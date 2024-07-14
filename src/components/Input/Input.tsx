@@ -1,10 +1,10 @@
 import styles from "./Input.module.css";
-import { InputProps } from "../../../utils/types";
-const Input = ({ title, placeholder }:InputProps) => {
+import { InputProps } from "../../utils/types";
+const Input = ({ title, placeholder, type }: InputProps) => {
   return (
     <div className={styles.container}>
       <p>{title}</p>
-      <input type="text" placeholder={placeholder}/>
+      <input type={type} placeholder={placeholder}/>
     </div>
   );
 };

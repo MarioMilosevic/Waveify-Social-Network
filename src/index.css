@@ -5,17 +5,17 @@
 }
 
 :root {
-  --main-color:#49DEA5;
+  --main-color: #49dea5;
   /* slate-500 */
-  --secondary-color:#64748b;
-  --secondary-color:#94a3b8;
+  --secondary-color: #94a3b8;
   /* slate-50 */
-  --background-color:#F8FAFC;
+  
+  --background-color: #f8fafc;
+  --border-radius-small: 0.6rem;
 }
 
-
-html{
-font-size: 62.5%;
+html {
+  font-size: 62.5%;
 }
 
 body {
