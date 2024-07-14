@@ -1,11 +1,8 @@
 import './App.css'
-import logo from "./assets/logo.png"
+import LogIn from './components/LogIn/LogIn'
 function App() {
-
   return (
-    <div>
-      <img src={logo} alt={logo} />
-    </div>
+    <LogIn/>
   )
 }
 

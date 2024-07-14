@@ -1,0 +1,10 @@
+.container {
+    border: 1px solid black;
+    padding-top: 2rem;
+}
+
+.logo {
+    height: 75px;
+    border: 1px solid black;
+    /* margin: 0 auto; */
+}
