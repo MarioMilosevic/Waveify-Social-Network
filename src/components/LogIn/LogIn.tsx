@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.png"
 import styles from "./LogIn.module.css"
-import Input from "./Input/Input"
+import Input from "../Input/Input"
 const LogIn = () => {
   return (
     <div className={styles.container}>
