@@ -1,0 +1,18 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:0.8rem;
+}
+
+p{
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.6rem;
+    border-color: var(--secondary-color);
+}
