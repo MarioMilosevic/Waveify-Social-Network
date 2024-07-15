@@ -19,3 +19,16 @@
 .logo {
   height: 75px;
 }
+
+.error {
+  width: 100%;
+    padding: 0.6rem;
+    border-radius: var(--border-radius-small);
+    border:none;
+    background-color: var(--error-color);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    cursor: pointer;
+    text-align: center;
+}
