@@ -1,9 +1,18 @@
+import { UseFormRegisterReturn } from "react-hook-form";
 export type InputProps = {
-    title: string;
-    placeholder: string;
-    type: string;
-}
+  title: string;
+  placeholder: string;
+  value: string;
+  changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  zod: UseFormRegisterReturn;
+};
 
 export type ButtonProps = {
     text: string;
+}
+
+export type UserType = {
+    email: string;
+    password: string;
 }
