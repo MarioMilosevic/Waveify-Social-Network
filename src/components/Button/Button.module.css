@@ -1,7 +1,17 @@
 .button {
     width: 100%;
-    padding: 1rem;
+    padding: 1.6rem;
     border-radius: var(--border-radius-small);
     border:none;
-    background-color: #cbd5e1;
+    background-color: var(--button-active-color);
+    background-color: var(--gray-color);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: background-color 200ms;
+}
+
+.button:hover{
+    background-color: var(--gray-color-hover);
 }
