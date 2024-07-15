@@ -1,13 +1,21 @@
 .container {
-    padding-top: 10rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 420px;
-    margin: 0 auto;
-    align-items: center;
+  padding-top: 10rem;
+  width: 420px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.container,
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form {
+  width: 100%;
 }
 
 .logo {
-    height: 75px;
+  height: 75px;
 }
