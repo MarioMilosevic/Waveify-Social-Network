@@ -9,7 +9,8 @@ export type InputProps = {
 };
 
 export type ButtonProps = {
-    text: string;
+  text: string;
+  isActive:boolean
 }
 
 export type UserType = {

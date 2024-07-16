@@ -1,11 +1,12 @@
-import { ButtonProps } from "../../utils/types"
-import styles from "./Button.module.css"
-const Button = ({text}:ButtonProps) => {
-  return (
-    <button className={styles.button}>
-      {text}
-    </button>
-  )
-}
+import { ButtonProps } from "../../utils/types";
+import styles from "./Button.module.css";
 
-export default Button
+const Button = ({ text, isActive }: ButtonProps) => {
+  const buttonClass = isActive
+    ? styles["button-active"]
+    : styles["button-inactive"];
+
+  return <button className={`${styles.button} ${buttonClass}`}>{text}</button>;
+};
+
+export default Button;

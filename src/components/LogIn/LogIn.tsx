@@ -1,22 +1,25 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { initialUserState } from "../../utils/constants";
+import { UserType } from "../../utils/types";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-import { initialUserState } from "../../utils/constants";
-import { UserType } from "../../utils/types";
 
 const LogIn = () => {
   const [user, setUser] = useState<UserType>(initialUserState);
   const [loginError, setLoginError] = useState<string>("");
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid },
+    watch,
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       email: user.email,
@@ -25,24 +28,32 @@ const LogIn = () => {
     resolver: zodResolver(authenticationSchema),
   });
 
+  const emailWatch = watch("email");
+  const passwordWatch = watch("password");
+
+  useEffect(() => {
+    setLoginError("");
+  }, [emailWatch, passwordWatch]);
+
+  useEffect(() => {
+    setIsButtonActive(isValid);
+  }, [isValid]);
+
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
     try {
-      if (data.email === "mariomilosevic887@gmail.com") {
-        console.log("tacan email");
-      } else {
-        console.log("Email nije dobar");
-        setLoginError("Email nije dobar");
+      if (data.email !== "mariomilosevic887@gmail.com") {
+        setLoginError("Account not found.");
+        return;
       }
-      if (data.password === "123456789") {
-        console.log("tacan pasvord");
+      if (data.password !== "123456789") {
+        setLoginError("Incorrect password");
+        return;
       } else {
-        console.log("Pasvord nije dobar");
-        setLoginError("Pasvord nije dobar");
+        setLoginError("");
+        reset()
       }
     } catch (error) {
-      console.log("An error occurred during login");
-      console.log(errors);
+      setLoginError("An error occurred during login")
     }
   };
 
@@ -63,7 +74,6 @@ const LogIn = () => {
           }
           zod={{ ...register("email") }}
         />
-        {errors.email && <span>{errors.email.message}</span>}
         <Input
           placeholder="Enter your password here"
           title="Password"
@@ -77,10 +87,9 @@ const LogIn = () => {
           }
           zod={{ ...register("password") }}
         />
-        {errors.password && <span>{errors.password.message}</span>}
         {loginError && <div className={styles.error}>{loginError}</div>}
 
-        <Button text="Confirm" />
+        <Button text="Confirm" isActive={isButtonActive} />
       </form>
     </div>
   );
