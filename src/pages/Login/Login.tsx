@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { initialUserState } from "../../utils/constants";
 import { UserType } from "../../utils/types";
 import { login } from "../../utils/helperFunction";
+import { useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
@@ -13,8 +14,7 @@ import Button from "../../components/Button/Button";
 const LogIn = () => {
   const [user, setUser] = useState<UserType>(initialUserState);
   const [loginError, setLoginError] = useState<string>("");
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -35,13 +35,14 @@ const LogIn = () => {
     setLoginError("");
   }, [emailWatch, passwordWatch]);
 
-  useEffect(() => {
-    setIsButtonActive(isValid);
-  }, [isValid]);
+
 
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login(data.email, data.password);
+      if (response) {
+        navigate("/home");
+      }
       console.log("Login successful:", response);
     } catch (error) {
       if (error instanceof Error) {
@@ -83,10 +84,11 @@ const LogIn = () => {
           zod={{ ...register("password") }}
         />
         {loginError && <div className={styles.error}>{loginError}</div>}
-        <Button text="Confirm" isActive={isButtonActive} />
+        <Button text="Confirm" isActive={isValid} />
       </form>
     </div>
   );
 };
 
 export default LogIn;
+

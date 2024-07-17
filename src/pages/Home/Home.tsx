@@ -1,6 +1,7 @@
+import styles from "./Home.module.css"
 const Home = () => {
   return (
-    <div>
+    <div className={styles.container}>
       Home
     </div>
   )
