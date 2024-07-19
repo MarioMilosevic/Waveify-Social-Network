@@ -22,7 +22,7 @@ const LogIn = () => {
     register,
     handleSubmit,
     formState: { isValid },
-    watch,
+    // watch,
   } = useForm<FormValues>({
     defaultValues: {
       email: user.email,
@@ -31,12 +31,12 @@ const LogIn = () => {
     resolver: zodResolver(authenticationSchema),
   });
 
-  const emailWatch = watch("email");
-  const passwordWatch = watch("password");
+  // const emailWatch = watch("email");
+  // const passwordWatch = watch("password");
 
-  useEffect(() => {
-    setLoginError("");
-  }, [emailWatch, passwordWatch]);
+  // useEffect(() => {
+  //   setLoginError("");
+  // }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -49,7 +49,6 @@ const LogIn = () => {
           full_name: "Mario Milosevic",
           picture: marioPicture, // username:"MarioMilosevic"
         };
-        console.log(updatedUser);
         dispatch(setUser(updatedUser));
         navigate("/home");
       }
@@ -63,6 +62,17 @@ const LogIn = () => {
     }
   };
 
+  const updateCredentials = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    dispatch(
+      setUser({
+        ...user,
+        [name]: value,
+      })
+    );
+    if (value === "") setLoginError("");
+  };
+
   return (
     <div className={styles.container}>
       <img src={logo} alt="Logo" className={styles.logo} />
@@ -72,14 +82,7 @@ const LogIn = () => {
           title="Email"
           type="text"
           value={user.email || ""}
-          changeHandler={(e) =>
-            dispatch(
-              setUser({
-                ...user,
-                email: e.target.value,
-              })
-            )
-          }
+          changeHandler={updateCredentials}
           zod={{ ...register("email") }}
         />
         <Input
@@ -87,14 +90,7 @@ const LogIn = () => {
           title="Password"
           type="password"
           value={user.password || ""}
-          changeHandler={(e) =>
-            dispatch(
-              setUser({
-                ...user,
-                password: e.target.value,
-              })
-            )
-          }
+          changeHandler={updateCredentials}
           zod={{ ...register("password") }}
         />
         {loginError && <div className={styles.error}>{loginError}</div>}
