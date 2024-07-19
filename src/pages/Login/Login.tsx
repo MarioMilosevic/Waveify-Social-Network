@@ -5,13 +5,14 @@ import { useState } from "react";
 import { login, getCurrentUser ,getPosts } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
-import { setUser } from "../../redux/features/userSlice";
+import { setUser, setUserPosts } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import marioPicture from "../../assets/mariomilosevic.jpg";
+// import { PostType } from "../../utils/types";
 
 const LogIn = () => {
   const { user } = useUserSlice();
@@ -45,7 +46,8 @@ const LogIn = () => {
           picture: marioPicture, // username:"MarioMilosevic"
         };
         dispatch(setUser(updatedUser));
-        // navigate("/home");
+        dispatch(setUserPosts(posts))
+        navigate("/home");
       }
     } catch (error) {
       if (error instanceof Error) {

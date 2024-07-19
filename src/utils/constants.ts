@@ -3,7 +3,8 @@ export const initialUserState = {
     password: "",
     full_name: "",
     picture: "",
-    username:""
+    username: "",
+    posts:[]
 }
 
 export const baseUrl = "https://api.hr.constel.co/api/v1";

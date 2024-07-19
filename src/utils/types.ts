@@ -19,4 +19,23 @@ export type UserType = {
   full_name: string;
   picture: string;
   username: string;
+  posts:PostType[]
 }
+
+export type PostType = {
+  audio: null;
+  comments: number;
+  created_at: string;
+  image: string;
+  liked: boolean;
+  likes: number;
+  post_id: string;
+  text: string;
+  user: {
+    full_name: string;
+    picture: string;
+    username: string;
+  },
+  user_id:string
+}
+
