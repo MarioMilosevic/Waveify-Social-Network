@@ -1,16 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
-import { useState, useEffect } from "react";
-import { login, getCurrentUser } from "../../utils/helperFunction";
+import { useState } from "react";
+import { login, getCurrentUser ,getPosts } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
+import { setUser } from "../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { setUser } from "../../redux/features/userSlice";
-import { useDispatch } from "react-redux";
 import marioPicture from "../../assets/mariomilosevic.jpg";
 
 const LogIn = () => {
@@ -22,7 +22,6 @@ const LogIn = () => {
     register,
     handleSubmit,
     formState: { isValid },
-    // watch,
   } = useForm<FormValues>({
     defaultValues: {
       email: user.email,
@@ -31,12 +30,6 @@ const LogIn = () => {
     resolver: zodResolver(authenticationSchema),
   });
 
-  // const emailWatch = watch("email");
-  // const passwordWatch = watch("password");
-
-  // useEffect(() => {
-  //   setLoginError("");
-  // }, []);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -44,15 +37,16 @@ const LogIn = () => {
       if (response) {
         localStorage.setItem("jwt", response.token);
         const currentUser = await getCurrentUser();
+        const posts = await getPosts()
+        console.log(posts)
         const updatedUser = {
           ...currentUser,
           full_name: "Mario Milosevic",
           picture: marioPicture, // username:"MarioMilosevic"
         };
         dispatch(setUser(updatedUser));
-        navigate("/home");
+        // navigate("/home");
       }
-      console.log("Login successful:", response);
     } catch (error) {
       if (error instanceof Error) {
         setLoginError(error.message);

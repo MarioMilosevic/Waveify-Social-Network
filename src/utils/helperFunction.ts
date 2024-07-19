@@ -57,3 +57,32 @@ export const getCurrentUser = async () => {
   }
 }
 
+export const getPosts = async () => {
+  const jwt = localStorage.getItem("jwt");
+
+  if (!jwt) return;
+
+    const response = await fetch(`${baseUrl}/posts`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+    });
+  console.log(response)
+
+  try {
+    if (response.status === 400) {
+      const { error } = await response.json();
+      console.log(error);
+      return;
+    }
+
+    const {posts} = await response.json()
+    console.log(posts)
+
+  } catch (error) {
+     console.error(error);
+     throw new Error("Could not get the user");  
+  }
+}
