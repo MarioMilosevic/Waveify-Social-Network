@@ -1,15 +1,11 @@
 import { useUserSlice } from "../../hooks/useUserSlice";
-import { getCurrentUser } from "../../utils/helperFunction";
-import { useEffect } from "react";
 const ProtectedRoute = () => {
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await getCurrentUser();
-      console.log(user);
-    };
-    checkUser();
-  }, []);
-  return <div>Protected route</div>;
+    const { user } = useUserSlice()
+    console.log("iz protected route", user)
+    return <div>
+        <p>{user.full_name }</p>
+        <img src={user.picture} alt={user.picture} />
+  </div>;
 };
 
 export default ProtectedRoute;

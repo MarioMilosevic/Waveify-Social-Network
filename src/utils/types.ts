@@ -15,5 +15,8 @@ export type ButtonProps = {
 
 export type UserType = {
     email: string;
-    password: string;
+  password: string;
+  full_name: string;
+  picture: string;
+  username: string;
 }

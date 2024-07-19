@@ -11,6 +11,7 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
+import marioPicture from "../../assets/mariomilosevic.jpg";
 
 const LogIn = () => {
   const { user } = useUserSlice();
@@ -42,6 +43,14 @@ const LogIn = () => {
       const response = await login(data.email, data.password);
       if (response) {
         localStorage.setItem("jwt", response.token);
+        const currentUser = await getCurrentUser();
+        const updatedUser = {
+          ...currentUser,
+          full_name: "Mario Milosevic",
+          picture: marioPicture, // username:"MarioMilosevic"
+        };
+        console.log(updatedUser);
+        dispatch(setUser(updatedUser));
         navigate("/home");
       }
       console.log("Login successful:", response);
@@ -62,7 +71,7 @@ const LogIn = () => {
           placeholder="Enter your email here"
           title="Email"
           type="text"
-          value={user.email}
+          value={user.email || ""}
           changeHandler={(e) =>
             dispatch(
               setUser({
@@ -77,7 +86,7 @@ const LogIn = () => {
           placeholder="Enter your password here"
           title="Password"
           type="password"
-          value={user.password}
+          value={user.password || ""}
           changeHandler={(e) =>
             dispatch(
               setUser({
@@ -90,6 +99,8 @@ const LogIn = () => {
         />
         {loginError && <div className={styles.error}>{loginError}</div>}
         <Button text="Confirm" isActive={isValid} />
+        <p>malesija.nemanja@gmail.com</p>
+        <p>He5r4dOVdy9x6IT</p>
       </form>
     </div>
   );
