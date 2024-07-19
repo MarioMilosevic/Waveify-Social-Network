@@ -2,17 +2,22 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
 import { useState, useEffect } from "react";
-import { initialUserState } from "../../utils/constants";
-import { UserType } from "../../utils/types";
+// import { initialUserState } from "../../utils/constants";
+// import { UserType } from "../../utils/types";
 import { login } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
+import { useUserSlice } from "../../hooks/useUserSlice";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import { setUser } from "../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
 
 const LogIn = () => {
-  const [user, setUser] = useState<UserType>(initialUserState);
+  const { user } = useUserSlice();
+  const dispatch = useDispatch();
+  // const [user, setUser] = useState<UserType>(initialUserState);
   const [loginError, setLoginError] = useState<string>("");
   const navigate = useNavigate();
   const {
@@ -31,18 +36,15 @@ const LogIn = () => {
   const emailWatch = watch("email");
   const passwordWatch = watch("password");
 
-
-
   useEffect(() => {
     setLoginError("");
   }, [emailWatch, passwordWatch]);
-
-
 
   const onSubmit = async (data: FormValues) => {
     try {
       const response = await login(data.email, data.password);
       if (response) {
+        console.log(response);
         navigate("/home");
       }
       console.log("Login successful:", response);
@@ -65,10 +67,12 @@ const LogIn = () => {
           type="text"
           value={user.email}
           changeHandler={(e) =>
-            setUser((prev) => ({
-              ...prev,
-              email: e.target.value,
-            }))
+            dispatch(
+              setUser({
+                ...user,
+                email: e.target.value,
+              })
+            )
           }
           zod={{ ...register("email") }}
         />
@@ -78,10 +82,12 @@ const LogIn = () => {
           type="password"
           value={user.password}
           changeHandler={(e) =>
-            setUser((prev) => ({
-              ...prev,
-              password: e.target.value,
-            }))
+            dispatch(
+              setUser({
+                ...user,
+                password: e.target.value,
+              })
+            )
           }
           zod={{ ...register("password") }}
         />
@@ -93,4 +99,3 @@ const LogIn = () => {
 };
 
 export default LogIn;
-
