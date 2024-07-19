@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./pages/Login/Login";
-import Home from "./pages/Home/Home";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<LogIn/> } />
-        <Route path={"/home"} element={<Home/> } />
+        <Route path={"/home"} element={<ProtectedRoute/> } />
       </Routes>
     </BrowserRouter>
   )

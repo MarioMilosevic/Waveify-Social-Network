@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
 import { useState, useEffect } from "react";
-// import { initialUserState } from "../../utils/constants";
-// import { UserType } from "../../utils/types";
-import { login } from "../../utils/helperFunction";
+import { login, getCurrentUser } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import logo from "../../assets/logo.png";
@@ -17,7 +15,6 @@ import { useDispatch } from "react-redux";
 const LogIn = () => {
   const { user } = useUserSlice();
   const dispatch = useDispatch();
-  // const [user, setUser] = useState<UserType>(initialUserState);
   const [loginError, setLoginError] = useState<string>("");
   const navigate = useNavigate();
   const {
@@ -44,7 +41,7 @@ const LogIn = () => {
     try {
       const response = await login(data.email, data.password);
       if (response) {
-        console.log(response);
+        localStorage.setItem("jwt", response.token);
         navigate("/home");
       }
       console.log("Login successful:", response);
