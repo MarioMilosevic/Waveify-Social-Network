@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
 import { useState } from "react";
-import { login, getCurrentUser ,getPosts } from "../../utils/helperFunction";
+import { fetchData } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { setUser, setUserPosts } from "../../redux/features/userSlice";
@@ -31,22 +31,24 @@ const LogIn = () => {
     resolver: zodResolver(authenticationSchema),
   });
 
-
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await login(data.email, data.password);
+      const response = await fetchData("POST", "login", {
+        email: data.email,
+        password: data.password,
+      });
       if (response) {
         localStorage.setItem("jwt", response.token);
-        const currentUser = await getCurrentUser();
-        const posts = await getPosts()
-        console.log(posts)
+        const currentUser = await fetchData("GET", "/accounts/me");
+        const posts = await fetchData("GET", "/posts");
+        console.log(posts);
         const updatedUser = {
           ...currentUser,
           full_name: "Mario Milosevic",
           picture: marioPicture, // username:"MarioMilosevic"
         };
         dispatch(setUser(updatedUser));
-        dispatch(setUserPosts(posts))
+        dispatch(setUserPosts(posts));
         navigate("/home");
       }
     } catch (error) {
