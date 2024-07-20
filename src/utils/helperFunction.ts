@@ -1,5 +1,7 @@
 import { baseUrl } from "./constants";
 import { setUser, setUserPosts } from "../redux/features/userSlice";
+import { Dispatch } from "redux";
+import { NavigateFunction } from "react-router-dom";
 import marioPicture from "../assets/mariomilosevic.jpg"
 
 
@@ -48,7 +50,7 @@ export const fetchData = async (
   }
 };
 
-export const getUserInformation = async (dispatch, navigate) => {
+export const getUserInformation = async (dispatch:Dispatch, navigate:NavigateFunction) => {
   try {
     const currentUser = await fetchData("GET", "/accounts/me");
     const posts = await fetchData("GET", "/posts");

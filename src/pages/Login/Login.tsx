@@ -5,13 +5,12 @@ import { useState } from "react";
 import { fetchData, getUserInformation } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
-import { setUser, setUserPosts } from "../../redux/features/userSlice";
+import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
 import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import marioPicture from "../../assets/mariomilosevic.jpg";
 
 const LogIn = () => {
   const { user } = useUserSlice();
@@ -38,16 +37,17 @@ const LogIn = () => {
       });
       if (response) {
         localStorage.setItem("jwt", response.token);
-        const currentUser = await fetchData("GET", "/accounts/me");
-        const posts = await fetchData("GET", "/posts");
-        const updatedUser = {
-          ...currentUser,
-          full_name: "Mario Milosevic",
-          picture: marioPicture, // username:"MarioMilosevic"
-        };
-        dispatch(setUser(updatedUser));
-        dispatch(setUserPosts(posts));
-        navigate("/home");
+        getUserInformation(dispatch, navigate)
+        // const currentUser = await fetchData("GET", "/accounts/me");
+        // const posts = await fetchData("GET", "/posts");
+        // const updatedUser = {
+        //   ...currentUser,
+        //   full_name: "Mario Milosevic",
+        //   picture: marioPicture, // username:"MarioMilosevic"
+        // };
+        // dispatch(setUser(updatedUser));
+        // dispatch(setUserPosts(posts));
+        // navigate("/home");
       }
     } catch (error) {
       if (error instanceof Error) {
