@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
 import { useState } from "react";
-import { fetchData } from "../../utils/helperFunction";
+import { fetchData, getUserInformation } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { setUser, setUserPosts } from "../../redux/features/userSlice";
@@ -12,7 +12,6 @@ import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import marioPicture from "../../assets/mariomilosevic.jpg";
-// import { PostType } from "../../utils/types";
 
 const LogIn = () => {
   const { user } = useUserSlice();
@@ -41,7 +40,6 @@ const LogIn = () => {
         localStorage.setItem("jwt", response.token);
         const currentUser = await fetchData("GET", "/accounts/me");
         const posts = await fetchData("GET", "/posts");
-        console.log(posts);
         const updatedUser = {
           ...currentUser,
           full_name: "Mario Milosevic",
