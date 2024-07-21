@@ -3,6 +3,7 @@ import { setUser, setUserPosts } from "../redux/features/userSlice";
 import { Dispatch } from "redux";
 import { NavigateFunction } from "react-router-dom";
 import marioPicture from "../assets/mariomilosevic.jpg";
+import { UserType } from "./types";
 
 export const fetchData = async (
   endpoint: string,
@@ -48,6 +49,8 @@ export const fetchData = async (
   }
 };
 
+
+
 export const getUserInformation = async (
   dispatch: Dispatch,
   navigate: NavigateFunction
@@ -55,11 +58,7 @@ export const getUserInformation = async (
   try {
     const currentUser = await fetchData("/accounts/me");
     const posts = await fetchData("/posts");
-    const updatedUser = {
-      ...currentUser,
-      full_name: "Mario Milosevic",
-      picture: marioPicture,
-    };
+    const updatedUser = updateUser(currentUser)
 
     dispatch(setUser(updatedUser));
     dispatch(setUserPosts(posts));
@@ -67,4 +66,8 @@ export const getUserInformation = async (
   } catch (error) {
     console.error("Error fetching user information:", error);
   }
+};
+
+export const updateUser = (user: UserType) => {
+  return { ...user, full_name: "Mario Milosevic", picture: marioPicture, username:"mario_milosevic" };
 };
