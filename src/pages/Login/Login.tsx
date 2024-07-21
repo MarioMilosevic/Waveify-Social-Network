@@ -31,23 +31,13 @@ const LogIn = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetchData("POST", "login", {
+      const response = await fetchData("login", {
         email: data.email,
         password: data.password,
       });
       if (response) {
         localStorage.setItem("jwt", response.token);
         getUserInformation(dispatch, navigate)
-        // const currentUser = await fetchData("GET", "/accounts/me");
-        // const posts = await fetchData("GET", "/posts");
-        // const updatedUser = {
-        //   ...currentUser,
-        //   full_name: "Mario Milosevic",
-        //   picture: marioPicture, // username:"MarioMilosevic"
-        // };
-        // dispatch(setUser(updatedUser));
-        // dispatch(setUserPosts(posts));
-        // navigate("/home");
       }
     } catch (error) {
       if (error instanceof Error) {

@@ -2,11 +2,9 @@ import { baseUrl } from "./constants";
 import { setUser, setUserPosts } from "../redux/features/userSlice";
 import { Dispatch } from "redux";
 import { NavigateFunction } from "react-router-dom";
-import marioPicture from "../assets/mariomilosevic.jpg"
-
+import marioPicture from "../assets/mariomilosevic.jpg";
 
 export const fetchData = async (
-  method: string,
   endpoint: string,
   payload?: { email: string; password: string }
 ) => {
@@ -16,22 +14,21 @@ export const fetchData = async (
     };
 
     const options: {
-      method: string;
+      method?: string;
       headers: { [key: string]: string };
       body?: string;
     } = {
-      method,
       headers,
     };
 
-    if (endpoint !== "login") {
+    if (endpoint === "login") {
+      options.body = JSON.stringify(payload);
+      options.method = "POST";
+    } else {
+      options.method = "GET";
       const jwt = localStorage.getItem("jwt");
       if (!jwt) throw new Error("No JWT found");
-      headers["Authorization"] = "Bearer " + jwt;
-    }
-
-    if (method === "POST" && payload) {
-      options.body = JSON.stringify(payload);
+      headers["Authorization"] = `Bearer ${jwt}`;
     }
 
     const response = await fetch(`${baseUrl}/${endpoint}`, options);
@@ -43,6 +40,7 @@ export const fetchData = async (
     }
 
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
@@ -50,14 +48,17 @@ export const fetchData = async (
   }
 };
 
-export const getUserInformation = async (dispatch:Dispatch, navigate:NavigateFunction) => {
+export const getUserInformation = async (
+  dispatch: Dispatch,
+  navigate: NavigateFunction
+) => {
   try {
-    const currentUser = await fetchData("GET", "/accounts/me");
-    const posts = await fetchData("GET", "/posts");
+    const currentUser = await fetchData("/accounts/me");
+    const posts = await fetchData("/posts");
     const updatedUser = {
       ...currentUser,
       full_name: "Mario Milosevic",
-      picture: marioPicture, 
+      picture: marioPicture,
     };
 
     dispatch(setUser(updatedUser));
@@ -67,4 +68,3 @@ export const getUserInformation = async (dispatch:Dispatch, navigate:NavigateFun
     console.error("Error fetching user information:", error);
   }
 };
-
