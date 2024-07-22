@@ -6,6 +6,7 @@ import marioPicture from "../assets/mariomilosevic.jpg";
 import { UserType } from "./types";
 
 export const fetchData = async (
+  // method = "GET",
   endpoint: string,
   payload?: { email: string; password: string }
 ) => {
@@ -58,6 +59,7 @@ export const getUserInformation = async (
   try {
     const currentUser = await fetchData("/accounts/me");
     const posts = await fetchData("/posts");
+    // odje promiseAll
     const updatedUser = updateUser(currentUser)
 
     dispatch(setUser(updatedUser));

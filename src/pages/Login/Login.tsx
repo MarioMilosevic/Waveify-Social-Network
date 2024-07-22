@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchData, getUserInformation } from "../../utils/helperFunction";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
@@ -17,14 +17,20 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const [loginError, setLoginError] = useState<string>("");
   const navigate = useNavigate();
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      navigate("/home");
+    }
+  }, [navigate]);
   const {
     register,
     handleSubmit,
     formState: { isValid },
   } = useForm<FormValues>({
     defaultValues: {
-      email: user.email,
-      password: user.password,
+      email: "",
+      password: "",
     },
     resolver: zodResolver(authenticationSchema),
   });
@@ -37,7 +43,7 @@ const LogIn = () => {
       });
       if (response) {
         localStorage.setItem("jwt", response.token);
-        getUserInformation(dispatch, navigate)
+        getUserInformation(dispatch, navigate);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -58,6 +64,9 @@ const LogIn = () => {
     );
     if (value === "") setLoginError("");
   };
+  // ako je user prisutan navigate(home)
+
+  console.log("LOGIN USER", user);
 
   return (
     <div className={styles.container}>
