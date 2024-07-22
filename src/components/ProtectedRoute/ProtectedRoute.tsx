@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../utils/helperFunction";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
@@ -36,7 +37,7 @@ const ProtectedRoute = () => {
         }
 
         const { account } = await response.json();
-        const updatedAccount = updateUser(account)
+        const updatedAccount = updateUser(account);
         console.log("testiram ", updatedAccount);
         dispatch(setUser(updatedAccount));
       } catch (error) {
@@ -49,8 +50,8 @@ const ProtectedRoute = () => {
     getUserWithJWT();
   }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>; 
-  
+  if (loading) return <LoadingSpinner />;
+
   return user?.full_name ? <Outlet /> : <Navigate to="/login" />;
 };
 
