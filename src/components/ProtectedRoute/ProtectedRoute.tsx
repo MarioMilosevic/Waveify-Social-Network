@@ -9,8 +9,8 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUserWithJWT = async () => {
@@ -38,7 +38,6 @@ const ProtectedRoute = () => {
 
         const { account } = await response.json();
         const updatedAccount = updateUser(account);
-        console.log("testiram ", updatedAccount);
         dispatch(setUser(updatedAccount));
       } catch (error) {
         console.error(error);
@@ -49,7 +48,6 @@ const ProtectedRoute = () => {
 
     getUserWithJWT();
   }, [dispatch]);
-
   if (loading) return <LoadingSpinner />;
 
   return user?.full_name ? <Outlet /> : <Navigate to="/login" />;

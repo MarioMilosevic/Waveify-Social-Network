@@ -10,7 +10,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/home" element={<ProtectedRoute />}>
-          <Route element={<Home />} />
+          <Route index element={<Home />} />
         </Route>
       </Routes>
     </BrowserRouter>

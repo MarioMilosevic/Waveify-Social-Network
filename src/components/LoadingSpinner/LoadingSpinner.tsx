@@ -1,6 +1,10 @@
 import styles from "./LoadingSpinner.module.css";
 const LoadingSpinner = () => {
-  return <span className={styles.loader}></span>;
+  return (
+   <div className={styles.container}>
+    <span className={styles.loader}></span>;
+   </div> 
+  )
 };
 
 export default LoadingSpinner;
