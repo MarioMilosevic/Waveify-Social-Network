@@ -43,7 +43,8 @@ const LogIn = () => {
       });
       if (response) {
         localStorage.setItem("jwt", response.token);
-        getUserInformation(dispatch, navigate);
+        navigate('/home')
+        // getUserInformation(dispatch, navigate);
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -64,9 +65,7 @@ const LogIn = () => {
     );
     if (value === "") setLoginError("");
   };
-  // ako je user prisutan navigate(home)
 
-  console.log("LOGIN USER", user);
 
   return (
     <div className={styles.container}>

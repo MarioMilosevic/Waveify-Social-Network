@@ -19,7 +19,6 @@ const ProtectedRoute = () => {
         setLoading(false);
         return;
       }
-
       try {
         const response = await fetch(`${baseUrl}/accounts/me`, {
           method: "GET",

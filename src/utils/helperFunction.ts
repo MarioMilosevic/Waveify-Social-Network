@@ -42,7 +42,7 @@ export const fetchData = async (
     }
 
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
@@ -50,17 +50,16 @@ export const fetchData = async (
   }
 };
 
-
-
 export const getUserInformation = async (
   dispatch: Dispatch,
   navigate: NavigateFunction
 ) => {
   try {
-    const currentUser = await fetchData("/accounts/me");
-    const posts = await fetchData("/posts");
-    // odje promiseAll
-    const updatedUser = updateUser(currentUser)
+    const [currentUser, posts] = await Promise.all([
+      fetchData("/accounts/me"),
+      fetchData("/posts"),
+    ]);
+    const updatedUser = updateUser(currentUser);
 
     dispatch(setUser(updatedUser));
     dispatch(setUserPosts(posts));
@@ -71,5 +70,10 @@ export const getUserInformation = async (
 };
 
 export const updateUser = (user: UserType) => {
-  return { ...user, full_name: "Mario Milosevic", picture: marioPicture, username:"mario_milosevic" };
+  return {
+    ...user,
+    full_name: "Mario Milosevic",
+    picture: marioPicture,
+    username: "mario_milosevic",
+  };
 };
