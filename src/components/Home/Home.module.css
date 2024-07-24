@@ -1,0 +1,11 @@
+.home {
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+.icon, .home {
+    color:var(--button-active-hover-color)
+
+}
