@@ -42,7 +42,6 @@ export const fetchData = async (
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
@@ -60,7 +59,6 @@ export const getUserInformation = async (
       fetchData("/posts"),
     ]);
     const updatedUser = updateUser(currentUser);
-
     dispatch(setUser(updatedUser));
     dispatch(setUserPosts(posts));
     navigate("/home");

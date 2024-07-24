@@ -1,14 +1,13 @@
 import { useUserSlice } from "../../hooks/useUserSlice";
-import { baseUrl } from "../../utils/constants";
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
-import { updateUser } from "../../utils/helperFunction";
+import { getUserInformation } from "../../utils/helperFunction";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
@@ -16,37 +15,22 @@ const ProtectedRoute = () => {
     const getUserWithJWT = async () => {
       const jwt = localStorage.getItem("jwt");
       if (!jwt) {
-        setLoading(false);
+        setLoading(false); 
         return;
-      }
-      try {
-        const response = await fetch(`${baseUrl}/accounts/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-
-        if (!response.ok) {
-          const { error } = await response.json();
-          console.log(error);
+      } else {
+        try {
+          await getUserInformation(dispatch, navigate);
+        } catch (error) {
+          console.error("Error fetching user information:", error);
+        } finally {
           setLoading(false);
-          return;
         }
-
-        const { account } = await response.json();
-        const updatedAccount = updateUser(account);
-        dispatch(setUser(updatedAccount));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
       }
     };
 
     getUserWithJWT();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
+
   if (loading) return <LoadingSpinner />;
 
   return user?.full_name ? <Outlet /> : <Navigate to="/login" />;
