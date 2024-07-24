@@ -1,9 +1,9 @@
-import { useUserSlice } from "../../hooks/useUserSlice";
+import { useUserSlice } from "../../../hooks/useUserSlice";
 import { Navigate, Outlet, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getUserInformation } from "../../utils/helperFunction";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { getUserInformation } from "../../../utils/helperFunction";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
     const getUserWithJWT = async () => {
       const jwt = localStorage.getItem("jwt");
       if (!jwt) {
-        setLoading(false); 
+        setLoading(false);
         return;
       } else {
         try {
