@@ -6,6 +6,11 @@
     gap: 2rem;
 }
 
+.microphone_container {
+    border: 1px solid black;
+    width: 100%;
+}
+
 img{
     width: 60px;
     height: 60px;
@@ -20,4 +25,17 @@ img{
     display: flex;
     justify-content: space-between;
     /* align-items: center; */
+}
+
+button {
+    border:none;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background-color: var(--gray-color);
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: var(--gray-color-hover-color);
+
 }
