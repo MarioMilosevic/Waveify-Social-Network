@@ -4,4 +4,5 @@
     margin: 0 auto; 
     font-size: 3rem;
     min-height: 100vh;
+    display: flex;
 }

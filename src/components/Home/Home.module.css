@@ -1,11 +1,13 @@
 .home {
-    border: 1px solid black;
     display: flex;
     align-items: center;
-    gap: 5rem;
+    gap: 3rem;
 }
 
 .icon, .home {
-    color:var(--button-active-hover-color)
+    color:var(--button-active-hover-color);
+}
 
+.paragraph, .icon {
+    cursor: pointer;
 }

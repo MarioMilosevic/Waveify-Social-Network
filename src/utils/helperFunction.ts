@@ -54,11 +54,11 @@ export const getUserInformation = async (
   navigate: NavigateFunction
 ) => {
   try {
-    const [currentUser, posts] = await Promise.all([
+    const [{account}, { posts }] = await Promise.all([
       fetchData("/accounts/me"),
       fetchData("/posts"),
     ]);
-    const updatedUser = updateUser(currentUser);
+    const updatedUser = updateUser(account);
     dispatch(setUser(updatedUser));
     dispatch(setUserPosts(posts));
     navigate("/home");

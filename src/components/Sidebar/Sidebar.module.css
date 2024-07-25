@@ -1,7 +1,10 @@
 .sidebar {
-  border: 1px solid black;
-  width: 20%;
+  /* border: 1px solid black; */
+  width: 200px;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
 img{

@@ -4,7 +4,7 @@ import { IoHomeSharp } from "react-icons/io5";
 const Home = () => {
     return <div className={styles.home}>
         <IoHomeSharp className={styles.icon} />
-        <p>Home</p>
+        <p className={styles.paragraph}>Home</p>
   </div>;
 };
 
