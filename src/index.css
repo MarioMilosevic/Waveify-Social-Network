@@ -7,14 +7,13 @@
 :root {
   --main-color: #49dea5;
   --secondary-color: #f8fafc;
-  /* --ternary-color:#f1f5f9; */
-  --ternary-color:#e2e8f0;
-  --gray-color:#94a3b8;
-  --gray-color-hover-color:#687281;
-  --button-active-color:#42c895;
-  --button-active-hover-color:#3bb486;
-  --error-color:#ef4444;
-  --border-color:#cbd5e1;
+  --ternary-color: #f1f5f9;
+  --gray-color: #94a3b8;
+  --gray-color-hover-color: #687281;
+  --button-active-color: #42c895;
+  --button-active-hover-color: #3bb486;
+  --error-color: #ef4444;
+  --border-color: #cbd5e1;
   --border-radius-small: 0.6rem;
 }
 
@@ -23,8 +22,6 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: "Poppins", sans-serif;
   background-color: var(--secondary-color);
 }
