@@ -1,41 +1,68 @@
 .post {
-    border: 1px solid black;
-    padding: 1rem;
     display: flex;
     align-items: center;
     gap: 2rem;
+    padding: 1rem;
 }
 
-.microphone_container {
-    border: 1px solid black;
+.container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    border-radius: 10px;
+    background-color: var(--ternary-color);
 }
-
-img{
+.picture{
     width: 60px;
     height: 60px;
     border-radius: 9999px;
 }
 
+
 .status {
     font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
-.microphone {
+.status h2{
+font-size: 1.6rem;
+font-weight: 400;
+border-bottom:1px solid var(--gray-color);
+width: 100%;
+padding-bottom: 1.2rem;
+}
+
+.microphone_container {
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
+    padding-left: 6.6rem;
+    align-items: center;
+}
+
+.microphone_icon{
+    cursor: pointer;
+    color: var(--button-active-color);
+}
+
+.microphone_icon:hover{
+color: var(--button-active-hover-color);
 }
 
 button {
     border:none;
-    padding: 1rem 2rem;
+    padding: 2rem 4rem;
     border-radius: 1rem;
-    background-color: var(--gray-color);
+    font-size: 1.6rem;
+    font-weight: 600;
     cursor: pointer;
+    background-color: var(--gray-color);
+    color: var(--secondary-color);
 }
 
 button:hover{
     background-color: var(--gray-color-hover-color);
-
 }

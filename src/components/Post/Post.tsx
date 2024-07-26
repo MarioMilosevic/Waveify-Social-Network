@@ -7,11 +7,13 @@ const Post = () => {
   console.log(user);
   return (
     <div className={styles.post}>
-      <img src={user.picture} alt={user.picture} />
-      <div className={styles.microphone_container}>
-        <div className={styles.status}>What's happening</div>
-        <div className={styles.microphone}>
-          <FaMicrophone />
+      <div className={styles.container}>
+        <div className={styles.status}>
+        <img src={user.picture} alt={user.picture} className={styles.picture} />
+          <h2>What's happening</h2>
+        </div>
+        <div className={styles.microphone_container}>
+          <FaMicrophone className={styles.microphone_icon} />
           <button>New Post</button>
         </div>
       </div>

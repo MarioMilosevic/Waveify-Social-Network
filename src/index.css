@@ -7,6 +7,8 @@
 :root {
   --main-color: #49dea5;
   --secondary-color: #f8fafc;
+  /* --ternary-color:#f1f5f9; */
+  --ternary-color:#e2e8f0;
   --gray-color:#94a3b8;
   --gray-color-hover-color:#687281;
   --button-active-color:#42c895;
