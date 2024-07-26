@@ -7,7 +7,8 @@ const Main = () => {
   console.log(user.posts)
     return <div className={styles.container}>
       <NewPost />
-      {user.posts.map((post) => <Post key={post.post_id} {...post} />)}
+      <Post key={user.posts[0].post_id} {...user.posts[0]} />
+      {/* {user.posts.map((post) => <Post key={post.post_id} {...post} />)} */}
   </div>;
 };
 

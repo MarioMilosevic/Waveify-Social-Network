@@ -13,10 +13,13 @@ const Post = ({
 }) => {
   return (
     <div className={styles.container}>
-      <div>
-        <img src={image} alt={image} />
-        <div>
-          <p>{`@${user.username}`}</p>
+      <div className={styles.header}>
+        <div className={styles.image_container}>
+          <img src={user.picture} alt={user.picture} />
+          <div className={styles.user_info}>
+            <h3>{`@${user.username}`}</h3>
+            <h2>{user.full_name}</h2>
+          </div>
         </div>
         <div>nesto</div>
       </div>
