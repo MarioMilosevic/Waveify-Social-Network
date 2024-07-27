@@ -1,5 +1,6 @@
 import styles from "./Post.module.css";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
+import PostButton from "../PostButton/PostButton";
 const Post = ({
   audio,
   comments,
@@ -40,6 +41,7 @@ const Post = ({
         <p>{text}</p>
       </div>
       {/*  */}
+      <PostButton />
     </li>
   );
 };

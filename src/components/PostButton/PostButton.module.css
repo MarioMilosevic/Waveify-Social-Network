@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  padding-top: 1rem;
+  gap: 1rem;
+}
+
+.like,
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all;
+  transition-duration: 300ms;
+}
+
+.like {
+  background-color: var(--button-active-color);
+  color: var(--secondary-color);
+}
+
+.like:hover {
+  background-color: var(--button-active-hover-color);
+  color: var(--ternary-color);
+}
+
+.comment {
+  background-color: var(--gray-color);
+  color: var(--secondary-color);
+}
+
+.comment:hover {
+  background-color: var(--gray-color-hover-color);
+  color: var(--ternary-color);
+}
+
+.like span,
+.comment span {
+  font-size: 1.6rem;
+}
