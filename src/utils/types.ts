@@ -39,3 +39,8 @@ export type PostType = {
   user_id:string
 }
 
+export type PostButtonProps = {
+  likes: number;
+  comments: number;
+  liked: boolean;
+}

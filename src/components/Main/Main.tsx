@@ -8,7 +8,6 @@ const Main = () => {
   return (
     <div className={styles.container}>
       <NewPost />
-      {/* <Post key={user.posts[0].post_id} {...user.posts[0]} /> */}
       <ul className={styles.list}>
         {user.posts.map((post) => (
           <Post key={post.post_id} {...post} />

@@ -12,8 +12,7 @@
   padding: 0.5rem 1rem;
   border-radius: 10px;
   cursor: pointer;
-  transition: all;
-  transition-duration: 300ms;
+  transition: all 300ms ease-in-out;
 }
 
 .like {
@@ -21,7 +20,17 @@
   color: var(--secondary-color);
 }
 
-.like:hover {
+.like.liked {
+  background-color: var(--button-active-color);
+  color: var(--ternary-color);
+}
+
+.like.not_liked {
+  background-color: var(--gray-color);
+  color: var(--secondary-color);
+}
+
+.liked:hover {
   background-color: var(--button-active-hover-color);
   color: var(--ternary-color);
 }
@@ -31,7 +40,8 @@
   color: var(--secondary-color);
 }
 
-.comment:hover {
+.comment:hover,
+.not_liked:hover {
   background-color: var(--gray-color-hover-color);
   color: var(--ternary-color);
 }

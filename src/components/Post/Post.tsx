@@ -41,7 +41,7 @@ const Post = ({
         <p>{text}</p>
       </div>
       {/*  */}
-      <PostButton />
+      <PostButton likes={likes} comments={comments} liked={liked} />
     </li>
   );
 };
