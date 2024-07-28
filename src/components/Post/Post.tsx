@@ -5,18 +5,9 @@ import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
 import { useState } from "react";
 
-const Post = ({
-  audio,
-  comments,
-  created_at,
-  image,
-  liked,
-  likes,
-  post_id,
-  text,
-  user,
-  user_id,
-}) => {
+const Post = ({ post }) => {
+  
+  const {created_at, user, image, likes, comments, liked, text} = post
   const [modalActive, setModalActive] = useState<boolean>(false)
   const formattedDate = new Date(created_at)
     .toLocaleDateString("en-GB")
@@ -55,7 +46,7 @@ const Post = ({
         <p>{text}</p>
       </div>
       <PostButton likes={likes} comments={comments} liked={liked} likeHandler={likeHandler} commentHandler={commentHandler} />
-      {modalActive && <Modal likes={likes} comments={comments} />}
+      {modalActive && <Modal likes={likes} comments={comments} userPicture={userPicture }  />}
     </li>
   );
 };
