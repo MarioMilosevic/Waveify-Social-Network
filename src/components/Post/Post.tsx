@@ -1,6 +1,10 @@
-import styles from "./Post.module.css";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
+import { dateIconSize } from "../../utils/constants";
+import styles from "./Post.module.css";
+import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
+import { useState } from "react";
+
 const Post = ({
   audio,
   comments,
@@ -13,12 +17,22 @@ const Post = ({
   user,
   user_id,
 }) => {
+  const [modalActive, setModalActive] = useState<boolean>(false)
   const formattedDate = new Date(created_at)
     .toLocaleDateString("en-GB")
     .replace(/\//g, ".");
+  
+  const likeHandler = () => {
+    console.log('lajk')
+  }
+
+  const commentHandler = () => {
+    console.log('komment')
+    setModalActive(true)
+  }
+
   return (
     <li className={styles.container}>
-      {/*  */}
       <div className={styles.header}>
         <div className={styles.user_container}>
           <img
@@ -32,7 +46,7 @@ const Post = ({
           </div>
         </div>
         <div className={styles.calendar_container}>
-          <LiaCalendarWeekSolid size={25} />
+          <LiaCalendarWeekSolid size={dateIconSize} />
           <p>{formattedDate}</p>
         </div>
       </div>
@@ -40,10 +54,15 @@ const Post = ({
         {image && <img src={image} alt={image} className={styles.image} />}
         <p>{text}</p>
       </div>
-      {/*  */}
-      <PostButton likes={likes} comments={comments} liked={liked} />
+      <PostButton likes={likes} comments={comments} liked={liked} likeHandler={likeHandler} commentHandler={commentHandler} />
+      {modalActive && <Modal likes={likes} comments={comments} />}
     </li>
   );
 };
 
 export default Post;
+
+// open postModal kroz comment button (reuzat postojeci button)
+// otvori modal kroz React Portal
+// 1 useState za post (objekat)
+// bice 2 requesta 1 za post 1 za comments

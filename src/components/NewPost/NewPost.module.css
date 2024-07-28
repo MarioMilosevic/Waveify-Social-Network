@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
-    padding: 1rem;
+    padding-bottom: 2rem;
 }
 
 .container {
@@ -17,6 +17,7 @@
 .picture{
     width: 60px;
     height: 60px;
+    object-fit: cover;
     border-radius: 9999px;
 }
 
@@ -50,12 +51,12 @@ padding-bottom: 1.2rem;
 }
 
 .microphone_icon:hover{
-color: var(--button-active-hover-color);
+    color: var(--button-active-hover-color);
 }
 
 .microphone_container button {
     border:none;
-    padding: 2rem 4rem;
+    padding: 1rem 2rem;
     border-radius: 1rem;
     font-size: 1.6rem;
     font-weight: 600;
