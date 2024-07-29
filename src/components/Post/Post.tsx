@@ -46,7 +46,7 @@ const Post = ({ post }) => {
         <p>{text}</p>
       </div>
       <PostButton likes={likes} comments={comments} liked={liked} likeHandler={likeHandler} commentHandler={commentHandler} />
-      {modalActive && <Modal likes={likes} comments={comments} userPicture={userPicture }  />}
+      {modalActive && <Modal post={post }  />}
     </li>
   );
 };

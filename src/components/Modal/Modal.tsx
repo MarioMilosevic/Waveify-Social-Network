@@ -1,6 +1,9 @@
 import styles from "./Modal.module.css";
 import PostButton from "../PostButton/PostButton";
-const Modal = ({ likes, comments }) => {
+const Modal = ({ post }) => {
+  console.log(post)
+const {comments, likes} = post
+
   const likeHandler = () => {
     console.log("lajk iz modala");
   };
@@ -9,13 +12,15 @@ const Modal = ({ likes, comments }) => {
     console.log("comment iz modala");
   };
   return (
-    <div className={styles.container}>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
       <PostButton
         likes={likes}
         comments={comments}
         likeHandler={likeHandler}
         commentHandler={commentHandler}
-      />
+        />
+        </div>
     </div>
   );
 };
