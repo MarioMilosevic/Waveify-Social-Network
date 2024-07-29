@@ -8,11 +8,11 @@ const Main = () => {
   return (
     <div className={styles.container}>
       <NewPost />
-      <ul className={styles.list}>
+      <div className={styles.list}>
         {user.posts.map((post) => (
           <Post key={post.post_id} post={post } />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

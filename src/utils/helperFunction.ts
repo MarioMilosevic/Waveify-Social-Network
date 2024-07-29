@@ -75,3 +75,10 @@ export const updateUser = (user: UserType) => {
     username: "mario_milosevic",
   };
 };
+
+export const formatDate = (date:string) => {
+  const formattedDate = new Date(date)
+    .toLocaleDateString("en-GB")
+    .replace(/\//g, ".");
+  return formattedDate
+}

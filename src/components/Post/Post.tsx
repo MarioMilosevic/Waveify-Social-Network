@@ -4,14 +4,13 @@ import styles from "./Post.module.css";
 import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
 import { useState } from "react";
+import { formatDate } from "../../utils/helperFunction";
 
 const Post = ({ post }) => {
   
   const {created_at, user, image, likes, comments, liked, text} = post
   const [modalActive, setModalActive] = useState<boolean>(false)
-  const formattedDate = new Date(created_at)
-    .toLocaleDateString("en-GB")
-    .replace(/\//g, ".");
+  const formattedDate = formatDate(created_at)
   
   const likeHandler = () => {
     console.log('lajk')
@@ -23,7 +22,7 @@ const Post = ({ post }) => {
   }
 
   return (
-    <li className={styles.container}>
+    <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.user_container}>
           <img
@@ -47,7 +46,7 @@ const Post = ({ post }) => {
       </div>
       <PostButton likes={likes} comments={comments} liked={liked} likeHandler={likeHandler} commentHandler={commentHandler} />
       {modalActive && <Modal post={post }  />}
-    </li>
+    </div>
   );
 };
 
