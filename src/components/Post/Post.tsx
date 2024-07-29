@@ -7,19 +7,18 @@ import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
 
 const Post = ({ post }) => {
-  
-  const {created_at, user, image, likes, comments, liked, text} = post
-  const [modalActive, setModalActive] = useState<boolean>(false)
-  const formattedDate = formatDate(created_at)
-  
+  const { created_at, user, image, likes, comments, liked, text } = post;
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const formattedDate = formatDate(created_at);
+
   const likeHandler = () => {
-    console.log('lajk')
-  }
+    console.log("lajk");
+  };
 
   const commentHandler = () => {
-    console.log('komment')
-    setModalActive(true)
-  }
+    console.log("komment");
+    setModalActive(true);
+  };
 
   return (
     <div className={styles.container}>
@@ -44,8 +43,14 @@ const Post = ({ post }) => {
         {image && <img src={image} alt={image} className={styles.image} />}
         <p>{text}</p>
       </div>
-      <PostButton likes={likes} comments={comments} liked={liked} likeHandler={likeHandler} commentHandler={commentHandler} />
-      {modalActive && <Modal post={post }  />}
+      <PostButton
+        likes={likes}
+        comments={comments}
+        liked={liked}
+        likeHandler={likeHandler}
+        commentHandler={commentHandler}
+      />
+      {modalActive && <Modal post={post} setModalActive={setModalActive} />}
     </div>
   );
 };
