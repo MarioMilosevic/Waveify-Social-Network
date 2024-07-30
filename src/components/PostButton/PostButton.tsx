@@ -3,7 +3,13 @@ import styles from "./PostButton.module.css";
 import { FaHeart, FaComment } from "react-icons/fa";
 import { buttonIconSize } from "../../utils/constants";
 
-const PostButton = ({ likes, comments, liked, likeHandler, commentHandler }: PostButtonProps) => {
+const PostButton = ({
+  likes,
+  comments,
+  liked,
+  likeHandler,
+  commentHandler,
+}: PostButtonProps) => {
   const likeClass = liked ? styles.liked : styles.not_liked;
 
   return (

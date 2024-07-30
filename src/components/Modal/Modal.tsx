@@ -9,9 +9,20 @@ import { formatDate } from "../../utils/helperFunction";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { dateIconSize } from "../../utils/constants";
 import { AiOutlineClose } from "react-icons/ai";
+import Comment from "../Comment/Comment";
 import Input from "../Input/Input";
 const Modal = ({ post, setModalActive }) => {
-  const [comment, setComment] = useState<string>("")
+  const [comment, setComment] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    // formState: { isValid },
+  } = useForm<CommentValue>({
+    defaultValues: {
+      comment: "",
+    },
+    resolver: zodResolver(commentSchema),
+  });
   const {
     comments,
     likes,
@@ -31,20 +42,14 @@ const Modal = ({ post, setModalActive }) => {
     console.log("comment iz modala");
   };
 
-    const {
-      register,
-      handleSubmit,
-      formState: { isValid },
-    } = useForm<CommentValue>({
-      defaultValues: {
-        comment:""
-      },
-      resolver: zodResolver(commentSchema),
-    });
-
   const closeModal = () => {
     setModalActive(false);
   };
+
+  const onSubmit = () => {
+    console.log("treba da zavrsim");
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -66,16 +71,29 @@ const Modal = ({ post, setModalActive }) => {
           {image && <img src={image} alt={image} className={styles.image} />}
           <p>{text}</p>
         </div>
-        <form className={styles.comment}>
-          <Input
-            placeholder="Write a comment"
-            title=""
-            type="text"
-            value={comment}
-            changeHandler={(e) => setComment(e.target.value)}
-            zod={{ ...register("comment") }}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.comment}>
+            <Input
+              placeholder="Write a comment"
+              title=""
+              type="text"
+              value={comment}
+              changeHandler={(e) => setComment(e.target.value)}
+              zod={{ ...register("comment") }}
+            />
+            <FiSend className={styles.comment_button} />
+          </div>
+          <PostButton
+            likes={likes}
+            comments={comments}
+            liked={liked}
+            likeHandler={likeHandler}
+            commentHandler={commentHandler}
           />
-          <FiSend className={styles.comment_button} />
+          <div>
+            <span>{comments} comments</span>
+            {/* <Comment/> */}
+          </div>
         </form>
       </div>
     </div>

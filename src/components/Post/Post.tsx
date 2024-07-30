@@ -5,6 +5,7 @@ import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
 import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
+import { createPortal } from "react-dom";
 
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text } = post;
@@ -50,7 +51,11 @@ const Post = ({ post }) => {
         likeHandler={likeHandler}
         commentHandler={commentHandler}
       />
-      {modalActive && <Modal post={post} setModalActive={setModalActive} />}
+      {modalActive &&
+        createPortal(
+          <Modal post={post} setModalActive={setModalActive} />,
+          document.body
+        )}
     </div>
   );
 };
