@@ -23,6 +23,7 @@ const LogIn = () => {
       navigate("/home");
     }
   }, [navigate]);
+  
   const {
     register,
     handleSubmit,
@@ -44,7 +45,6 @@ const LogIn = () => {
       if (response) {
         localStorage.setItem("jwt", response.token);
         navigate('/home')
-        // getUserInformation(dispatch, navigate);
       }
     } catch (error) {
       if (error instanceof Error) {

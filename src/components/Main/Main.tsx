@@ -10,7 +10,7 @@ const Main = () => {
       <NewPost />
       <div className={styles.list}>
         {user.posts.map((post) => (
-          <Post key={post.post_id} post={post } />
+          <Post key={post.post_id} post={post} />
         ))}
       </div>
     </div>

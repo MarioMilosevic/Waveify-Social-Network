@@ -5,4 +5,10 @@ export const authenticationSchema = z.object({
   password: z.string().min(6, { message: "Password must be at least 6 charachters." }),
 });
 
+export const commentSchema = z.object({
+  comment:z.string().min(1)
+})
+
+
 export type FormValues = z.infer<typeof authenticationSchema>
+export type CommentValue = z.infer<typeof commentSchema>

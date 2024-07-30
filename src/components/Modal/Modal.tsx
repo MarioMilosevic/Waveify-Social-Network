@@ -1,12 +1,17 @@
 import styles from "./Modal.module.css";
 import PostButton from "../PostButton/PostButton";
+import { CommentValue, commentSchema } from "../../utils/zod";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { FiSend } from "react-icons/fi";
 import { formatDate } from "../../utils/helperFunction";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { dateIconSize } from "../../utils/constants";
 import { AiOutlineClose } from "react-icons/ai";
+import Input from "../Input/Input";
 const Modal = ({ post, setModalActive }) => {
-  console.log(post);
+  const [comment, setComment] = useState<string>("")
   const {
     comments,
     likes,
@@ -25,6 +30,17 @@ const Modal = ({ post, setModalActive }) => {
   const commentHandler = () => {
     console.log("comment iz modala");
   };
+
+    const {
+      register,
+      handleSubmit,
+      formState: { isValid },
+    } = useForm<CommentValue>({
+      defaultValues: {
+        comment:""
+      },
+      resolver: zodResolver(commentSchema),
+    });
 
   const closeModal = () => {
     setModalActive(false);
@@ -50,10 +66,17 @@ const Modal = ({ post, setModalActive }) => {
           {image && <img src={image} alt={image} className={styles.image} />}
           <p>{text}</p>
         </div>
-        <div className={styles.comment}>
-          <input type="text" placeholder="Write a comment" />
+        <form className={styles.comment}>
+          <Input
+            placeholder="Write a comment"
+            title=""
+            type="text"
+            value={comment}
+            changeHandler={(e) => setComment(e.target.value)}
+            zod={{ ...register("comment") }}
+          />
           <FiSend className={styles.comment_button} />
-        </div>
+        </form>
       </div>
     </div>
   );

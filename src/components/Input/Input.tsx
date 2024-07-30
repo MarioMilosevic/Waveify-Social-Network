@@ -19,7 +19,7 @@ const Input = ({
 
   return (
     <div className={styles.container}>
-      <p>{title}</p>
+      {title && <p>{title}</p>}
       <input
         type={type}
         placeholder={placeholder}
