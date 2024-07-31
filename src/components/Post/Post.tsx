@@ -4,12 +4,14 @@ import styles from "./Post.module.css";
 import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
 import { useState } from "react";
-import { formatDate } from "../../utils/helperFunction";
+import { formatDate, getPostComments } from "../../utils/helperFunction";
 import { createPortal } from "react-dom";
 
 const Post = ({ post }) => {
-  const { created_at, user, image, likes, comments, liked, text } = post;
+  console.log(post)
+  const { created_at, user, image, likes, comments, liked, text, post_id } = post;
   const [modalActive, setModalActive] = useState<boolean>(false);
+  const [mario, setMario] = useState({post:"", comments:[]})
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
@@ -19,6 +21,7 @@ const Post = ({ post }) => {
   const commentHandler = () => {
     console.log("komment");
     setModalActive(true);
+    getPostComments(post_id)
   };
 
   return (

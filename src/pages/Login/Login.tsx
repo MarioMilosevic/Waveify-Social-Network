@@ -23,7 +23,7 @@ const LogIn = () => {
       navigate("/home");
     }
   }, [navigate]);
-  
+
   const {
     register,
     handleSubmit,
@@ -38,13 +38,17 @@ const LogIn = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetchData("login", {
-        email: data.email,
-        password: data.password,
-      });
+      const response = await fetchData(
+        "login",
+        {
+          email: data.email,
+          password: data.password,
+        },
+        "POST"
+      );
       if (response) {
         localStorage.setItem("jwt", response.token);
-        navigate('/home')
+        navigate("/home");
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -65,7 +69,6 @@ const LogIn = () => {
     );
     if (value === "") setLoginError("");
   };
-
 
   return (
     <div className={styles.container}>
