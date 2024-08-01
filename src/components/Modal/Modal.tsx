@@ -66,21 +66,21 @@ const Modal = ({ setModalActive, postDetails }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <AiOutlineClose className={styles.closeButton} onClick={closeModal} />
+        <AiOutlineClose className={styles.close_button} onClick={closeModal} />
         <div className={styles.header}>
-          <div className={styles.userContainer}>
+          <div className={styles.user_container}>
             <img src={picture} alt={username} className={styles.profileImage} />
             <div className={styles.userInfo}>
               <h3>{`@${username}`}</h3>
               <h2>{full_name}</h2>
             </div>
           </div>
-          <div className={styles.calendarContainer}>
+          <div className={styles.calendar_container}>
             <LiaCalendarWeekSolid size={dateIconSize} />
             <p>{formattedDate}</p>
           </div>
         </div>
-        <div className={styles.imageContainer}>
+        <div className={styles.image_container}>
           {image && <img src={image} alt={text} className={styles.image} />}
           <p>{text}</p>
         </div>
@@ -94,7 +94,7 @@ const Modal = ({ setModalActive, postDetails }) => {
               changeHandler={(e) => setComment(e.target.value)}
               zod={{ ...register("comment") }}
             />
-            <button type="submit" className={styles.commentButton}>
+            <button type="submit" className={styles.comment_button}>
               <FiSend />
             </button>
           </div>
