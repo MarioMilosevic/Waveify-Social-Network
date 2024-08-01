@@ -8,20 +8,19 @@ import { formatDate, getPostComments } from "../../utils/helperFunction";
 import { createPortal } from "react-dom";
 
 const Post = ({ post }) => {
-  console.log(post)
   const { created_at, user, image, likes, comments, liked, text, post_id } = post;
   const [modalActive, setModalActive] = useState<boolean>(false);
-  const [mario, setMario] = useState({post:"", comments:[]})
+  const [postDetails, setPostDetails] = useState({post:"", comments:[]})
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
     console.log("lajk");
   };
 
-  const commentHandler = () => {
-    console.log("komment");
+  const commentHandler = async () => {
+    const response = await getPostComments(post_id)
+    setPostDetails(response)
     setModalActive(true);
-    getPostComments(post_id)
   };
 
   return (
@@ -56,7 +55,7 @@ const Post = ({ post }) => {
       />
       {modalActive &&
         createPortal(
-          <Modal post={post} setModalActive={setModalActive} />,
+          <Modal postDetails={postDetails} setModalActive={setModalActive} />,
           document.body
         )}
     </div>
