@@ -1,10 +1,14 @@
 import styles from "./Comment.module.css"
+import UserHeader from "../UserHeader/UserHeader"
+import { formatDate } from "../../utils/helperFunction"
 const Comment = ({ comment }) => {
-  const { comment_id, created_at, full_name, picture, text, username } = comment
-
+  console.log(comment)
+  const {created_at, text} = comment
+  const formattedDate = formatDate(created_at)
   return (
     <div className={styles.container}>
-      Comment
+      <UserHeader user={comment} formattedDate={formattedDate} />
+      <p>{text}</p>
     </div>
   )
 }

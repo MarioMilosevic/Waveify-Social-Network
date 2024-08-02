@@ -12,6 +12,7 @@ import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { dateIconSize } from "../../utils/constants";
 import Comment from "../Comment/Comment";
 import { AiOutlineClose } from "react-icons/ai";
+import UserHeader from "../UserHeader/UserHeader";
 
 const Modal = ({ setModalActive, postDetails }) => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const Modal = ({ setModalActive, postDetails }) => {
       likes,
       post_id,
       text,
-      user: { username, full_name, picture },
+      user,
       user_id,
     },
     comments,
@@ -69,7 +70,8 @@ const Modal = ({ setModalActive, postDetails }) => {
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <AiOutlineClose className={styles.close_button} onClick={closeModal} />
-        <div className={styles.header}>
+        <UserHeader user={user} formattedDate={formattedDate} />
+        {/* <div className={styles.header}>
           <div className={styles.user_container}>
             <img src={picture} alt={username} className={styles.profileImage} />
             <div className={styles.userInfo}>
@@ -81,7 +83,7 @@ const Modal = ({ setModalActive, postDetails }) => {
             <LiaCalendarWeekSolid size={dateIconSize} />
             <p>{formattedDate}</p>
           </div>
-        </div>
+        </div> */}
         <div className={styles.image_container}>
           {image && <img src={image} alt={text} className={styles.image} />}
           <p>{text}</p>
@@ -108,7 +110,7 @@ const Modal = ({ setModalActive, postDetails }) => {
             commentHandler={commentHandler}
           />
           <span>{postComments} comments</span>
-          <Comment comment={comments[0]} />
+          {comments.map((comment) => <Comment comment={comment} />)}
         </form>
       </div>
     </div>
