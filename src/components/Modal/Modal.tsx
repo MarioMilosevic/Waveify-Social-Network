@@ -10,13 +10,14 @@ import { FiSend } from "react-icons/fi";
 import { formatDate } from "../../utils/helperFunction";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { dateIconSize } from "../../utils/constants";
+import Comment from "../Comment/Comment";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Modal = ({ setModalActive, postDetails }) => {
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
 
-  console.log(postDetails);
+  // console.log(postDetails);
 
   const {
     post: {
@@ -33,8 +34,9 @@ const Modal = ({ setModalActive, postDetails }) => {
     },
     comments,
   } = postDetails;
-  console.log(likes);
-  console.log(comments);
+  // console.log(likes);
+  // console.log(comments);
+  // console.log(postComments)
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
@@ -89,7 +91,7 @@ const Modal = ({ setModalActive, postDetails }) => {
             <Input
               placeholder="Write a comment"
               type="text"
-              title="Mario"
+              title=""
               value={comment}
               changeHandler={(e) => setComment(e.target.value)}
               zod={{ ...register("comment") }}
@@ -105,9 +107,8 @@ const Modal = ({ setModalActive, postDetails }) => {
             likeHandler={likeHandler}
             commentHandler={commentHandler}
           />
-          {/* <div>
-            <span>{comments} comments</span>
-          </div> */}
+          <span>{postComments} comments</span>
+          <Comment comment={comments[0]} />
         </form>
       </div>
     </div>

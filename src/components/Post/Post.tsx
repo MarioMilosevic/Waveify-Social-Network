@@ -6,6 +6,7 @@ import PostButton from "../PostButton/PostButton";
 import { useState } from "react";
 import { formatDate, getPostComments } from "../../utils/helperFunction";
 import { createPortal } from "react-dom";
+import UserHeader from "../UserHeader/UserHeader";
 
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } = post;
@@ -25,7 +26,8 @@ const Post = ({ post }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <UserHeader user={user} formattedDate={formattedDate } />
+      {/* <div className={styles.header}>
         <div className={styles.user_container}>
           <img
             src={user.picture}
@@ -41,7 +43,7 @@ const Post = ({ post }) => {
           <LiaCalendarWeekSolid size={dateIconSize} />
           <p>{formattedDate}</p>
         </div>
-      </div>
+      </div> */}
       <div className={styles.image_container}>
         {image && <img src={image} alt={image} className={styles.image} />}
         <p>{text}</p>

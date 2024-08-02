@@ -4,45 +4,6 @@
   border-radius: 10px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.user_container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-bottom: 1rem;
-}
-
-.profile_image {
-  border-radius: 9999px;
-  object-fit: cover;
-}
-
-.user_info {
-  font-size: 1rem;
-}
-
-.user_info h2 {
-  font-weight: 500;
-}
-
-.user_info h3 {
-  font-weight: 300;
-}
-
-.calendar_container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.calendar_container p {
-  font-weight: 300;
-}
-
 .image_container {
   height: auto;
   display: flex;
