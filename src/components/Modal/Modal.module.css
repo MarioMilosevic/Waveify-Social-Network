@@ -12,13 +12,14 @@
 }
 
 .modal {
+  border: 1px solid black;
   position: absolute;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
   width: 30%;
   z-index: 10;
-  padding: 4rem 2rem;
+  padding: 3rem 2rem;
   border-radius: 10px;
   background-color: var(--ternary-color);
 }
@@ -32,55 +33,17 @@
   cursor: pointer;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.user_container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-bottom: 1rem;
-}
-
-.profile_image {
-  border-radius: 9999px;
-  object-fit: cover;
-}
-
-.user_info {
-  font-size: 1rem;
-}
-
-.user_info h2 {
-  font-weight: 500;
-}
-
-.user_info h3 {
-  font-weight: 300;
-}
-
-.calendar_container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.calendar_container p {
-  font-weight: 300;
-}
-
 .image_container {
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .image_container p {
   font-weight: 400;
   font-size: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .image {
@@ -94,14 +57,29 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 1.5rem 0rem;
+  padding-bottom: 1rem;
 }
 
 .comment_button {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 20px;
-  height: 20px;
+  right: 0px;
+  top: 0px;
+  transform: translate(-75%, 50%);
+  border: none;
+  background-color: white;
   cursor: pointer;
+}
+
+.comment_button:hover {
+  background-color: white;
+}
+
+.post_buttons {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.comments_number {
+  font-size: 1.6rem;
 }

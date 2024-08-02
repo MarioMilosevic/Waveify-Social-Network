@@ -7,12 +7,12 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FiSend } from "react-icons/fi";
+import { IoIosSend } from "react-icons/io";
 import { formatDate } from "../../utils/helperFunction";
-import { LiaCalendarWeekSolid } from "react-icons/lia";
-import { dateIconSize } from "../../utils/constants";
 import Comment from "../Comment/Comment";
 import { AiOutlineClose } from "react-icons/ai";
 import UserHeader from "../UserHeader/UserHeader";
+import { buttonIconSize } from "../../utils/constants";
 
 const Modal = ({ setModalActive, postDetails }) => {
   const [loading, setLoading] = useState(true);
@@ -71,19 +71,6 @@ const Modal = ({ setModalActive, postDetails }) => {
       <div className={styles.modal}>
         <AiOutlineClose className={styles.close_button} onClick={closeModal} />
         <UserHeader user={user} formattedDate={formattedDate} />
-        {/* <div className={styles.header}>
-          <div className={styles.user_container}>
-            <img src={picture} alt={username} className={styles.profileImage} />
-            <div className={styles.userInfo}>
-              <h3>{`@${username}`}</h3>
-              <h2>{full_name}</h2>
-            </div>
-          </div>
-          <div className={styles.calendar_container}>
-            <LiaCalendarWeekSolid size={dateIconSize} />
-            <p>{formattedDate}</p>
-          </div>
-        </div> */}
         <div className={styles.image_container}>
           {image && <img src={image} alt={text} className={styles.image} />}
           <p>{text}</p>
@@ -99,17 +86,19 @@ const Modal = ({ setModalActive, postDetails }) => {
               zod={{ ...register("comment") }}
             />
             <button type="submit" className={styles.comment_button}>
-              <FiSend />
+              <IoIosSend size={buttonIconSize}/>
             </button>
           </div>
+          <div className={styles.post_buttons }>
           <PostButton
             likes={likes}
             comments={postComments}
             liked={liked}
             likeHandler={likeHandler}
             commentHandler={commentHandler}
-          />
-          <span>{postComments} comments</span>
+            />
+            </div>
+          <span className={styles.comments_number}>{postComments} comments</span>
           {comments.map((comment) => <Comment comment={comment} />)}
         </form>
       </div>
