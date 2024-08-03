@@ -7,31 +7,30 @@ import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getUserWithJWT = async () => {
       const jwt = localStorage.getItem("jwt");
-      if (!jwt) {
-        setLoading(false);
-        return;
-      } else {
+      if (jwt) {
         try {
           await getUserInformation(dispatch, navigate);
         } catch (error) {
-          console.error("Error fetching user information:", error);
+          console.error("Error fetching user information", error);
         } finally {
           setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
 
     getUserWithJWT();
   }, [dispatch, navigate]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner size="big" />;
 
   return user?.full_name ? <Outlet /> : <Navigate to="/login" />;
 };

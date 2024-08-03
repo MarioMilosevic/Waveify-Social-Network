@@ -17,8 +17,8 @@ const Post = ({ post }) => {
   };
 
   const commentHandler = async () => {
-    const response = await getPostComments(post_id)
-    setPostDetails(response)
+    // const response = await getPostComments(post_id)
+    // setPostDetails(response)
     setModalActive(true);
   };
 
@@ -38,7 +38,8 @@ const Post = ({ post }) => {
       />
       {modalActive &&
         createPortal(
-          <Modal postDetails={postDetails} setModalActive={setModalActive} />,
+          <Modal postId={post_id} setModalActive={setModalActive} />,
+          // <Modal postDetails={postDetails} setModalActive={setModalActive} />,
           document.body
         )}
     </div>

@@ -2,7 +2,6 @@ import styles from "./UserHeader.module.css";
 import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { dateIconSize } from "../../utils/constants";
 const UserHeader = ({ user, formattedDate }) => {
-  console.log(user)
   const {picture, full_name, username} = user
   return (
     <div className={styles.header}>

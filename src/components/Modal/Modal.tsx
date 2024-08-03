@@ -2,39 +2,42 @@ import styles from "./Modal.module.css";
 import PostButton from "../PostButton/PostButton";
 import Input from "../Input/Input";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { setLoading } from "../../redux/features/loadingSlice";
+import { getPostComments } from "../../utils/helperFunction";
 import { CommentValue, commentSchema } from "../../utils/zod";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { FiSend } from "react-icons/fi";
 import { IoIosSend } from "react-icons/io";
 import { formatDate } from "../../utils/helperFunction";
 import Comment from "../Comment/Comment";
 import { AiOutlineClose } from "react-icons/ai";
 import UserHeader from "../UserHeader/UserHeader";
 import { buttonIconSize } from "../../utils/constants";
+import { useDispatch } from "react-redux";
 
-const Modal = ({ setModalActive, postDetails }) => {
+const Modal = ({ setModalActive, postId }) => {
+  // const { loading } = useLoadingSlice();
   const [loading, setLoading] = useState(true);
+  // const dispatch = useDispatch();
+  const [postDetails, setPostDetails] = useState(null);
   const [comment, setComment] = useState("");
 
-  console.log(postDetails);
+  useEffect(() => {
+    const fetchPostComments = async () => {
+      try {
+        const response = await getPostComments(postId);
+        setPostDetails(response);
+      } catch (error) {
+        console.error("Error fetching post comments:", error);
+      }
+      // finally {
+      // setLoading(false);
+      // }
+    };
 
-  const {
-    post: {
-      audio,
-      comments: postComments,
-      created_at,
-      image,
-      liked,
-      likes,
-      post_id,
-      text,
-      user,
-      user_id,
-    },
-    comments,
-  } = postDetails;
+    fetchPostComments();
+  }, [postId]);
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
@@ -44,6 +47,13 @@ const Modal = ({ setModalActive, postDetails }) => {
   // if (loading) {
   //   return <LoadingSpinner />;
   // }
+
+  if (!postDetails) {
+    return null;
+  }
+
+  const { comments, post } = postDetails;
+  const { created_at, image, liked, likes, text, user } = post;
 
   const formattedDate = formatDate(created_at);
 
@@ -65,40 +75,52 @@ const Modal = ({ setModalActive, postDetails }) => {
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <AiOutlineClose className={styles.close_button} onClick={closeModal} />
-        <UserHeader user={user} formattedDate={formattedDate} />
-        <div className={styles.image_container}>
-          {image && <img src={image} alt={text} className={styles.image} />}
-          <p>{text}</p>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.comment}>
-            <Input
-              placeholder="Write a comment"
-              type="text"
-              title=""
-              value={comment}
-              changeHandler={(e) => setComment(e.target.value)}
-              zod={{ ...register("comment") }}
-            />
-            <button type="submit" className={styles.comment_button}>
-              <IoIosSend size={buttonIconSize}/>
-            </button>
+      {loading && <LoadingSpinner kurac="kurac"/>}
+      {/* {postDetails ? (
+        <div className={styles.modal}>
+          <AiOutlineClose
+            className={styles.close_button}
+            onClick={closeModal}
+          />
+          <UserHeader user={user} formattedDate={formattedDate} />
+          <div className={styles.image_container}>
+            {image && <img src={image} alt={text} className={styles.image} />}
+            <p>{text}</p>
           </div>
-          <div className={styles.post_buttons}>
-          <PostButton
-            likes={likes}
-            comments={postComments}
-            liked={liked}
-            likeHandler={likeHandler}
-            commentHandler={commentHandler}
-            />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className={styles.comment}>
+              <Input
+                placeholder="Write a comment"
+                type="text"
+                title=""
+                value={comment}
+                changeHandler={(e) => setComment(e.target.value)}
+                zod={{ ...register("comment") }}
+              />
+              <button type="submit" className={styles.comment_button}>
+                <IoIosSend size={buttonIconSize} />
+              </button>
             </div>
-          <span className={styles.comments_number}>{postComments} comments</span>
-          {comments.map((comment) => <Comment comment={comment} />)}
-        </form>
-      </div>
+            <div className={styles.post_buttons}>
+              <PostButton
+                likes={likes}
+                comments={comments.length}
+                liked={liked}
+                likeHandler={likeHandler}
+                commentHandler={commentHandler}
+              />
+            </div>
+            <span className={styles.comments_number}>
+              {comments.length} comments
+            </span>
+            {comments.map((comment) => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </form>
+        </div>
+      ) : (
+        <LoadingSpinner kurac="mario"/>
+      )} */}
     </div>
   );
 };
