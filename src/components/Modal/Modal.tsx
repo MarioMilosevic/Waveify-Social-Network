@@ -18,7 +18,7 @@ const Modal = ({ setModalActive, postDetails }) => {
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
 
-  // console.log(postDetails);
+  console.log(postDetails);
 
   const {
     post: {
@@ -35,9 +35,6 @@ const Modal = ({ setModalActive, postDetails }) => {
     },
     comments,
   } = postDetails;
-  // console.log(likes);
-  // console.log(comments);
-  // console.log(postComments)
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
@@ -89,7 +86,7 @@ const Modal = ({ setModalActive, postDetails }) => {
               <IoIosSend size={buttonIconSize}/>
             </button>
           </div>
-          <div className={styles.post_buttons }>
+          <div className={styles.post_buttons}>
           <PostButton
             likes={likes}
             comments={postComments}

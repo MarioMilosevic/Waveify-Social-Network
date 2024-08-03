@@ -15,7 +15,6 @@ const ProtectedRoute = () => {
     const getUserWithJWT = async () => {
       const jwt = localStorage.getItem("jwt");
       if (!jwt) {
-        setLoading(false); 
         return;
       } else {
         try {

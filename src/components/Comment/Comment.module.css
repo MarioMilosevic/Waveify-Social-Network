@@ -1,3 +1,7 @@
 .container {
-    border: 1px solid black;
+    padding: 1rem 0rem;
+}
+
+.container p {
+    font-weight: 400;
 }

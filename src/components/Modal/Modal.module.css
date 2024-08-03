@@ -12,7 +12,6 @@
 }
 
 .modal {
-  border: 1px solid black;
   position: absolute;
   top: 50%;
   right: 50%;
@@ -22,6 +21,8 @@
   padding: 3rem 2rem;
   border-radius: 10px;
   background-color: var(--ternary-color);
+  overflow-y: scroll;
+  height: 800px;
 }
 
 .close_button {
@@ -57,7 +58,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-bottom: 1rem;
 }
 
 .comment_button {
@@ -75,11 +75,13 @@
 }
 
 .post_buttons {
-  border: 1px solid black;
   display: flex;
+  padding: 1.5rem 0rem;
   align-items: center;
 }
 
 .comments_number {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  padding:1rem 0;
+  font-weight: 600;
 }
