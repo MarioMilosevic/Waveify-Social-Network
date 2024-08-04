@@ -2,10 +2,11 @@ import styles from "./LoadingSpinner.module.css";
 
 const LoadingSpinner = ({ size }:{size:string}) => {
   console.log(size)
-  const mario = size === "big" ? "100vh" : "100%";
+  const height = size === "big" ? "100vh" : size === "normal" ? "100%" : 0;
+
 
   return (
-    <div className={styles.container} style={{ minHeight: mario }}>
+    <div className={styles.container} style={{ minHeight: height }}>
       <span className={styles.loader}></span>
     </div>
   );
