@@ -10,17 +10,17 @@ export type InputProps = {
 
 export type ButtonProps = {
   text: string;
-  isActive:boolean
-}
+  isActive: boolean;
+};
 
 export type UserType = {
-    email: string;
+  email: string;
   password: string;
   full_name: string;
   picture: string;
   username: string;
-  posts:PostType[]
-}
+  posts: PostType[];
+};
 
 export type PostType = {
   audio: null;
@@ -35,12 +35,37 @@ export type PostType = {
     full_name: string;
     picture: string;
     username: string;
-  },
-  user_id:string
-}
+  };
+  user_id: string;
+};
+
+export type CommentType = {
+  comment_id: string;
+  created_at: string;
+  full_name: string;
+  picture: string;
+  text: string;
+  username: string;
+};
+
+export type SingleCommentType = {
+  comment: {
+    comment_id: string;
+    created_at: string;
+    full_name: string;
+    picture: string;
+    text: string;
+    username: string;
+  };
+};
 
 export type PostButtonProps = {
   likes: number;
   comments: number;
   liked: boolean;
-}
+};
+
+export type PostResponseType = {
+  post: PostType;
+  comments: CommentType[];
+};

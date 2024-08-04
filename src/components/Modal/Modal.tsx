@@ -13,27 +13,53 @@ import Comment from "../Comment/Comment";
 import { AiOutlineClose } from "react-icons/ai";
 import UserHeader from "../UserHeader/UserHeader";
 import { buttonIconSize } from "../../utils/constants";
+import { PostResponseType } from "../../utils/types";
+import { useSinglePost } from "../../hooks/useSinglePost";
+
+// function useSinglePost(postId) {
+//   const [loading, setLoading] = useState(true);
+//   const [postDetails, setPostDetails] = useState<PostResponseType>();
+//   useEffect(() => {
+//     const fetchPostComments = async () => {
+//       try {
+//         const response = await getPostComments(postId);
+//         setPostDetails(response);
+//       } catch (error) {
+//         console.error("Error fetching post comments:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchPostComments();
+//   }, [postId]);
+//   return {
+//     loading,
+//     postDetails,
+//   };
+// }
 
 const Modal = ({ setModalActive, postId }) => {
-  const [loading, setLoading] = useState(true);
-  const [postDetails, setPostDetails] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [postDetails, setPostDetails] = useState<PostResponseType>();
   const [comment, setComment] = useState("");
 
-  useEffect(() => {
-    const fetchPostComments = async () => {
-      try {
-        const response = await getPostComments(postId);
-        console.log(response)
-        setPostDetails(response);
-      } catch (error) {
-        console.error("Error fetching post comments:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { loading, postDetails } = useSinglePost(postId);
 
-    fetchPostComments();
-  }, [postId]);
+  // useEffect(() => {
+  //   const fetchPostComments = async () => {
+  //     try {
+  //       const response = await getPostComments(postId);
+  //       setPostDetails(response);
+  //     } catch (error) {
+  //       console.error("Error fetching post comments:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchPostComments();
+  // }, [postId]);
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
@@ -56,10 +82,6 @@ const Modal = ({ setModalActive, postId }) => {
         </div>
       </div>
     );
-  }
-
-  if (!postDetails) {
-    return null;
   }
 
   const { comments, post } = postDetails;
@@ -98,12 +120,12 @@ const Modal = ({ setModalActive, postId }) => {
               commentHandler={() => console.log("comment from modal")}
             />
           </div>
-          <span className={styles.comments_number}>
-            {comments.length} comments
-          </span>
-          {comments.map(({ id, ...commentProps }) => (
-            <Comment key={id} comment={commentProps} />
-          ))}
+          <div className={styles.comments_number}>
+            {comments ? comments.length : "No"} comments
+            {comments.map((comment) => (
+              <Comment comment={comment} />
+            ))}
+          </div>
         </form>
       </div>
     </div>
@@ -111,3 +133,13 @@ const Modal = ({ setModalActive, postId }) => {
 };
 
 export default Modal;
+
+
+/** 
+ U post trebam da napravim logiku za otvaranje i zatvaranje MODALA 
+ U MODAL samo da renderujem children
+ Children da bude <SinglePost/> u njoj sva logika koja je trenutno u MODAL-u
+
+ 
+ 
+*/
