@@ -15,9 +15,10 @@ const Post = ({ post }) => {
     console.log("lajk");
   };
 
-  const commentHandler = async () => {
-    setModalActive(true);
+  const modalHandler = (isOpen:boolean) => {
+    setModalActive(isOpen);
   };
+
 
   return (
     <div className={styles.container}>
@@ -32,12 +33,12 @@ const Post = ({ post }) => {
         comments={comments}
         liked={liked}
         likeHandler={likeHandler}
-        commentHandler={commentHandler}
+        commentHandler={() => modalHandler(true)}
         />
         </div>
       {modalActive &&
         createPortal(
-          <Modal postId={post_id} setModalActive={setModalActive} />,
+          <Modal postId={post_id} modalHandler={modalHandler} />,
           document.body
         )}
     </div>
