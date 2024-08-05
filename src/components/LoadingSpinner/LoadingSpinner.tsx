@@ -1,9 +1,7 @@
 import styles from "./LoadingSpinner.module.css";
 
-const LoadingSpinner = ({ size }:{size:string}) => {
-  console.log(size)
+const LoadingSpinner = ({ size }: { size: string }) => {
   const height = size === "big" ? "100vh" : size === "normal" ? "100%" : 0;
-
 
   return (
     <div className={styles.container} style={{ minHeight: height }}>

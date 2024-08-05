@@ -69,3 +69,8 @@ export type PostResponseType = {
   post: PostType;
   comments: CommentType[];
 };
+
+export type UserHeaderProps = {
+  user: { picture: string; full_name: string; username: string };
+  formattedDate: string;
+};
