@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostResponseType } from "../utils/types";
-import { getPostComments } from "../utils/helperFunction";
+import { getPostInformation } from "../utils/helperFunction";
 
 export function useSinglePost(postId:string) {
   const [loading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ export function useSinglePost(postId:string) {
   useEffect(() => {
     const fetchPostComments = async () => {
       try {
-        const response = await getPostComments(postId);
+        const response = await getPostInformation(postId);
         setPostDetails(response);
       } catch (error) {
         console.error("Error fetching post comments:", error);
