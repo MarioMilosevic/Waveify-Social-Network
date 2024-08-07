@@ -1,7 +1,33 @@
 .container {
-    padding: 1rem 0rem;
+  padding: 1rem 0rem;
 }
 
 .container p {
-    font-weight: 400;
+  font-weight: 400;
+}
+
+.text_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button_container {
+  display: flex;
+  align-items: center;
+    justify-content: space-between;
+  width: var(--comment-width);
+}
+
+.button_container button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.6rem;
+}
+
+.button_container,
+.button_container button {
+  color: var(--error-color);
 }
