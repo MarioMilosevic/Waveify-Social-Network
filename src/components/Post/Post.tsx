@@ -9,6 +9,7 @@ import { createPortal } from "react-dom";
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } = post;
   const [modalActive, setModalActive] = useState<boolean>(false);
+  
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {

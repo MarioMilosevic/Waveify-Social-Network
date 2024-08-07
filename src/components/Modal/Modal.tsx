@@ -6,6 +6,7 @@ import SinglePost from "../SinglePost/SinglePost";
 
 const Modal = ({ modalHandler, postId }) => {
   const { loading, postDetails } = useSinglePost(postId);
+  console.log('post detalji', postDetails)
 
   return (
     <div className={styles.overlay}>

@@ -11,21 +11,23 @@ import PostButton from "../PostButton/PostButton";
 import Comment from "../Comment/Comment";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-import { addComment, findUserPost } from "../../redux/features/userSlice";
+// import { findUserPost } from "../../redux/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
-import useFindPost from "../../hooks/useFindPost";
 
 const SinglePost = ({ postDetails }) => {
+  const { comments, post } = postDetails;
+  const [commentsArr, setCommentsArr] = useState(comments);
+  console.log(commentsArr);
   const [comment, setComment] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
     resolver: zodResolver(commentSchema),
   });
 
-  const { comments, post } = postDetails;
+  console.log(comments);
   console.log(post);
   const {
     created_at,
@@ -38,16 +40,15 @@ const SinglePost = ({ postDetails }) => {
   } = post;
   const formattedDate = formatDate(created_at);
 
-  const foundPost = useFindPost(post_id)
-  console.log(foundPost)
-
   const onSubmit = async (data) => {
     console.log("submit comment", data);
     try {
-      const mario = await postComment(post_id, { text: data.comment });
-      console.log(mario);
-      if (mario) {
-        dispatch(addComment({ post_id, data }))
+      const { comment: postedComment } = await postComment(post_id, {
+        text: data.comment,
+      });
+      console.log(postedComment);
+      if (postedComment) {
+        setCommentsArr([...commentsArr, postedComment]);
       }
     } catch (error) {
       console.error("Error posting comment");
@@ -78,15 +79,15 @@ const SinglePost = ({ postDetails }) => {
         <div className={styles.post_buttons}>
           <PostButton
             likes={likes}
-            comments={comments.length}
+            comments={commentsArr.length}
             liked={liked}
             likeHandler={() => console.log("like from modal")}
             commentHandler={() => console.log("comment from modal")}
           />
         </div>
         <div className={styles.comments_number}>
-          {comments ? comments.length : "No"} comments
-          {comments.map((comment) => (
+          {commentsArr ? commentsArr.length : "No"} comments
+          {commentsArr.map((comment) => (
             <Comment key={comment.comment_id} comment={comment} />
           ))}
         </div>

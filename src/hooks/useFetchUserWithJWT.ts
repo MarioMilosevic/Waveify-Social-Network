@@ -27,7 +27,7 @@ const useFetchUserWithJWT = () => {
     fetchUserWithJWT();
   }, [dispatch, navigate]);
 
-  return loading;
+    return loading;
 };
 
 export default useFetchUserWithJWT;
