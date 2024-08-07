@@ -15,8 +15,10 @@
 .button_container {
   display: flex;
   align-items: center;
-    justify-content: space-between;
-  width: var(--comment-width);
+  justify-content: space-between;
+  gap: 1rem;
+  /* width: var(--comment-width); */
+  /* width: 100px; */
 }
 
 .button_container button {
