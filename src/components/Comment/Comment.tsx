@@ -4,6 +4,7 @@ import { formatDate } from "../../utils/helperFunction";
 import { SingleCommentType } from "../../utils/types";
 
 const Comment = ({ comment }: SingleCommentType) => {
+  console.log(comment)
   const { created_at, text } = comment;
   const formattedDate = formatDate(created_at);
   return (

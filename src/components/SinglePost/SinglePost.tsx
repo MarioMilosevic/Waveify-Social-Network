@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDate, postComment } from "../../utils/helperFunction";
+import {
+  formatDate,
+  postComment,
+  updateUser,
+} from "../../utils/helperFunction";
 import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
 import styles from "./SinglePost.module.css";
@@ -46,9 +50,9 @@ const SinglePost = ({ postDetails }) => {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
-      console.log(postedComment);
+      const updatedComment = updateUser(postedComment);
       if (postedComment) {
-        setCommentsArr([...commentsArr, postedComment]);
+        setCommentsArr([...commentsArr, updatedComment]);
       }
     } catch (error) {
       console.error("Error posting comment");
