@@ -1,34 +1,11 @@
 import { useUserSlice } from "../../../hooks/useUserSlice";
-import { Navigate, Outlet, useNavigate } from "react-router";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getUserInformation } from "../../../utils/helperFunction";
+import { Navigate, Outlet } from "react-router";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import useFetchUserWithJWT from "../../../hooks/useFetchUserWithJWT";
 
 const ProtectedRoute = () => {
   const { user } = useUserSlice();
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getUserWithJWT = async () => {
-      const jwt = localStorage.getItem("jwt");
-      if (jwt) {
-        try {
-          await getUserInformation(dispatch, navigate);
-        } catch (error) {
-          console.error("Error fetching user information", error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
-    };
-
-    getUserWithJWT();
-  }, [dispatch, navigate]);
+  const loading = useFetchUserWithJWT();
 
   if (loading) return <LoadingSpinner size="big" />;
 

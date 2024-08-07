@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialUserState } from "../../utils/constants";
-import { PostType, UserType } from "../../utils/types";
+import { CommentType, PostType, UserType } from "../../utils/types";
 
 type UserState = {
   user: UserType;
@@ -20,14 +20,19 @@ export const userSlice = createSlice({
     setUserPosts: (state, action: PayloadAction<PostType[]>) => {
       state.user.posts = action.payload;
     },
-    addComment: (state, action) => {
+    addComment: (state, action: PayloadAction<{ post_id: string; comment: CommentType }>) => {
+      const { post_id, comment } = action.payload
+      console.log(post_id)
+      const post = state.user.posts.find((post) => post.post_id === post_id)
+      console.log(post)
+      // if(post) post.comments.push(comment)
       // i want to update user.post.comment.push(action.paylaod)
       // bassically i want to pass postId to find user.post, when i found it to push comment into it
     }
   },
 });
 
-export const { setUser, setUserPosts } = userSlice.actions;
+export const { setUser, setUserPosts, addComment } = userSlice.actions;
 
 export const findUserPost = (state:UserState, postId:string) => {
   return state.user.posts.find((post) => post.post_id === postId)

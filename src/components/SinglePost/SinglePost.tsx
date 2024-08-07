@@ -11,13 +11,14 @@ import PostButton from "../PostButton/PostButton";
 import Comment from "../Comment/Comment";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-import { findUserPost } from "../../redux/features/userSlice";
-import { useSelector } from "react-redux";
+import { addComment, findUserPost } from "../../redux/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
 import useFindPost from "../../hooks/useFindPost";
 
 const SinglePost = ({ postDetails }) => {
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch()
 
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
@@ -45,6 +46,9 @@ const SinglePost = ({ postDetails }) => {
     try {
       const mario = await postComment(post_id, { text: data.comment });
       console.log(mario);
+      if (mario) {
+        dispatch(addComment({ post_id, data }))
+      }
     } catch (error) {
       console.error("Error posting comment");
     }
