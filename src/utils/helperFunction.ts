@@ -16,7 +16,6 @@ export const fetchData = async (
       "Content-Type": "application/json",
     };
 
-    // Get JWT token from local storage
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       headers["Authorization"] = `Bearer ${jwt}`;
@@ -48,44 +47,6 @@ export const fetchData = async (
   }
 };
 
-// export const fetchData = async (
-//   endpoint: string,
-//   payload?: { [key: string]: string },
-//   method: string = "GET"
-// ) => {
-//   try {
-//     const headers: { [key: string]: string } = {
-//       "Content-Type": "application/json",
-//     };
-//     const options: {
-//       method: string;
-//       headers: { [key: string]: string };
-//       body?: string;
-//     } = { headers, method };
-
-//     if (method === "POST" && payload) {
-//       options.body = JSON.stringify(payload);
-//     } else {
-//       const jwt = localStorage.getItem("jwt");
-//       if (!jwt) throw new Error("No JWT found");
-//       headers["Authorization"] = `Bearer ${jwt}`;
-//     }
-
-//     const response = await fetch(`${baseUrl}/${endpoint}`, options);
-
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//       const errorData = JSON.parse(errorText);
-//       throw new Error(errorData.error.message);
-//     }
-
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error("There was a problem with the fetch operation:", error);
-//     throw error;
-//   }
-// };
 
 export const getUserInformation = async (
   dispatch: Dispatch,

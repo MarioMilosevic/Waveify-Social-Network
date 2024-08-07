@@ -11,6 +11,10 @@ import PostButton from "../PostButton/PostButton";
 import Comment from "../Comment/Comment";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
+import { findUserPost } from "../../redux/features/userSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
+import useFindPost from "../../hooks/useFindPost";
 
 const SinglePost = ({ postDetails }) => {
   const [comment, setComment] = useState("");
@@ -21,19 +25,34 @@ const SinglePost = ({ postDetails }) => {
   });
 
   const { comments, post } = postDetails;
-  console.log(post)
-  const { created_at, image, liked, likes, text, user, post_id } = post;
+  console.log(post);
+  const {
+    created_at,
+    image,
+    liked,
+    likes,
+    text,
+    user: postUser,
+    post_id,
+  } = post;
   const formattedDate = formatDate(created_at);
 
+  const foundPost = useFindPost(post_id)
+  console.log(foundPost)
 
   const onSubmit = async (data) => {
     console.log("submit comment", data);
-    const mario = await postComment(post_id, {text:data.comment})
-    console.log(mario)
+    try {
+      const mario = await postComment(post_id, { text: data.comment });
+      console.log(mario);
+    } catch (error) {
+      console.error("Error posting comment");
+    }
   };
+
   return (
     <>
-      <UserHeader user={user} formattedDate={formattedDate} />
+      <UserHeader user={postUser} formattedDate={formattedDate} />
       <div className={styles.image_container}>
         {image && <img src={image} alt={text} className={styles.image} />}
         <p>{text}</p>
@@ -49,7 +68,7 @@ const SinglePost = ({ postDetails }) => {
             zod={{ ...register("comment") }}
           />
           <button type="submit" className={styles.comment_button}>
-            <IoIosSend size={buttonIconSize} />
+            <IoIosSend size={buttonIconSize} onClick={handleSubmit(onSubmit)} />
           </button>
         </div>
         <div className={styles.post_buttons}>

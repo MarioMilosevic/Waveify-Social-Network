@@ -10,16 +10,14 @@ const Modal = ({ modalHandler, postId }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
+        <AiOutlineClose
+          className={styles.close_button}
+          onClick={() => modalHandler(false)}
+        />
         {loading ? (
           <LoadingSpinner size="normal" />
         ) : (
-          <>
-            <AiOutlineClose
-              className={styles.close_button}
-              onClick={() => modalHandler(false)}
-            />
-            <SinglePost postDetails={postDetails} />
-          </>
+          <SinglePost postDetails={postDetails} />
         )}
       </div>
     </div>
@@ -27,4 +25,3 @@ const Modal = ({ modalHandler, postId }) => {
 };
 
 export default Modal;
-
