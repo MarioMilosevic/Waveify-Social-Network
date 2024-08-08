@@ -10,14 +10,15 @@ const Comment = ({
   postId,
   removeUserCommentHandler,
 }: SingleCommentType) => {
-  console.log(comment);
   const { created_at, text, username, comment_id } = comment;
   const formattedDate = formatDate(created_at);
 
-  const mario = async () => {
-    const nesto = await removeUserComment(postId, comment_id);
-    removeUserCommentHandler(comment_id);
-    console.log(nesto);
+  const removeComment = async () => {
+    const response = await removeUserComment(postId, comment_id);
+    console.log(response)
+    if (response) {
+      removeUserCommentHandler(comment_id);
+    }
   };
 
   return (
@@ -29,8 +30,7 @@ const Comment = ({
         {username === "nemanja_malesija" ? (
           <div className={styles.button_container}>
             <FaTrash />
-            {/* <button onClick={() => removeUserComment(postId, comment_id)}> */}
-            <button onClick={mario}>Delete</button>
+            <button onClick={removeComment}>Delete</button>
           </div>
         ) : null}
       </div>

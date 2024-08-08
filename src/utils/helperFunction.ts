@@ -168,17 +168,6 @@ export const postComment = async (
   }
 };
 
-// export const removeUserComment = async (postId: string, commentId: string) => {
-//   try {
-//     const response = await fetchData(
-//       `posts/${postId}/comments/${commentId}`,
-//       "DELETE"
-//     );
-//     console.log(response);
-//   } catch (error) {
-//     console.error("Error deleting comment", error);
-//   }
-// };
 
 export const removeUserComment = async (postId: string, commentId: string) => {
   try {
@@ -199,16 +188,9 @@ export const removeUserComment = async (postId: string, commentId: string) => {
       }
     );
 
-    if (response.ok) {
-      console.log("Comment deleted successfully");
-      const responseJson = await response.json()
-      console.log(responseJson)
-    } else {
-      const errorData = await response.json();
-      console.error("Failed to delete comment", errorData);
+    if (!response.ok) {
+      console.error("Failed to delete comment");
     }
-    console.log(response);
-    return response
   } catch (error) {
     console.error("Error deleting comment", error);
   }
