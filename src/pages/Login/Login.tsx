@@ -40,11 +40,11 @@ const LogIn = () => {
     try {
       const response = await fetchData(
         "login",
+        "POST",
         {
           email: data.email,
           password: data.password,
         },
-        "POST"
       );
       if (response) {
         localStorage.setItem("jwt", response.token);

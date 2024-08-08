@@ -18,10 +18,12 @@ import { buttonIconSize } from "../../utils/constants";
 // import { findUserPost } from "../../redux/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/query";
+import { removeUserComment } from "../../utils/helperFunction";
 
 const SinglePost = ({ postDetails }) => {
   const { comments, post } = postDetails;
   const [commentsArr, setCommentsArr] = useState(comments);
+
   console.log(commentsArr);
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
@@ -31,8 +33,6 @@ const SinglePost = ({ postDetails }) => {
     resolver: zodResolver(commentSchema),
   });
 
-  console.log(comments);
-  console.log(post);
   const {
     created_at,
     image,
@@ -50,13 +50,21 @@ const SinglePost = ({ postDetails }) => {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
-      const updatedComment = updateUser(postedComment);
+      // const updatedComment = updateUser(postedComment);
       if (postedComment) {
-        setCommentsArr([...commentsArr, updatedComment]);
+        // setCommentsArr([...commentsArr, updatedComment]);
+        setCommentsArr([...commentsArr, postedComment]);
       }
     } catch (error) {
       console.error("Error posting comment");
     }
+  };
+  console.log(commentsArr);
+
+  const removeUserCommentHandler = async (commentId: string) => {
+    setCommentsArr(
+      commentsArr.filter((comment) => comment.comment_id !== commentId)
+    );
   };
 
   return (
@@ -92,7 +100,12 @@ const SinglePost = ({ postDetails }) => {
         <div className={styles.comments_number}>
           {commentsArr ? commentsArr.length : "No"} comments
           {commentsArr.map((comment) => (
-            <Comment key={comment.comment_id} comment={comment} />
+            <Comment
+              key={comment.comment_id}
+              comment={comment}
+              postId={post_id}
+              removeUserCommentHandler={removeUserCommentHandler }
+            />
           ))}
         </div>
       </form>
