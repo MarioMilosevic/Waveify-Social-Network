@@ -27,20 +27,34 @@
   background-color: var(--ternary-color);
   flex-direction: column;
   position: absolute;
+  padding:2rem;
+  border-radius: var(--border-radius-medium);
   top: 80px;
   right: 0;
-  transform-origin: right; 
+  transform-origin: top-right; 
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
   font-size: 1.6rem;
   overflow: hidden;
 }
 
 .visible {
-  width: 150px;
-  height: 100px;
+  width: 170px;
+  /* height: 100px; */
 }
 
 .not_visible {
   width: 0px;
   height: 0px;
+}
+
+.profile_div, .log_out {
+    width: 100%;
+    display: flex;
+    padding: 0.5rem 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile_icon, .log_out_icon {
+    color: var(--main-color);
 }
