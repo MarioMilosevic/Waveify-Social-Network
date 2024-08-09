@@ -105,12 +105,23 @@ export const removeUserComment = async (postId: string, commentId: string) => {
   }
 };
 
-export const like = async (postId:string) => {
+export const like = async (postId:string, method:string) => {
     try {
         const endpoint = `posts/${postId}/like`
-        const response = await fetchData(endpoint, "POST")
+        const response = await fetchData(endpoint, method)
         console.log(response)
     } catch (error) {
         console.error("Error giving like to post", error)
     }
+}
+
+export const createNewPost = async(text:string) => {
+  const endpoint = `${baseUrl}/posts`
+  try {
+    const response = fetchData(endpoint, 'POST',{text:text})
+    console.log(response)
+} catch (error) {
+  console.error('Error creating new post', error)
+}
+
 }

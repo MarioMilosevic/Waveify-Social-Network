@@ -4,7 +4,7 @@ import { formatDate } from "../../utils/helperFunction";
 import { SingleCommentType } from "../../utils/types";
 import { removeUserComment } from "../../utils/api";
 import { FaTrash } from "react-icons/fa";
-import { failure } from "../../utils/toasts";
+// import { failure } from "../../utils/toasts";
 
 const Comment = ({
   comment,
@@ -19,7 +19,7 @@ const Comment = ({
       const response = await removeUserComment(postId, comment_id);
       if (response) {
         removeUserCommentHandler(comment_id);
-        failure(); // Trigger toast notification
+        // failure(); 
       }
     } catch (error) {
       console.error("Error removing comment:", error);

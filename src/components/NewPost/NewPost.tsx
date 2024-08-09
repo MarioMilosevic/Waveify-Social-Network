@@ -1,6 +1,7 @@
 import styles from "./NewPost.module.css";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { FaMicrophone } from "react-icons/fa6";
+import { createNewPost } from "../../utils/api";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -17,7 +18,8 @@ const NewPost = () => {
         </div>
         <div className={styles.microphone_container}>
           <FaMicrophone className={styles.microphone_icon} />
-          <button>New Post</button>
+          <button onClick={() => console.log("")}>New Post</button>
+          {/* <button onClick={() => createNewPost(text)}>New Post</button> */}
         </div>
       </div>
     </div>

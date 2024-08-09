@@ -12,8 +12,10 @@ import PostButton from "../PostButton/PostButton";
 import Comment from "../Comment/Comment";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-// import { toast, ToastContainer } from "react-toastify";
-// import { success } from "../../utils/toasts";
+import { ToastContainer } from "react-toastify";
+import { success, failure } from "../../utils/toasts";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 const SinglePost = ({ postDetails }) => {
@@ -48,7 +50,7 @@ const SinglePost = ({ postDetails }) => {
       if (postedComment) {
         // setCommentsArr([...commentsArr, updatedComment]);
         setCommentsArr([...commentsArr, postedComment]);
-        // success()
+        success()
         // const notify = () => toast('Mariooo')
         // notify()
       }
@@ -62,9 +64,7 @@ const SinglePost = ({ postDetails }) => {
     setCommentsArr(
       commentsArr.filter((comment) => comment.comment_id !== commentId)
     );
-
-
-    // failure();
+    failure();
   };
 
   return (
@@ -110,7 +110,6 @@ const SinglePost = ({ postDetails }) => {
           />
         ))}
       </div>
-      {/* <ToastContainer /> */}
     </>
   );
 };
