@@ -34,6 +34,7 @@ export const fetchData = async (
     if (!response.ok) {
       const errorText = await response.text();
       const errorData = JSON.parse(errorText);
+      console.log(response)
       throw new Error(errorData.error.message);
     }
 
@@ -105,23 +106,22 @@ export const removeUserComment = async (postId: string, commentId: string) => {
   }
 };
 
-export const like = async (postId:string, method:string) => {
-    try {
-        const endpoint = `posts/${postId}/like`
-        const response = await fetchData(endpoint, method)
-        console.log(response)
-    } catch (error) {
-        console.error("Error giving like to post", error)
-    }
-}
-
-export const createNewPost = async(text:string) => {
-  const endpoint = `${baseUrl}/posts`
+export const like = async (postId: string, method: string) => {
   try {
-    const response = fetchData(endpoint, 'POST',{text:text})
-    console.log(response)
-} catch (error) {
-  console.error('Error creating new post', error)
-}
+    const endpoint = `posts/${postId}/like`;
+    const response = await fetchData(endpoint, method);
+    console.log(response);
+  } catch (error) {
+    console.error("Error giving like to post", error);
+  }
+};
 
-}
+export const createNewPost = async (status: string) => {
+  try {
+    console.log("Payload:", { text: status });
+    const response = await fetchData("posts", "POST", { text: status });
+    console.log(response);
+  } catch (error) {
+    console.error("Error creating new post", error);
+  }
+};
