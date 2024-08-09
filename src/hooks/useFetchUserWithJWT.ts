@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { getUserInformation } from "../utils/helperFunction";
+import { getUserInformation } from "../utils/api";
 
 const useFetchUserWithJWT = () => {
   const [loading, setLoading] = useState(true);

@@ -2,8 +2,9 @@ import styles from "./Comment.module.css";
 import UserHeader from "../UserHeader/UserHeader";
 import { formatDate } from "../../utils/helperFunction";
 import { SingleCommentType } from "../../utils/types";
-import { removeUserComment } from "../../utils/helperFunction";
+import { removeUserComment } from "../../utils/api";
 import { FaTrash } from "react-icons/fa";
+import { failure } from "../../utils/toasts";
 
 const Comment = ({
   comment,
@@ -14,10 +15,14 @@ const Comment = ({
   const formattedDate = formatDate(created_at);
 
   const removeComment = async () => {
-    const response = await removeUserComment(postId, comment_id);
-    console.log(response)
-    if (response) {
-      removeUserCommentHandler(comment_id);
+    try {
+      const response = await removeUserComment(postId, comment_id);
+      if (response) {
+        removeUserCommentHandler(comment_id);
+        failure(); // Trigger toast notification
+      }
+    } catch (error) {
+      console.error("Error removing comment:", error);
     }
   };
 
@@ -26,16 +31,16 @@ const Comment = ({
       <UserHeader user={comment} formattedDate={formattedDate} />
       <div className={styles.text_container}>
         <p>{text}</p>
-        {/* provjerit odje ovo moze li drugacije kako */}
-        {username === "nemanja_malesija" ? (
+        {username === "nemanja_malesija" && (
           <div className={styles.button_container}>
             <FaTrash />
             <button onClick={removeComment}>Delete</button>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
 };
 
 export default Comment;
+

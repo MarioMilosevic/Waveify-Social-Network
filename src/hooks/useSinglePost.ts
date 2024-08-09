@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PostResponseType } from "../utils/types";
-import { getPostInformation } from "../utils/helperFunction";
+import { getPostInformation } from "../utils/api";
 
 export function useSinglePost(postId:string) {
   const [loading, setLoading] = useState(true);

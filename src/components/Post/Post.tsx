@@ -5,15 +5,24 @@ import UserHeader from "../UserHeader/UserHeader";
 import { useState } from "react";
 import { formatDate} from "../../utils/helperFunction";
 import { createPortal } from "react-dom";
+import { like } from "../../utils/api";
 
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } = post;
   const [modalActive, setModalActive] = useState<boolean>(false);
+  const [postLiked, setPostLiked] = useState<boolean>(liked)
+  const [likesNumber, setLikesNumber] = useState<number>(likes)
   
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
-    console.log("lajk");
+    like(post_id)
+    if (postLiked) {
+      setLikesNumber((prev) => prev - 1)
+    } else {
+      setLikesNumber((prev) => prev + 1)
+    }
+    setPostLiked(prev => !prev)
   };
 
   const modalHandler = (isOpen:boolean) => {
@@ -30,9 +39,9 @@ const Post = ({ post }) => {
       </div>
       <div className={styles.post_buttons }>
       <PostButton
-        likes={likes}
+        likes={likesNumber}
         comments={comments}
-        liked={liked}
+        liked={postLiked}
         likeHandler={likeHandler}
         commentHandler={() => modalHandler(true)}
         />

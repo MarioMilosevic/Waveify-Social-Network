@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authenticationSchema, FormValues } from "../../utils/zod";
 import { useState, useEffect } from "react";
-import { fetchData } from "../../utils/helperFunction";
+import { fetchData } from "../../utils/api";
 import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { setUser } from "../../redux/features/userSlice";
