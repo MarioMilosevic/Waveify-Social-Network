@@ -18,6 +18,7 @@
   height: 60px;
   object-fit: cover;
   border-radius: 9999px;
+  cursor: pointer;
 }
 
 .visible,
@@ -26,11 +27,12 @@
   top: 80px;
   right: 0;
   display: flex;
-  align-items: flex-end;
+  gap: 1rem;
   flex-direction: column;
+  justify-content: center;
   background-color: var(--ternary-color);
   border-radius: var(--border-radius-medium);
-  transform-origin: top-right; 
+  transform-origin: top-right;
   transition: all 0.2s ease-in-out;
   font-size: 1.6rem;
   overflow: hidden;
@@ -39,7 +41,7 @@
 .visible {
   width: 170px;
   height: 100px;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .not_visible {
@@ -48,14 +50,25 @@
   height: 0px;
 }
 
-.profile_div, .log_out {
-    width: 100%;
-    display: flex;
-    padding: 0.5rem 0;
-    align-items: center;
-    justify-content: space-between;
+.profile_div,
+.log_out {
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--border-radius-medium);
+  cursor: pointer;
 }
 
-.profile_icon, .log_out_icon {
-    color: var(--main-color);
+.profile_div:hover,
+.log_out:hover {
+  background-color: var(--gray-color);
+}
+
+.profile_icon,
+.log_out_icon {
+  color: var(--main-color);
+  width: 25px;
+  height: 25px;
 }

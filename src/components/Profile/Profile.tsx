@@ -3,8 +3,14 @@ import marioImage from "../../assets/mariomilosevic.jpg";
 import { CgProfile } from "react-icons/cg";
 import { IoMdExit } from "react-icons/io";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 const Profile = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const navigate = useNavigate()
+  const logOut = () => {
+    localStorage.removeItem('jwt')
+    navigate('/login')
+  }
   return (
     <div className={styles.container}>
       <div className={styles.image_container}>
@@ -16,11 +22,10 @@ const Profile = () => {
         />
         <div className={isVisible ? styles.visible : styles.not_visible}>
           <div className={styles.profile_div}>
-
             <CgProfile className={styles.profile_icon} />
             <span>My profile</span>
           </div>
-          <div className={styles.log_out}>
+          <div className={styles.log_out} onClick={logOut}>
             <IoMdExit className={styles.log_out_icon} />
             <span>Log out</span>
           </div>
