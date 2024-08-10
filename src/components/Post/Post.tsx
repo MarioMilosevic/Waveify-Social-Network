@@ -14,12 +14,12 @@ const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
-    dispatch(toggleLike(post_id))
+    dispatch(toggleLike(post_id));
   };
 
   const modalHandler = (isOpen: boolean) => {
@@ -44,9 +44,7 @@ const Post = ({ post }) => {
       </div>
       {modalActive &&
         createPortal(
-          <Modal
-            modalHandler={modalHandler}
-          >
+          <Modal modalHandler={modalHandler}>
             {<SinglePost postId={post_id} />}
           </Modal>,
           document.body

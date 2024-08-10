@@ -17,7 +17,11 @@ import { ToastContainer } from "react-toastify";
 import { success, failure } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
-import { toggleLike } from "../../redux/features/userSlice";
+import {
+  addComment,
+  removeComment,
+  toggleLike,
+} from "../../redux/features/userSlice";
 import { like } from "../../utils/api";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -51,6 +55,7 @@ const SinglePost = ({ postId }) => {
       });
       setComment("");
       if (postedComment) {
+        dispatch(addComment(postId));
         setPostDetails((prev) => {
           const updatedComments = [...prev?.comments, postedComment];
           return {
@@ -66,6 +71,7 @@ const SinglePost = ({ postId }) => {
   };
 
   const removeUserCommentHandler = async (commentId: string) => {
+    dispatch(removeComment(postId));
     setPostDetails((prev) => {
       const updatedComments = prev?.comments.filter(
         (comment) => comment.comment_id !== commentId
@@ -79,7 +85,7 @@ const SinglePost = ({ postId }) => {
     failure();
   };
 
-  const mario = () => {
+  const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
     dispatch(toggleLike(post_id));
     setPostDetails((prev) => {
@@ -126,8 +132,7 @@ const SinglePost = ({ postId }) => {
           likes={likes}
           comments={comments.length}
           liked={liked}
-          // likeHandler={() => console.log('alo')}
-          likeHandler={mario}
+          likeHandler={likeHandler}
           commentHandler={() => console.log("comment from modal")}
         />
       </div>
