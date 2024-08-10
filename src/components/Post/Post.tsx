@@ -14,7 +14,6 @@ const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch()
   const formattedDate = formatDate(created_at);
 

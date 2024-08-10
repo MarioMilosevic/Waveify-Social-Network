@@ -16,16 +16,19 @@ import { buttonIconSize } from "../../utils/constants";
 import { ToastContainer } from "react-toastify";
 import { success, failure } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
+import { useDispatch } from "react-redux";
+import { toggleLike } from "../../redux/features/userSlice";
+import { like } from "../../utils/api";
 import "react-toastify/dist/ReactToastify.css";
 
 const SinglePost = ({ postId }) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
-  console.log(postDetails);
   const [comment, setComment] = useState("");
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
     resolver: zodResolver(commentSchema),
   });
+  const dispatch = useDispatch();
 
   if (loading) return <LoadingSpinner size="normal" />;
 
@@ -76,6 +79,26 @@ const SinglePost = ({ postId }) => {
     failure();
   };
 
+  const mario = () => {
+    like(post_id, liked ? "DELETE" : "POST");
+    dispatch(toggleLike(post_id));
+    setPostDetails((prev) => {
+      const updatedLiked = !prev.post.liked;
+      const updatedLikes = updatedLiked
+        ? prev.post.likes + 1
+        : prev.post.likes - 1;
+
+      return {
+        ...prev,
+        post: {
+          ...prev.post,
+          liked: updatedLiked,
+          likes: updatedLikes,
+        },
+      };
+    });
+  };
+
   return (
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
@@ -103,7 +126,8 @@ const SinglePost = ({ postId }) => {
           likes={likes}
           comments={comments.length}
           liked={liked}
-          likeHandler={() => console.log("like from modal")}
+          // likeHandler={() => console.log('alo')}
+          likeHandler={mario}
           commentHandler={() => console.log("comment from modal")}
         />
       </div>
