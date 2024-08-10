@@ -1,12 +1,7 @@
 import styles from "./Modal.module.css";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { AiOutlineClose } from "react-icons/ai";
-import { useSinglePost } from "../../hooks/useSinglePost";
-import SinglePost from "../SinglePost/SinglePost";
 
-const Modal = ({ modalHandler, postId }) => {
-  const { loading, postDetails } = useSinglePost(postId);
-
+const Modal = ({ modalHandler, children }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -14,11 +9,7 @@ const Modal = ({ modalHandler, postId }) => {
           className={styles.close_button}
           onClick={() => modalHandler(false)}
         />
-        {loading ? (
-          <LoadingSpinner size="normal" />
-        ) : (
-          <SinglePost postDetails={postDetails} />
-        )}
+        {children}
       </div>
     </div>
   );

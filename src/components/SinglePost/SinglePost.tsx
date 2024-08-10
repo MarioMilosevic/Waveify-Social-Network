@@ -1,3 +1,132 @@
+// import { useState, useEffect } from "react";
+// import { useForm } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import { formatDate } from "../../utils/helperFunction";
+// import { postComment } from "../../utils/api";
+// import { commentSchema } from "../../utils/zod";
+// import { CommentValue } from "../../utils/zod";
+// import styles from "./SinglePost.module.css";
+// import UserHeader from "../UserHeader/UserHeader";
+// import Input from "../Input/Input";
+// import PostButton from "../PostButton/PostButton";
+// import Comment from "../Comment/Comment";
+// import { IoIosSend } from "react-icons/io";
+// import { buttonIconSize } from "../../utils/constants";
+// import { ToastContainer } from "react-toastify";
+// import { success, failure } from "../../utils/toasts";
+// import "react-toastify/dist/ReactToastify.css";
+// import { useSinglePost } from "../../hooks/useSinglePost";
+// import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
+
+
+// const SinglePost = ({ postId }) => {
+//   const { loading, postDetails, setPostDetails } = useSinglePost(postId)
+  
+//   console.log(loading)
+//   console.log(postDetails)
+//   console.log(setPostDetails)
+//   // const [comment, setComment] = useState("");
+
+//   // console.log(postDetails)
+
+//   // if(!postDetails) return <LoadingSpinner size="normal"/>
+
+//   // const { register, handleSubmit } = useForm<CommentValue>({
+//   //   defaultValues: { comment: "" },
+//   //   resolver: zodResolver(commentSchema),
+//   // });
+
+//   // const {
+//   //   created_at,
+//   //   image,
+//   //   liked,
+//   //   likes,
+//   //   text,
+//   //   user: postUser,
+//   //   post_id,
+//   // } = post;
+//   // const formattedDate = formatDate(created_at);
+
+//   // const onSubmit = async (data) => {
+//   //   try {
+//   //     const { comment: postedComment } = await postComment(post_id, {
+//   //       text: data.comment,
+//   //     });
+//   //     setComment("");
+//   //     // const updatedComment = updateUser(postedComment);
+//   //     if (postedComment) {
+//   //       // setCommentsArr([...commentsArr, updatedComment]);
+//   //       setCommentsArr([...commentsArr, postedComment]);
+//   //       success()
+//   //       // const notify = () => toast('Mariooo')
+//   //       // notify()
+//   //     }
+
+//   //   } catch (error) {
+//   //     console.error("Error posting comment");
+//   //   }
+//   // };
+
+//   // const removeUserCommentHandler = async (commentId: string) => {
+//   //   setCommentsArr(
+//   //     commentsArr.filter((comment) => comment.comment_id !== commentId)
+//   //   );
+//   //   failure();
+//   // };
+
+//   return (
+//     { postDetails &&
+//     <>
+    
+//        <UserHeader user={postUser} formattedDate={formattedDate} />
+//       <div className={styles.image_container}>
+//         {image && <img src={image} alt={text} className={styles.image} />}
+//         <p>{text}</p>
+//       </div>
+//       <form onSubmit={handleSubmit(onSubmit)}>
+//         <div className={styles.comment}>
+//           <Input
+//             placeholder="Write a comment"
+//             type="text"
+//             title=""
+//             value={comment}
+//             changeHandler={(e) => setComment(e.target.value)}
+//             zod={{ ...register("comment") }}
+//           />
+//           <button type="submit" className={styles.comment_button}>
+//             <IoIosSend size={buttonIconSize} onClick={handleSubmit(onSubmit)} />
+//           </button>
+//         </div>
+//       </form>
+    
+//       <div className={styles.post_buttons}>
+//         <PostButton
+//           likes={likes}
+//           comments={commentsArr.length}
+//           liked={liked}
+//           likeHandler={() => console.log("like from modal")}
+//           commentHandler={() => console.log("comment from modal")}
+//         />
+//       </div>
+//       <div className={styles.comments_number}>
+//          {commentsArr ? commentsArr.length : "No"} comments
+//         {commentsArr.map((comment) => (
+//             <Comment
+//               key={comment.comment_id}
+//               comment={comment}
+//               postId={post_id}
+//               removeUserCommentHandler={removeUserCommentHandler}
+//             />
+//           ))}
+//         </div>
+//       </>
+//     }
+//     );
+//   };
+  
+//   export default SinglePost;
+  
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,20 +144,23 @@ import { buttonIconSize } from "../../utils/constants";
 import { ToastContainer } from "react-toastify";
 import { success, failure } from "../../utils/toasts";
 import "react-toastify/dist/ReactToastify.css";
+import { useSinglePost } from "../../hooks/useSinglePost";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-
-
-const SinglePost = ({ postDetails }) => {
-  const { comments, post } = postDetails;
-  const [commentsArr, setCommentsArr] = useState(comments);
-
+const SinglePost = ({ postId }) => {
+  const { loading, postDetails, setPostDetails } = useSinglePost(postId);
+  console.log(postDetails)
   const [comment, setComment] = useState("");
-
   const { register, handleSubmit } = useForm<CommentValue>({
     defaultValues: { comment: "" },
     resolver: zodResolver(commentSchema),
   });
 
+  
+  if (loading) return <LoadingSpinner size="normal" />;
+  if (!postDetails) return null;
+  
+  const {comments, post} = postDetails
   const {
     created_at,
     image,
@@ -40,30 +172,26 @@ const SinglePost = ({ postDetails }) => {
   } = post;
   const formattedDate = formatDate(created_at);
 
+
   const onSubmit = async (data) => {
     try {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
       setComment("");
-      // const updatedComment = updateUser(postedComment);
       if (postedComment) {
-        // setCommentsArr([...commentsArr, updatedComment]);
-        setCommentsArr([...commentsArr, postedComment]);
-        success()
-        // const notify = () => toast('Mariooo')
-        // notify()
+        // setCommentsArr([...commentsArr, postedComment]);
+        success();
       }
-
     } catch (error) {
       console.error("Error posting comment");
     }
   };
 
   const removeUserCommentHandler = async (commentId: string) => {
-    setCommentsArr(
-      commentsArr.filter((comment) => comment.comment_id !== commentId)
-    );
+    // setCommentsArr(
+    //   commentsArr.filter((comment) => comment.comment_id !== commentId)
+    // );
     failure();
   };
 
@@ -85,23 +213,22 @@ const SinglePost = ({ postDetails }) => {
             zod={{ ...register("comment") }}
           />
           <button type="submit" className={styles.comment_button}>
-            <IoIosSend size={buttonIconSize} onClick={handleSubmit(onSubmit)} />
+            <IoIosSend size={buttonIconSize} />
           </button>
         </div>
       </form>
-
       <div className={styles.post_buttons}>
         <PostButton
           likes={likes}
-          comments={commentsArr.length}
+          comments={comments.length}
           liked={liked}
           likeHandler={() => console.log("like from modal")}
           commentHandler={() => console.log("comment from modal")}
         />
       </div>
       <div className={styles.comments_number}>
-        {commentsArr ? commentsArr.length : "No"} comments
-        {commentsArr.map((comment) => (
+        {comments.length ? comments.length : "No"} comments
+        {comments.map((comment) => (
           <Comment
             key={comment.comment_id}
             comment={comment}
@@ -110,6 +237,7 @@ const SinglePost = ({ postDetails }) => {
           />
         ))}
       </div>
+      <ToastContainer />
     </>
   );
 };

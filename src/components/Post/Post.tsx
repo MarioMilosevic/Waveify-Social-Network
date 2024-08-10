@@ -6,20 +6,19 @@ import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
 import { createPortal } from "react-dom";
 import { like } from "../../utils/api";
-
+import SinglePost from "../SinglePost/SinglePost";
+import { useSinglePost } from "../../hooks/useSinglePost";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+//napravit mali context
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);
-  const [postLiked, setPostLiked] = useState<boolean>(liked);
-  const [likesNumber, setLikesNumber] = useState<number>(likes);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
-    like(post_id, postLiked ? "DELETE" : "POST");
-    setLikesNumber((prev) => prev + (postLiked ? -1 : 1));
-    setPostLiked((prev) => !prev);
+    like(post_id, liked ? "DELETE" : "POST");
   };
 
   const modalHandler = (isOpen: boolean) => {
@@ -35,16 +34,20 @@ const Post = ({ post }) => {
       </div>
       <div className={styles.post_buttons}>
         <PostButton
-          likes={likesNumber}
+          likes={likes}
           comments={comments}
-          liked={postLiked}
+          liked={liked}
           likeHandler={likeHandler}
           commentHandler={() => modalHandler(true)}
         />
       </div>
       {modalActive &&
         createPortal(
-          <Modal postId={post_id} modalHandler={modalHandler} />,
+          <Modal
+            modalHandler={modalHandler}
+          >
+            {<SinglePost postId={post_id} />}
+          </Modal>,
           document.body
         )}
     </div>

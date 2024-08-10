@@ -9,8 +9,8 @@ export function useSinglePost(postId:string) {
   useEffect(() => {
     const fetchPostComments = async () => {
       try {
-        const response = await getPostInformation(postId);
-        setPostDetails(response);
+        const data = await getPostInformation(postId);
+        setPostDetails(data);
       } catch (error) {
         console.error("Error fetching post comments:", error);
       } finally {
@@ -24,7 +24,9 @@ export function useSinglePost(postId:string) {
   return {
     loading,
     postDetails,
+    setPostDetails
   };
 }
+
 
 
