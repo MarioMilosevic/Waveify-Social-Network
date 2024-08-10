@@ -4,21 +4,23 @@ import PostButton from "../PostButton/PostButton";
 import UserHeader from "../UserHeader/UserHeader";
 import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
+import { toggleLike } from "../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
 import { like } from "../../utils/api";
 import SinglePost from "../SinglePost/SinglePost";
-import { useSinglePost } from "../../hooks/useSinglePost";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 //napravit mali context
 const Post = ({ post }) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch()
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
+    dispatch(toggleLike(post_id))
   };
 
   const modalHandler = (isOpen: boolean) => {

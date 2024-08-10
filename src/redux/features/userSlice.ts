@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialUserState } from "../../utils/constants";
-import { CommentType, PostType, UserType } from "../../utils/types";
+import { PostType, UserType } from "../../utils/types";
 
 type UserState = {
   user: UserType;
@@ -20,22 +20,18 @@ export const userSlice = createSlice({
     setUserPosts: (state, action: PayloadAction<PostType[]>) => {
       state.user.posts = action.payload;
     },
-    // addComment: (state, action:PayloadAction<{postId:string, comment:CommentType}>) => {
-    //   const currentPost = state.user.posts.find((post) => post.post_id === action.payload.postId)
-    //   currentPost?.comments.push(action.payload.comment)
-    // }
+    toggleLike: (state, action: PayloadAction<string>) => {
+      const userPost = state.user.posts.find(
+        (post) => post.post_id === action.payload
+      );
+      if (userPost) {
+        userPost.liked = !userPost.liked;
+        userPost.likes += userPost.liked ? 1 : -1;
+      }
+    },
   },
 });
 
-export const { setUser, setUserPosts } = userSlice.actions;
-
-// export const findUserPost = (state:UserState, postId:string) => {
-//   return state.user.posts.find((post) => post.post_id === postId)
-// }
+export const { setUser, setUserPosts, toggleLike } = userSlice.actions;
 
 export default userSlice.reducer;
-
-/**
- * posaljem komentar sa postId-jem
- * dobijem response da je dobro
- */
