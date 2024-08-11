@@ -1,7 +1,7 @@
 import styles from "./Comment.module.css";
 import UserHeader from "../UserHeader/UserHeader";
 import { formatDate } from "../../utils/helperFunction";
-import { SingleCommentType } from "../../utils/types";
+import { CommentProps } from "../../utils/types";
 import { removeUserComment } from "../../utils/api";
 import { FaTrash } from "react-icons/fa";
 // import { failure } from "../../utils/toasts";
@@ -10,7 +10,8 @@ const Comment = ({
   comment,
   postId,
   removeUserCommentHandler,
-}: SingleCommentType) => {
+}: CommentProps) => {
+  console.log(comment)
   const { created_at, text, username, comment_id } = comment;
   const formattedDate = formatDate(created_at);
 

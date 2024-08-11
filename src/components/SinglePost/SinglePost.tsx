@@ -17,15 +17,12 @@ import { ToastContainer } from "react-toastify";
 import { success, failure } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
-import {
-  addComment,
-  removeComment,
-  toggleLike,
-} from "../../redux/features/userSlice";
+import { updateComment, toggleLike } from "../../redux/features/userSlice";
 import { like } from "../../utils/api";
+import { SinlgePostProps } from "../../utils/types";
 import "react-toastify/dist/ReactToastify.css";
 
-const SinglePost = ({ postId }) => {
+const SinglePost = ({ postId }: SinlgePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
   const [comment, setComment] = useState("");
   const { register, handleSubmit } = useForm<CommentValue>({
@@ -35,6 +32,9 @@ const SinglePost = ({ postId }) => {
   const dispatch = useDispatch();
 
   if (loading) return <LoadingSpinner size="normal" />;
+  console.log(postDetails);
+
+  if (!postDetails) return;
 
   const { comments, post } = postDetails;
   const {
@@ -46,18 +46,19 @@ const SinglePost = ({ postId }) => {
     user: postUser,
     post_id,
   } = post;
-  const formattedDate = formatDate(created_at);
+  const formattedDate = formatDate(created_at || "");
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { comment: string }) => {
     try {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
       setComment("");
       if (postedComment) {
-        dispatch(addComment(postId));
+        dispatch(updateComment({ postId, action: "increment" }));
         setPostDetails((prev) => {
-          const updatedComments = [...prev?.comments, postedComment];
+          if(!prev) return prev
+          const updatedComments = [...prev.comments, postedComment];
           return {
             ...prev,
             comments: updatedComments,
@@ -71,8 +72,9 @@ const SinglePost = ({ postId }) => {
   };
 
   const removeUserCommentHandler = async (commentId: string) => {
-    dispatch(removeComment(postId));
+    dispatch(updateComment({ postId, action: "decrement" }));
     setPostDetails((prev) => {
+      if(!prev) return prev
       const updatedComments = prev?.comments.filter(
         (comment) => comment.comment_id !== commentId
       );
@@ -89,6 +91,7 @@ const SinglePost = ({ postId }) => {
     like(post_id, liked ? "DELETE" : "POST");
     dispatch(toggleLike(post_id));
     setPostDetails((prev) => {
+      if(!prev) return prev
       const updatedLiked = !prev.post.liked;
       const updatedLikes = updatedLiked
         ? prev.post.likes + 1

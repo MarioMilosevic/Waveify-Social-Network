@@ -39,6 +39,10 @@ export type PostType = {
   user_id: string;
 };
 
+export type PostProps = {
+  post:PostType
+}
+
 export type CommentType = {
   comment_id: string;
   created_at: string;
@@ -48,21 +52,18 @@ export type CommentType = {
   username: string;
 };
 
-export type SingleCommentType = {
-  comment: {
-    comment_id: string;
-    created_at: string;
-    full_name: string;
-    picture: string;
-    text: string;
-    username: string;
-  };
+export type CommentProps = {
+  comment: CommentType;
+  postId: string;
+  removeUserCommentHandler:(commentId:string) => void
 };
 
 export type PostButtonProps = {
   likes: number;
   comments: number;
   liked: boolean;
+  likeHandler: () => void;
+  commentHandler:() => void
 };
 
 export type PostResponseType = {
@@ -74,3 +75,7 @@ export type UserHeaderProps = {
   user: { picture: string; full_name: string; username: string };
   formattedDate: string;
 };
+
+export type SinlgePostProps = {
+  postId: string;
+}

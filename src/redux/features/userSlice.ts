@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialUserState } from "../../utils/constants";
-import { PostType, UserType, CommentType } from "../../utils/types";
+import { PostType, UserType } from "../../utils/types";
 
 type UserState = {
   user: UserType;
+};
+
+type CommentActionPayload = {
+  postId: string;
+  action: "increment" | "decrement";
 };
 
 const initialState: UserState = {
@@ -31,25 +36,17 @@ export const userSlice = createSlice({
         userPost.likes += userPost.liked ? 1 : -1;
       }
     },
-    addComment: (
-      state,
-      action: PayloadAction<string>
-    ) => {
-      const userPost = findUserPostById(state, action.payload);
+    updateComment: (state, action: PayloadAction<CommentActionPayload>) => {
+      const { postId, action: commentAction } = action.payload;
+      const userPost = findUserPostById(state, postId);
       if (userPost) {
-        userPost.comments++;
+        userPost.comments += commentAction === "increment" ? 1 : -1;
       }
     },
-    removeComment: (state, action:PayloadAction<string>) => {
-      const userPost = findUserPostById(state, action.payload)
-      if (userPost) {
-        userPost.comments--
-      }
-    }
   },
 });
 
-export const { setUser, setUserPosts, toggleLike, addComment, removeComment } =
+export const { setUser, setUserPosts, toggleLike, updateComment } =
   userSlice.actions;
 
 export default userSlice.reducer;

@@ -88,7 +88,6 @@ export const postComment = async (
   try {
     const endpoint = `posts/${postId}/comments`;
     const response = await fetchData(endpoint, "POST", comment);
-    console.log("Comment posted successfully:", response);
     return response;
   } catch (error) {
     console.error("Error posting comment:", error);

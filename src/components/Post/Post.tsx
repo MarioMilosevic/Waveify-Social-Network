@@ -2,15 +2,16 @@ import styles from "./Post.module.css";
 import Modal from "../Modal/Modal";
 import PostButton from "../PostButton/PostButton";
 import UserHeader from "../UserHeader/UserHeader";
+import SinglePost from "../SinglePost/SinglePost";
 import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
 import { toggleLike } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
 import { like } from "../../utils/api";
-import SinglePost from "../SinglePost/SinglePost";
+import { PostProps } from "../../utils/types";
 //napravit mali context
-const Post = ({ post }) => {
+const Post = ({ post}:PostProps) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);
