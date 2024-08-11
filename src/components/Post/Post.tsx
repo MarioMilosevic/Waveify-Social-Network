@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
 import { like } from "../../utils/api";
 import { PostProps } from "../../utils/types";
-//napravit mali context
-const Post = ({ post}:PostProps) => {
+
+const Post = ({ post }: PostProps) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const [modalActive, setModalActive] = useState<boolean>(false);

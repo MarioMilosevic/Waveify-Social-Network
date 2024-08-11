@@ -13,14 +13,12 @@ import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-import { ToastContainer } from "react-toastify";
-import { success, failure } from "../../utils/toasts";
+import { success } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/userSlice";
 import { like } from "../../utils/api";
 import { SinlgePostProps } from "../../utils/types";
-import "react-toastify/dist/ReactToastify.css";
 
 const SinglePost = ({ postId }: SinlgePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
@@ -32,7 +30,6 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
   const dispatch = useDispatch();
 
   if (loading) return <LoadingSpinner size="normal" />;
-  console.log(postDetails);
 
   if (!postDetails) return;
 
@@ -57,14 +54,13 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
       if (postedComment) {
         dispatch(updateComment({ postId, action: "increment" }));
         setPostDetails((prev) => {
-          if(!prev) return prev
+          if (!prev) return prev;
           const updatedComments = [...prev.comments, postedComment];
           return {
             ...prev,
             comments: updatedComments,
           };
         });
-        success();
       }
     } catch (error) {
       console.error("Error posting comment");
@@ -74,24 +70,23 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
   const removeUserCommentHandler = async (commentId: string) => {
     dispatch(updateComment({ postId, action: "decrement" }));
     setPostDetails((prev) => {
-      if(!prev) return prev
+      if (!prev) return prev;
       const updatedComments = prev?.comments.filter(
         (comment) => comment.comment_id !== commentId
       );
+      success();
       return {
         ...prev,
         comments: updatedComments,
       };
     });
-
-    failure();
   };
 
   const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
     dispatch(toggleLike(post_id));
     setPostDetails((prev) => {
-      if(!prev) return prev
+      if (!prev) return prev;
       const updatedLiked = !prev.post.liked;
       const updatedLikes = updatedLiked
         ? prev.post.likes + 1
@@ -150,7 +145,6 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
           />
         ))}
       </div>
-      <ToastContainer />
     </>
   );
 };
