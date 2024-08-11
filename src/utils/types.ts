@@ -76,6 +76,6 @@ export type UserHeaderProps = {
   formattedDate: string;
 };
 
-export type SinlgePostProps = {
+export type SinglePostProps = {
   postId: string;
 }

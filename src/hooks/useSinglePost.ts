@@ -4,7 +4,7 @@ import { getPostInformation } from "../utils/api";
 
 export function useSinglePost(postId:string) {
   const [loading, setLoading] = useState(true);
-  const [postDetails, setPostDetails] = useState<PostResponseType | undefined>();
+  const [postDetails, setPostDetails] = useState<PostResponseType>();
 
   useEffect(() => {
     const fetchPostComments = async () => {

@@ -115,12 +115,41 @@ export const like = async (postId: string, method: string) => {
   }
 };
 
-export const createNewPost = async (status: string) => {
+
+export const createNewPost = async (text: string) => {
+  console.log(text);
   try {
-    console.log("Payload:", { text: status });
-    const response = await fetchData("posts", "POST", { text: status });
-    console.log(response);
+    const url = "https://api.hr.constel.co/api/v1/posts";
+    const jwt = localStorage.getItem("jwt");
+
+    if (!jwt) throw new Error("Authorization token is missing");
+    if (!text.trim()) throw new Error("Text cannot be empty!");
+
+    const formData = new URLSearchParams({ text }).toString();
+    console.log(formData)
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/x-www-form-urlencoded", 
+      },
+      body: formData, 
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP error! Status: ${response.status}. ${errorText}`);
+    }
+
+    const result = await response.json();
+    console.log(result);
   } catch (error) {
-    console.error("Error creating new post", error);
+    console.error("Error creating post:", error);
   }
 };
+
+
+
+
+

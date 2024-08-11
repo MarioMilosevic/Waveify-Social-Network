@@ -7,7 +7,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDate } from "../../utils/helperFunction";
+import { formatDate, /*updateUser*/ } from "../../utils/helperFunction";
 import { postComment } from "../../utils/api";
 import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
@@ -18,9 +18,9 @@ import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/userSlice";
 import { like } from "../../utils/api";
-import { SinlgePostProps } from "../../utils/types";
+import { SinglePostProps } from "../../utils/types";
 
-const SinglePost = ({ postId }: SinlgePostProps) => {
+const SinglePost = ({ postId }: SinglePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
   const [comment, setComment] = useState("");
   const { register, handleSubmit } = useForm<CommentValue>({
@@ -50,11 +50,14 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
+      // const updatedComment = updateUser(postedComment)
+
       setComment("");
       if (postedComment) {
         dispatch(updateComment({ postId, action: "increment" }));
         setPostDetails((prev) => {
           if (!prev) return prev;
+          // const updatedComments = [...prev.comments, updatedComment];
           const updatedComments = [...prev.comments, postedComment];
           return {
             ...prev,
@@ -150,3 +153,5 @@ const SinglePost = ({ postId }: SinlgePostProps) => {
 };
 
 export default SinglePost;
+
+

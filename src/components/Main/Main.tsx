@@ -13,8 +13,8 @@ const Main = () => {
         {user.posts.map((post) => (
           <Post key={post.post_id} post={post} />
         ))}
-        <ToastContainer className={styles.toast} />
       </div>
+        <ToastContainer className={styles.toast} />
     </div>
   );
 };

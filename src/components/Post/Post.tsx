@@ -12,10 +12,10 @@ import { like } from "../../utils/api";
 import { PostProps } from "../../utils/types";
 
 const Post = ({ post }: PostProps) => {
-  const { created_at, user, image, likes, comments, liked, text, post_id } =
-    post;
   const [modalActive, setModalActive] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const { created_at, user, image, likes, comments, liked, text, post_id } =
+    post;
   const formattedDate = formatDate(created_at);
 
   const likeHandler = () => {
