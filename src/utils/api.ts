@@ -117,7 +117,6 @@ export const like = async (postId: string, method: string) => {
 
 
 export const createNewPost = async (text: string) => {
-  console.log(text);
   try {
     const url = "https://api.hr.constel.co/api/v1/posts";
     const jwt = localStorage.getItem("jwt");
@@ -142,8 +141,9 @@ export const createNewPost = async (text: string) => {
       throw new Error(`HTTP error! Status: ${response.status}. ${errorText}`);
     }
 
-    const result = await response.json();
-    console.log(result);
+    const data = await response.json();
+    console.log(data);
+    return data
   } catch (error) {
     console.error("Error creating post:", error);
   }

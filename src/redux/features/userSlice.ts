@@ -29,6 +29,9 @@ export const userSlice = createSlice({
     setUserPosts: (state, action: PayloadAction<PostType[]>) => {
       state.user.posts = action.payload;
     },
+    addUserPost: (state, action:PayloadAction<PostType>) => {
+      state.user.posts.push(action.payload)
+    },
     toggleLike: (state, action: PayloadAction<string>) => {
       const userPost = findUserPostById(state, action.payload);
       if (userPost) {
@@ -46,7 +49,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserPosts, toggleLike, updateComment } =
+export const { setUser, setUserPosts,addUserPost, toggleLike, updateComment } =
   userSlice.actions;
 
 export default userSlice.reducer;

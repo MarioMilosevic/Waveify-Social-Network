@@ -6,20 +6,27 @@ import { createNewPost } from "../../utils/api";
 import { statusSchema, StatusValue } from "../../utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addUserPost } from "../../redux/features/userSlice";
 import Input from "../Input/Input";
 
 const NewPost = () => {
   const { user } = useUserSlice();
   const [status, setStatus] = useState<string>("")
+  const dispatch = useDispatch()
 
  const { register, handleSubmit } = useForm<StatusValue>({
    defaultValues: { status: "" },
    resolver: zodResolver(statusSchema),
  });
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
   console.log('kasnije')
-}  
+    const { post } = await createNewPost(status)
+    dispatch(addUserPost(post))
+  console.log(post)
+  }  
+  
   return (
     <div className={styles.post}>
       <div className={styles.container}>
