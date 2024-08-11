@@ -5,10 +5,10 @@ import UserHeader from "../UserHeader/UserHeader";
 import SinglePost from "../SinglePost/SinglePost";
 import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
-import { toggleLike } from "../../redux/features/userSlice";
+import { toggleLike, removeUserPost } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
-import { like } from "../../utils/api";
+import { like, removePost } from "../../utils/api";
 import { PostProps } from "../../utils/types";
 import DeleteButton from "../DeleteButton/DeleteButton";
 
@@ -25,9 +25,17 @@ const Post = ({ post }: PostProps) => {
     dispatch(toggleLike(post_id));
   };
 
+  const removePostHandler = async () => {
+    removePost(post_id)
+    // ispod je greska
+    dispatch(removeUserPost(post_id))
+  }
+  
   const modalHandler = (isOpen: boolean) => {
     setModalActive(isOpen);
   };
+
+
 
   return (
     <div className={styles.container}>
@@ -37,7 +45,7 @@ const Post = ({ post }: PostProps) => {
         <div className={styles.text_container}>
           <p>{text}</p>
           {user.username === "nemanja_malesija" && (
-            <DeleteButton removeHandler={() => console.log("kasnije")} />
+            <DeleteButton removeHandler={removePostHandler} />
           )}
         </div>
       </div>

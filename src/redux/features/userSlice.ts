@@ -29,8 +29,13 @@ export const userSlice = createSlice({
     setUserPosts: (state, action: PayloadAction<PostType[]>) => {
       state.user.posts = action.payload;
     },
-    addUserPost: (state, action:PayloadAction<PostType>) => {
-      state.user.posts.push(action.payload)
+    addUserPost: (state, action: PayloadAction<PostType>) => {
+      state.user.posts.push(action.payload);
+    },
+    removeUserPost: (state, action: PayloadAction<string>) => {
+      state.user.posts = state.user.posts.filter(
+        (post) => post.post_id !== action.payload
+      );
     },
     toggleLike: (state, action: PayloadAction<string>) => {
       const userPost = findUserPostById(state, action.payload);
@@ -49,7 +54,13 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserPosts,addUserPost, toggleLike, updateComment } =
-  userSlice.actions;
+export const {
+  setUser,
+  setUserPosts,
+  addUserPost,
+  removeUserPost,
+  toggleLike,
+  updateComment,
+} = userSlice.actions;
 
 export default userSlice.reducer;

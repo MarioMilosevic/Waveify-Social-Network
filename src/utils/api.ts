@@ -34,7 +34,7 @@ export const fetchData = async (
     if (!response.ok) {
       const errorText = await response.text();
       const errorData = JSON.parse(errorText);
-      console.log(response)
+      console.log(response);
       throw new Error(errorData.error.message);
     }
 
@@ -98,8 +98,8 @@ export const postComment = async (
 export const removeUserComment = async (postId: string, commentId: string) => {
   try {
     const endpoint = `posts/${postId}/comments/${commentId}`;
-    const response = await fetchData(endpoint, "DELETE");
-    return response;
+    const data = await fetchData(endpoint, "DELETE");
+    return data;
   } catch (error) {
     console.error("Error deleting comment", error);
   }
@@ -108,13 +108,11 @@ export const removeUserComment = async (postId: string, commentId: string) => {
 export const like = async (postId: string, method: string) => {
   try {
     const endpoint = `posts/${postId}/like`;
-    const response = await fetchData(endpoint, method);
-    console.log(response);
+    await fetchData(endpoint, method);
   } catch (error) {
     console.error("Error giving like to post", error);
   }
 };
-
 
 export const createNewPost = async (text: string) => {
   try {
@@ -125,15 +123,14 @@ export const createNewPost = async (text: string) => {
     if (!text.trim()) throw new Error("Text cannot be empty!");
 
     const formData = new URLSearchParams({ text }).toString();
-    console.log(formData)
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${jwt}`,
-        "Content-Type": "application/x-www-form-urlencoded", 
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: formData, 
+      body: formData,
     });
 
     if (!response.ok) {
@@ -142,14 +139,18 @@ export const createNewPost = async (text: string) => {
     }
 
     const data = await response.json();
-    console.log(data);
-    return data
+    return data;
   } catch (error) {
     console.error("Error creating post:", error);
   }
 };
 
-
-
-
-
+export const removePost = async (postId: string) => {
+  try {
+    const endpoint = `posts/${postId}`;
+    const data = await fetchData(endpoint, "DELETE");
+    return data;
+  } catch (error) {
+    console.error("Error deleting comment", error);
+  }
+};
