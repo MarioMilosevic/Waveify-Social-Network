@@ -79,3 +79,7 @@ export type UserHeaderProps = {
 export type SinglePostProps = {
   postId: string;
 }
+
+export type DeleteButtonProps = {
+  removeHandler:() => void
+}

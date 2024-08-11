@@ -3,7 +3,7 @@ import { useUserSlice } from "../../hooks/useUserSlice";
 import { FaMicrophone } from "react-icons/fa6";
 import { useState } from "react";
 import { createNewPost } from "../../utils/api";
-import { statusSchema, StatusValue } from "../../utils/zod";
+import { textSchema, StatusValue } from "../../utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -12,25 +12,24 @@ import Input from "../Input/Input";
 
 const NewPost = () => {
   const { user } = useUserSlice();
-  const [status, setStatus] = useState<string>("")
+  const [text, setText] = useState<string>("")
   const dispatch = useDispatch()
 
  const { register, handleSubmit } = useForm<StatusValue>({
-   defaultValues: { status: "" },
-   resolver: zodResolver(statusSchema),
+   defaultValues: { text: "" },
+   resolver: zodResolver(textSchema),
  });
 
   const onSubmit = async () => {
-  console.log('kasnije')
-    const { post } = await createNewPost(status)
+    const { post } = await createNewPost(text)
     dispatch(addUserPost(post))
-  console.log(post)
+    setText("")
   }  
   
   return (
     <div className={styles.post}>
       <div className={styles.container}>
-        <div className={styles.status}>
+        <div className={styles.text}>
           <img
             src={user.picture}
             alt={user.picture}
@@ -41,16 +40,15 @@ const NewPost = () => {
               placeholder="What's happening"
               title=""
               type="text"
-              value={status}
-              changeHandler={(e) => setStatus(e.target.value)}
-              zod={{ ...register("status") }}
+              value={text}
+              changeHandler={(e) => setText(e.target.value)}
+              zod={{ ...register("text") }}
             />
           </form>
         </div>
         <div className={styles.microphone_container}>
           <FaMicrophone className={styles.microphone_icon} />
-          {/* <button onClick={() => console.log("")}>New Post</button> */}
-          <button onClick={() => createNewPost(status)}>New Post</button>
+          <button onClick={onSubmit}>New Post</button>
         </div>
       </div>
     </div>

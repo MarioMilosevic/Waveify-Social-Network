@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
 import { like } from "../../utils/api";
 import { PostProps } from "../../utils/types";
+import DeleteButton from "../DeleteButton/DeleteButton";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const Post = ({ post }: PostProps) => {
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const formattedDate = formatDate(created_at);
+  console.log(user);
 
   const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
@@ -32,7 +34,12 @@ const Post = ({ post }: PostProps) => {
       <UserHeader user={user} formattedDate={formattedDate} />
       <div className={styles.image_container}>
         {image && <img src={image} alt={image} className={styles.image} />}
-        <p>{text}</p>
+        <div className={styles.text_container}>
+          <p>{text}</p>
+          {user.username === "nemanja_malesija" && (
+            <DeleteButton removeHandler={() => console.log("kasnije")} />
+          )}
+        </div>
       </div>
       <div className={styles.post_buttons}>
         <PostButton

@@ -12,24 +12,3 @@
   align-items: center;
 }
 
-.button_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  /* width: var(--comment-width); */
-  /* width: 100px; */
-}
-
-.button_container button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 1.6rem;
-}
-
-.button_container,
-.button_container button {
-  color: var(--error-color);
-}
