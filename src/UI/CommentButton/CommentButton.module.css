@@ -1,0 +1,24 @@
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 300ms ease-in-out;
+}
+
+.comment {
+  background-color: var(--gray-color);
+  color: var(--secondary-color);
+}
+
+.comment:hover {
+  background-color: var(--gray-color-hover-color);
+  color: var(--ternary-color);
+}
+
+.comment span {
+    font-size: 1.6rem;
+}

@@ -1,15 +1,10 @@
-.container {
-  display: flex;
-  gap: 1rem;
-}
-
-.like,
-.comment {
+.like {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 10px;
+  border: none;
   cursor: pointer;
   transition: all 300ms ease-in-out;
 }
@@ -34,18 +29,11 @@
   color: var(--ternary-color);
 }
 
-.comment {
-  background-color: var(--gray-color);
-  color: var(--secondary-color);
-}
-
-.comment:hover,
 .not_liked:hover {
   background-color: var(--gray-color-hover-color);
   color: var(--ternary-color);
 }
 
-.like span,
-.comment span {
+.like span {
   font-size: 1.6rem;
 }

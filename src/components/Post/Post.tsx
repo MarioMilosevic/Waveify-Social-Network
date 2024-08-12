@@ -1,6 +1,5 @@
 import styles from "./Post.module.css";
 import Modal from "../Modal/Modal";
-import PostButton from "../PostButton/PostButton";
 import UserHeader from "../UserHeader/UserHeader";
 import SinglePost from "../SinglePost/SinglePost";
 import { useState } from "react";
@@ -11,6 +10,9 @@ import { createPortal } from "react-dom";
 import { like, removePost } from "../../utils/api";
 import { PostProps } from "../../utils/types";
 import DeleteButton from "../DeleteButton/DeleteButton";
+import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
+import LikeButton from "../../UI/LikeButton/LikeButton";
+import CommentButton from "../../UI/CommentButton/CommentButton";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -30,12 +32,6 @@ const Post = ({ post }: PostProps) => {
     dispatch(removeUserPost(post_id));
   };
 
-  // const modalHandler = (isOpen: boolean) => {
-  //   setModalActive(isOpen);
-  // };
-
-  // closeModal
-
   return (
     <div className={styles.container}>
       <UserHeader user={user} formattedDate={formattedDate} />
@@ -50,19 +46,18 @@ const Post = ({ post }: PostProps) => {
       </div>
       <div className={styles.post_buttons}>
         {/* razbit ovo na 3 komponente 1 za wrapper 1 za lajk 1 za comment button */}
-        <PostButton
-          likes={likes}
-          comments={comments}
-          liked={liked}
-          likeHandler={likeHandler}
-          // odje ovo promjenit
-          commentHandler={() => modalHandler(true)}
-        />
+        <ButtonWrapper>
+          <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
+          <CommentButton
+            comments={comments}
+            onClick={() => setModalActive(true)}
+          />
+        </ButtonWrapper>
       </div>
       {modalActive &&
         createPortal(
           // <Modal modalHandler={modalHandler}>
-          <Modal closeModal={closeModal}>
+          <Modal closeModal={() => setModalActive(false)}>
             <SinglePost postId={post_id} />
           </Modal>,
           document.body

@@ -1,13 +1,15 @@
 import styles from "./SinglePost.module.css";
 import UserHeader from "../UserHeader/UserHeader";
 import Input from "../Input/Input";
-import PostButton from "../PostButton/PostButton";
+import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
+import LikeButton from "../../UI/LikeButton/LikeButton";
+import CommentButton from "../../UI/CommentButton/CommentButton";
 import Comment from "../Comment/Comment";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDate, /*updateUser*/ } from "../../utils/helperFunction";
+import { formatDate /*updateUser*/ } from "../../utils/helperFunction";
 import { postComment } from "../../utils/api";
 import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
@@ -130,13 +132,13 @@ const SinglePost = ({ postId }: SinglePostProps) => {
         </div>
       </form>
       <div className={styles.post_buttons}>
-        <PostButton
-          likes={likes}
-          comments={comments.length}
-          liked={liked}
-          likeHandler={likeHandler}
-          commentHandler={() => console.log("comment from modal")}
-        />
+        <ButtonWrapper>
+          <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
+          <CommentButton
+            comments={comments.length}
+            onClick={() => "comment from modal"}
+          />
+        </ButtonWrapper>
       </div>
       <div className={styles.comments_number}>
         {comments.length ? comments.length : "No"} comments
@@ -154,5 +156,3 @@ const SinglePost = ({ postId }: SinglePostProps) => {
 };
 
 export default SinglePost;
-
-

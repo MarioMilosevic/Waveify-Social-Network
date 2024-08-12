@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 export type InputProps = {
   title: string;
@@ -91,6 +91,21 @@ export type PostsProps = {
 
 export type MainContainerProps = {
   children:ReactNode
+}
+
+export type ButtonWrapperProps = {
+  children:ReactNode
+}
+
+export type LikeButtonProps = {
+  likes: number;
+  liked: boolean;
+  onClick: () => void;
+}
+
+export type CommentButtonProps = {
+  onClick: () => void;
+  comments: number;
 }
 
 // export type ModalProps = {
