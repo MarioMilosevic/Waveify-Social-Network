@@ -45,7 +45,6 @@ const Post = ({ post }: PostProps) => {
         </div>
       </div>
       <div className={styles.post_buttons}>
-        {/* razbit ovo na 3 komponente 1 za wrapper 1 za lajk 1 za comment button */}
         <ButtonWrapper>
           <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
           <CommentButton
@@ -56,7 +55,6 @@ const Post = ({ post }: PostProps) => {
       </div>
       {modalActive &&
         createPortal(
-          // <Modal modalHandler={modalHandler}>
           <Modal closeModal={() => setModalActive(false)}>
             <SinglePost postId={post_id} />
           </Modal>,

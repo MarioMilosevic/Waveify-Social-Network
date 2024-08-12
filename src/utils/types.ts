@@ -23,6 +23,11 @@ export type UserType = {
   posts: PostType[];
 };
 
+
+export type UserState = {
+  user: UserType;
+};
+
 export type PostType = {
   audio: null;
   comments: number;
@@ -38,6 +43,15 @@ export type PostType = {
     username: string;
   };
   user_id: string;
+};
+
+export type PostsState = {
+  posts: PostType[];
+};
+
+export type CommentActionPayload = {
+  postId: string;
+  action: "increment" | "decrement";
 };
 
 export type PostProps = {
@@ -59,13 +73,6 @@ export type CommentProps = {
   removeUserCommentHandler:(commentId:string) => void
 };
 
-export type PostButtonProps = {
-  likes: number;
-  comments: number;
-  liked: boolean;
-  likeHandler: () => void;
-  commentHandler:() => void
-};
 
 export type PostResponseType = {
   post: PostType;
@@ -108,6 +115,7 @@ export type CommentButtonProps = {
   comments: number;
 }
 
-// export type ModalProps = {
-//   modalHandler:() => void
-// }
+export type ModalProps = {
+  closeModal: () => void;
+  children:ReactNode
+}
