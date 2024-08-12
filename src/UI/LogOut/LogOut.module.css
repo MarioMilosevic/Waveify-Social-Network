@@ -1,0 +1,19 @@
+.log_out {
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--border-radius-medium);
+  cursor: pointer;
+}
+
+.log_out:hover {
+  background-color: var(--gray-color);
+}
+
+.log_out_icon {
+  color: var(--main-color);
+  width: 25px;
+  height: 25px;
+}

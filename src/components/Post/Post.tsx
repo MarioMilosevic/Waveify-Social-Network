@@ -4,19 +4,24 @@ import UserHeader from "../UserHeader/UserHeader";
 import SinglePost from "../SinglePost/SinglePost";
 import { useState } from "react";
 import { formatDate } from "../../utils/helperFunction";
-import { toggleLike, removeUserPost } from "../../redux/features/userSlice";
+import {
+  toggleLike,
+  removePostFromState,
+} from "../../redux/features/posts.Slice";
 import { useDispatch } from "react-redux";
 import { createPortal } from "react-dom";
-import { like, removePost } from "../../utils/api";
+import { like, removePostFromServer } from "../../utils/api";
 import { PostProps } from "../../utils/types";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
 import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
+import { useUserSlice } from "../../hooks/useUserSlice";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const { user: stateUser } = useUserSlice();
   const { created_at, user, image, likes, comments, liked, text, post_id } =
     post;
   const formattedDate = formatDate(created_at);
@@ -28,8 +33,8 @@ const Post = ({ post }: PostProps) => {
   };
 
   const removePostHandler = async () => {
-    removePost(post_id);
-    dispatch(removeUserPost(post_id));
+    removePostFromServer(post_id);
+    dispatch(removePostFromState(post_id));
   };
 
   return (
@@ -39,7 +44,7 @@ const Post = ({ post }: PostProps) => {
         {image && <img src={image} alt={image} className={styles.image} />}
         <div className={styles.text_container}>
           <p>{text}</p>
-          {user.username === "nemanja_malesija" && (
+          {user.username === stateUser.username && (
             <DeleteButton removeHandler={removePostHandler} />
           )}
         </div>

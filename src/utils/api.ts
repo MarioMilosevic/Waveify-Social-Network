@@ -1,5 +1,6 @@
 import { baseUrl } from "./constants";
-import { setUser, setUserPosts } from "../redux/features/userSlice";
+import { setUser } from "../redux/features/userSlice";
+import { setPosts } from "../redux/features/posts.Slice";
 import { Dispatch } from "redux";
 import { NavigateFunction } from "react-router-dom";
 import { updateUser } from "./helperFunction";
@@ -57,7 +58,7 @@ export const getUserInformation = async (
     ]);
     const updatedUser = updateUser(account);
     dispatch(setUser(updatedUser));
-    dispatch(setUserPosts(posts));
+    dispatch(setPosts(posts));
     navigate("/home");
   } catch (error) {
     console.error("Error fetching user information:", error);
@@ -145,7 +146,7 @@ export const createNewPost = async (text: string) => {
   }
 };
 
-export const removePost = async (postId: string) => {
+export const removePostFromServer = async (postId: string) => {
   try {
     const endpoint = `posts/${postId}`;
     const data = await fetchData(endpoint, "DELETE");

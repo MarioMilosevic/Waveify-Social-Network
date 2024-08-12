@@ -119,3 +119,7 @@ export type ModalProps = {
   closeModal: () => void;
   children:ReactNode
 }
+
+export type LogOutProps = {
+  logOut: () => void
+}

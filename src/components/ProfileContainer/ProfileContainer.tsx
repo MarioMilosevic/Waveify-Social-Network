@@ -1,10 +1,11 @@
-import styles from "./Profile.module.css";
+import styles from "./ProfileContainer.module.css";
 import marioImage from "../../assets/mariomilosevic.jpg";
-import { CgProfile } from "react-icons/cg";
-import { IoMdExit } from "react-icons/io";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-const Profile = () => {
+import LogOut from "../../UI/LogOut/LogOut";
+import Profile from "../../UI/Profile/Profile";
+
+const ProfileContainer = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const navigate = useNavigate()
   const logOut = () => {
@@ -21,18 +22,12 @@ const Profile = () => {
           onClick={() => setIsVisible((prev) => !prev)}
         />
         <div className={isVisible ? styles.visible : styles.not_visible}>
-          <div className={styles.profile_div}>
-            <CgProfile className={styles.profile_icon} />
-            <span>My profile</span>
-          </div>
-          <div className={styles.log_out} onClick={logOut}>
-            <IoMdExit className={styles.log_out_icon} />
-            <span>Log out</span>
-          </div>
+          <Profile/>
+          <LogOut logOut={logOut}/>
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default ProfileContainer;

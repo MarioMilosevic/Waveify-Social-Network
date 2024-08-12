@@ -6,6 +6,7 @@
   gap: 1rem;
   border-radius: 10px;
   background-color: var(--ternary-color);
+  margin-bottom: 4rem;
 }
 
 .text {

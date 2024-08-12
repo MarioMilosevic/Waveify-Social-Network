@@ -18,7 +18,7 @@ import { buttonIconSize } from "../../utils/constants";
 import { success } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
-import { updateComment, toggleLike } from "../../redux/features/userSlice";
+import { updateComment, toggleLike } from "../../redux/features/posts.Slice";
 import { like } from "../../utils/api";
 import { SinglePostProps } from "../../utils/types";
 

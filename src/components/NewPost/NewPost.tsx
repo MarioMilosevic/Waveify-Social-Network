@@ -8,7 +8,7 @@ import { textSchema, StatusValue } from "../../utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addUserPost } from "../../redux/features/userSlice";
+import { addPostFromState } from "../../redux/features/posts.Slice";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -22,7 +22,7 @@ const NewPost = () => {
 
   const onSubmit = async () => {
     const { post } = await createNewPost(text)
-    dispatch(addUserPost(post))
+    dispatch(addPostFromState(post))
     setText("")
   }  
   
