@@ -1,5 +1,5 @@
 import { CgProfile } from "react-icons/cg";
-import styles from "./Mario.module.css"
+import styles from "./Profile.module.css"
 const Profile = () => {
   return (
     <div className={styles.profile_div}>

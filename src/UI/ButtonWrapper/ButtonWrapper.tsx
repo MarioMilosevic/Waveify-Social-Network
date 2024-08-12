@@ -1,8 +1,7 @@
 import { ButtonWrapperProps } from "../../utils/types"
-import styles from "./ButtonWrapper.module.css"
 const ButtonWrapper = ({children}:ButtonWrapperProps) => {
   return (
-    <div className={styles.container}>
+    <div style={{display:"flex", gap:"1rem"}}>
       {children}
     </div>
   )

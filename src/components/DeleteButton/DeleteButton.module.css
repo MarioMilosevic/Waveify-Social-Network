@@ -1,7 +1,6 @@
 .button_container {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   width: var(--comment-width);
   gap: 1rem;
 }
