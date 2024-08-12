@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const success = () => toast.success("Comment successfully removed", {
+export const removeToast = (text:string) => toast.success(`${text}`, {
   position: "top-center",
   autoClose: 5000,
   hideProgressBar: false,
@@ -11,3 +11,5 @@ export const success = () => toast.success("Comment successfully removed", {
   progress: undefined,
   theme: "dark",
 });
+
+

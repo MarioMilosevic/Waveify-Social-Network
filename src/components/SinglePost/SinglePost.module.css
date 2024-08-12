@@ -38,12 +38,6 @@
   background-color: white;
 }
 
-.post_buttons {
-  display: flex;
-  padding: 1.5rem 0rem;
-  align-items: center;
-}
-
 .comments_number {
   font-size: 1.8rem;
   padding:1rem 0;

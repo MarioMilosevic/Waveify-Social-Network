@@ -10,7 +10,6 @@ const Comment = ({
   postId,
   removeUserCommentHandler,
 }: CommentProps) => {
-  console.log(comment)
   const { created_at, text, username, comment_id } = comment;
   const formattedDate = formatDate(created_at);
 

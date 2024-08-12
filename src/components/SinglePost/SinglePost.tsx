@@ -15,7 +15,7 @@ import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-import { success } from "../../utils/toasts";
+import { removeToast } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/posts.Slice";
@@ -80,7 +80,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
       const updatedComments = prev?.comments.filter(
         (comment) => comment.comment_id !== commentId
       );
-      success();
+      removeToast("Comment sucessfully removed !");
       return {
         ...prev,
         comments: updatedComments,
@@ -113,10 +113,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
       {/* napravit reusable komponentu USERiNFO ili userHandler sta god  props={small, normal itd}*/}
-      <PostImage image={image}>
-        <p>{text}</p>
-      </PostImage>
-      {/*  */}
+      <PostImage image={image} text={text} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.comment}>
           <Input
@@ -132,7 +129,6 @@ const SinglePost = ({ postId }: SinglePostProps) => {
           </button>
         </div>
       </form>
-      <div className={styles.post_buttons}>
         <ButtonWrapper>
           <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
           <CommentButton
@@ -140,7 +136,6 @@ const SinglePost = ({ postId }: SinglePostProps) => {
             onClick={() => "comment from modal"}
           />
         </ButtonWrapper>
-      </div>
       <div className={styles.comments_number}>
         {comments.length ? comments.length : "No"} comments
         {comments.map((comment) => (

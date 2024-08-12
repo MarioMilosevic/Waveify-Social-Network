@@ -18,6 +18,7 @@ import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import PostImage from "../../UI/PostImage/PostImage";
+import { removeToast } from "../../utils/toasts";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -36,20 +37,16 @@ const Post = ({ post }: PostProps) => {
   const removePostHandler = async () => {
     removePostFromServer(post_id);
     dispatch(removePostFromState(post_id));
+    removeToast("Post sucessfully removed !");
   };
 
   return (
     <div className={styles.container}>
       <UserHeader user={user} formattedDate={formattedDate} />
-
-      <PostImage image={image}>
-        {/* {image && <img src={image} alt={image} className={styles.image} />} */}
-        <div className={styles.text_container}>
-          <p className={styles.text}>{text}</p>
-          {user.username === stateUser.username && (
-            <DeleteButton removeHandler={removePostHandler} />
-          )}
-        </div>
+      <PostImage image={image} text={text}>
+        {user.username === stateUser.username && (
+          <DeleteButton removeHandler={removePostHandler} />
+        )}
       </PostImage>
 
       <ButtonWrapper>

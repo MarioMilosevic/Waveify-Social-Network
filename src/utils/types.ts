@@ -125,6 +125,7 @@ export type LogOutProps = {
 }
 
 export type PostImageProps = {
-  children: ReactNode;
+  children?: ReactNode;
+  text: string;
   image: string;
 }
