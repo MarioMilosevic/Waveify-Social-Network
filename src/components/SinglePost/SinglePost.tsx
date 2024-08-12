@@ -109,6 +109,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
   return (
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
+      {/* napravit reusable komponentu USERiNFO ili userHandler sta god  props={small, normal itd}*/}
       <div className={styles.image_container}>
         {image && <img src={image} alt={text} className={styles.image} />}
         <p>{text}</p>

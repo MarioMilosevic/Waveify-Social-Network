@@ -12,16 +12,18 @@ const PostButton = ({
 }: PostButtonProps) => {
   const likeClass = liked ? styles.liked : styles.not_liked;
 
+  // like button i comment button u UI folder
+
   return (
     <div className={styles.container}>
-      <div className={`${styles.like} ${likeClass}`} onClick={likeHandler}>
+      <button className={`${styles.like} ${likeClass}`} onClick={likeHandler}>
         <FaHeart size={buttonIconSize} className="heart-icon" />
         <span>{likes}</span>
-      </div>
-      <div className={styles.comment} onClick={commentHandler}>
+      </button>
+      <button className={styles.comment} onClick={commentHandler}>
         <FaComment size={buttonIconSize} className="comment-icon" />
         <span>{comments}</span>
-      </div>
+      </button>
     </div>
   );
 };

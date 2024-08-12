@@ -1,15 +1,6 @@
-.container {
-  width: 70%;
-  padding: 2rem;
-}
-
 .list {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   list-style-type: none;
-}
-
-.toast {
-  font-size: 1.6rem;
 }

@@ -1,21 +1,22 @@
-import styles from "./Main.module.css";
 import NewPost from "../NewPost/NewPost";
 import Post from "../Post/Post";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { ToastContainer } from "react-toastify";
+import Posts from "../../UI/Posts/Posts";
+import MainContainer from "../../UI/MainContainer/MainContainer";
 const Main = () => {
   const { user } = useUserSlice();
-  console.log(user)
+  console.log(user);
   return (
-    <div className={styles.container}>
+    <MainContainer>
       <NewPost />
-      <div className={styles.list}>
+      <Posts>
         {user.posts.map((post) => (
           <Post key={post.post_id} post={post} />
         ))}
-      </div>
-        <ToastContainer className={styles.toast} />
-    </div>
+      </Posts>
+      <ToastContainer style={{ fontSize: "1.6rem" }} />
+    </MainContainer>
   );
 };
 

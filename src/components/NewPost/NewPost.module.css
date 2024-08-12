@@ -1,71 +1,68 @@
-.post {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding-bottom: 2rem;
-}
-
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
-    gap: 1rem;
-    border-radius: 10px;
-    background-color: var(--ternary-color);
-}
-.picture{
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 9999px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  gap: 1rem;
+  border-radius: 10px;
+  background-color: var(--ternary-color);
 }
 
+.text {
+  display: flex;
+  gap: 2rem;
+}
+
+.picture {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 9999px;
+}
 
 .status {
-    font-size: 1.6rem;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-
-
-.form{
-font-size: 1.6rem;
-font-weight: 400;
-color: var(--gray-color);
-width: 100%;
-padding-bottom: 1.2rem;
+.form {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gray-color);
+  width: 100%;
 }
 
 .microphone_container {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 6.6rem;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 6.6rem;
+  align-items: center;
 }
 
-.microphone_icon{
-    cursor: pointer;
-    color: var(--button-active-color);
+.microphone_icon {
+  cursor: pointer;
+  color: var(--button-active-color);
 }
 
-.microphone_icon:hover{
-    color: var(--button-active-hover-color);
+.microphone_icon:hover {
+  color: var(--button-active-hover-color);
 }
 
 .microphone_container button {
-    border:none;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    font-size: 1.6rem;
-    font-weight: 600;
-    cursor: pointer;
-    background-color: var(--gray-color);
-    color: var(--secondary-color);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--gray-color);
+  color: var(--secondary-color);
 }
 
-button:hover{
-    background-color: var(--gray-color-hover-color);
+button:hover {
+  background-color: var(--gray-color-hover-color);
 }

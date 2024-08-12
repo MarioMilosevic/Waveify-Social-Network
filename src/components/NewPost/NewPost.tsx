@@ -1,4 +1,5 @@
 import styles from "./NewPost.module.css";
+import Input from "../Input/Input";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { FaMicrophone } from "react-icons/fa6";
 import { useState } from "react";
@@ -8,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addUserPost } from "../../redux/features/userSlice";
-import Input from "../Input/Input";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -27,7 +27,6 @@ const NewPost = () => {
   }  
   
   return (
-    <div className={styles.post}>
       <div className={styles.container}>
         <div className={styles.text}>
           <img
@@ -51,7 +50,6 @@ const NewPost = () => {
           <button onClick={onSubmit}>New Post</button>
         </div>
       </div>
-    </div>
   );
 };
 

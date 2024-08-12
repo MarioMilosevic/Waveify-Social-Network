@@ -6,7 +6,7 @@ export const updateUser = (user: UserType) => {
     ...user,
     full_name: "Mario Milosevic",
     picture: marioPicture,
-    username: "mario_milosevic",
+    // username: "mario_milosevic",
   };
 };
 

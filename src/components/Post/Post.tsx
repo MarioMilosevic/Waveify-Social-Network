@@ -26,16 +26,15 @@ const Post = ({ post }: PostProps) => {
   };
 
   const removePostHandler = async () => {
-    removePost(post_id)
-    // ispod je greska
-    dispatch(removeUserPost(post_id))
-  }
-  
-  const modalHandler = (isOpen: boolean) => {
-    setModalActive(isOpen);
+    removePost(post_id);
+    dispatch(removeUserPost(post_id));
   };
 
+  // const modalHandler = (isOpen: boolean) => {
+  //   setModalActive(isOpen);
+  // };
 
+  // closeModal
 
   return (
     <div className={styles.container}>
@@ -50,18 +49,21 @@ const Post = ({ post }: PostProps) => {
         </div>
       </div>
       <div className={styles.post_buttons}>
+        {/* razbit ovo na 3 komponente 1 za wrapper 1 za lajk 1 za comment button */}
         <PostButton
           likes={likes}
           comments={comments}
           liked={liked}
           likeHandler={likeHandler}
+          // odje ovo promjenit
           commentHandler={() => modalHandler(true)}
         />
       </div>
       {modalActive &&
         createPortal(
-          <Modal modalHandler={modalHandler}>
-            {<SinglePost postId={post_id} />}
+          // <Modal modalHandler={modalHandler}>
+          <Modal closeModal={closeModal}>
+            <SinglePost postId={post_id} />
           </Modal>,
           document.body
         )}

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 export type InputProps = {
   title: string;
@@ -83,3 +84,15 @@ export type SinglePostProps = {
 export type DeleteButtonProps = {
   removeHandler:() => void
 }
+
+export type PostsProps = {
+  children:ReactNode
+}
+
+export type MainContainerProps = {
+  children:ReactNode
+}
+
+// export type ModalProps = {
+//   modalHandler:() => void
+// }
