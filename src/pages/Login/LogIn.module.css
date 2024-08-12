@@ -2,11 +2,11 @@
   padding-top: 10rem;
   width: 420px;
   margin: 0 auto;
-  align-items: center;
 }
 
 .container,
 .form {
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 2rem;

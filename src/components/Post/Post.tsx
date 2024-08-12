@@ -1,5 +1,5 @@
 import styles from "./Post.module.css";
-import Modal from "../Modal/Modal";
+import Modal from "../../UI/Modal/Modal";
 import UserHeader from "../UserHeader/UserHeader";
 import SinglePost from "../SinglePost/SinglePost";
 import { useState } from "react";
@@ -17,6 +17,7 @@ import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
 import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
+import PostImage from "../../UI/PostImage/PostImage";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -40,24 +41,24 @@ const Post = ({ post }: PostProps) => {
   return (
     <div className={styles.container}>
       <UserHeader user={user} formattedDate={formattedDate} />
-      <div className={styles.image_container}>
-        {image && <img src={image} alt={image} className={styles.image} />}
+
+      <PostImage image={image}>
+        {/* {image && <img src={image} alt={image} className={styles.image} />} */}
         <div className={styles.text_container}>
-          <p>{text}</p>
+          <p className={styles.text}>{text}</p>
           {user.username === stateUser.username && (
             <DeleteButton removeHandler={removePostHandler} />
           )}
         </div>
-      </div>
-      <div className={styles.post_buttons}>
-        <ButtonWrapper>
-          <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
-          <CommentButton
-            comments={comments}
-            onClick={() => setModalActive(true)}
-          />
-        </ButtonWrapper>
-      </div>
+      </PostImage>
+
+      <ButtonWrapper>
+        <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
+        <CommentButton
+          comments={comments}
+          onClick={() => setModalActive(true)}
+        />
+      </ButtonWrapper>
       {modalActive &&
         createPortal(
           <Modal closeModal={() => setModalActive(false)}>

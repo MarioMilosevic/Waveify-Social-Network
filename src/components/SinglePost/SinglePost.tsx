@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/posts.Slice";
 import { like } from "../../utils/api";
 import { SinglePostProps } from "../../utils/types";
+import PostImage from "../../UI/PostImage/PostImage";
 
 const SinglePost = ({ postId }: SinglePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
@@ -112,10 +113,10 @@ const SinglePost = ({ postId }: SinglePostProps) => {
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
       {/* napravit reusable komponentu USERiNFO ili userHandler sta god  props={small, normal itd}*/}
-      <div className={styles.image_container}>
-        {image && <img src={image} alt={text} className={styles.image} />}
+      <PostImage image={image}>
         <p>{text}</p>
-      </div>
+      </PostImage>
+      {/*  */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.comment}>
           <Input

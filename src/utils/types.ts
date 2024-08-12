@@ -123,3 +123,8 @@ export type ModalProps = {
 export type LogOutProps = {
   logOut: () => void
 }
+
+export type PostImageProps = {
+  children: ReactNode;
+  image: string;
+}
