@@ -19,6 +19,7 @@ import CommentButton from "../../UI/CommentButton/CommentButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import PostInfo from "../../UI/PostInfo/PostInfo";
 import { removeToast } from "../../utils/toasts";
+
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
 
 const Post = ({ post }: PostProps) => {

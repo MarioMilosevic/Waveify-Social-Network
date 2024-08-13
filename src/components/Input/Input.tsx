@@ -21,6 +21,7 @@ const Input = ({
     <div className={styles.container}>
       {title && <p>{title}</p>}
       <input
+        className={styles.input}
         type={type}
         placeholder={placeholder}
         value={value}
