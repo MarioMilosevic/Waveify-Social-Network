@@ -129,3 +129,7 @@ export type PostInfoProps = {
   text: string;
   image: string;
 }
+
+export type AudioPlayerProps = {
+  audio: string;
+}
