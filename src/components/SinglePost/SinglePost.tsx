@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/posts.Slice";
 import { like } from "../../utils/api";
 import { SinglePostProps } from "../../utils/types";
-import PostImage from "../../UI/PostImage/PostImage";
+import PostInfo from "../../UI/PostInfo/PostInfo";
 
 const SinglePost = ({ postId }: SinglePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
@@ -113,7 +113,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
       {/* napravit reusable komponentu USERiNFO ili userHandler sta god  props={small, normal itd}*/}
-      <PostImage image={image} text={text} />
+      <PostInfo image={image} text={text} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.comment}>
           <Input
@@ -129,13 +129,13 @@ const SinglePost = ({ postId }: SinglePostProps) => {
           </button>
         </div>
       </form>
-        <ButtonWrapper>
-          <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
-          <CommentButton
-            comments={comments.length}
-            onClick={() => "comment from modal"}
-          />
-        </ButtonWrapper>
+      <ButtonWrapper>
+        <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
+        <CommentButton
+          comments={comments.length}
+          onClick={() => "comment from modal"}
+        />
+      </ButtonWrapper>
       <div className={styles.comments_number}>
         {comments.length ? comments.length : "No"} comments
         {comments.map((comment) => (

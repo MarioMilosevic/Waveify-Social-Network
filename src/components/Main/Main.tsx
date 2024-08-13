@@ -6,7 +6,6 @@ import MainContainer from "../../UI/MainContainer/MainContainer";
 import { usePostsSlice } from "../../hooks/usePostsSlice";
 const Main = () => {
   const { posts } = usePostsSlice()
-  // console.log(posts)
   return (
     <MainContainer>
       <NewPost />

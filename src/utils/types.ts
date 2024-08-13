@@ -124,7 +124,7 @@ export type LogOutProps = {
   logOut: () => void
 }
 
-export type PostImageProps = {
+export type PostInfoProps = {
   children?: ReactNode;
   text: string;
   image: string;

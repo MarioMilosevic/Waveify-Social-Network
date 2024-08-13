@@ -17,17 +17,28 @@ import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
 import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
-import PostImage from "../../UI/PostImage/PostImage";
+import PostInfo from "../../UI/PostInfo/PostInfo";
 import { removeToast } from "../../utils/toasts";
+import AudioPlayer from "../AudioPlayer/AudioPlayer";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { user: stateUser } = useUserSlice();
-  const { created_at, user, image, likes, comments, liked, text, post_id } =
-    post;
+  const {
+    audio,
+    created_at,
+    user,
+    image,
+    likes,
+    comments,
+    liked,
+    text,
+    post_id,
+  } = post;
+  console.log(audio);
+
   const formattedDate = formatDate(created_at);
-  console.log(user);
 
   const likeHandler = () => {
     like(post_id, liked ? "DELETE" : "POST");
@@ -43,11 +54,12 @@ const Post = ({ post }: PostProps) => {
   return (
     <div className={styles.container}>
       <UserHeader user={user} formattedDate={formattedDate} />
-      <PostImage image={image} text={text}>
+      <PostInfo image={image} text={text}>
         {user.username === stateUser.username && (
           <DeleteButton removeHandler={removePostHandler} />
         )}
-      </PostImage>
+      </PostInfo>
+      {audio && <AudioPlayer audio={audio} />}
 
       <ButtonWrapper>
         <LikeButton likes={likes} liked={liked} onClick={likeHandler} />
