@@ -7,6 +7,7 @@ import { formatTime } from "../../utils/helperFunction";
 const AudioPlayer = ({ audio }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [audioDuration, setAudioDuration] = useState<string>("0:00");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
@@ -17,7 +18,7 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
 
     const handleAudioEnd = () => {
       setIsPlaying(false);
-      setProgress(0); 
+      setProgress(0);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -37,11 +38,13 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
     };
   }, [audio]);
 
-
   const updateProgress = () => {
     if (audioRef.current) {
       const currentTime = audioRef.current.currentTime;
       const duration = audioRef.current.duration;
+      const audioDuration =
+        duration === Infinity ? "0:00" : `${formatTime(duration)}`;
+      setAudioDuration(audioDuration);
       const progressPercentage = (currentTime / duration) * 100;
       setProgress(progressPercentage);
 
@@ -51,6 +54,7 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
 
   const playAudio = () => {
     if (audioRef.current) {
+      // setMario(formatTime(audioRef.current.currentTime));
       audioRef.current.play();
       setIsPlaying(true);
       animationRef.current = requestAnimationFrame(updateProgress);
@@ -87,9 +91,7 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
           {audioRef.current ? formatTime(audioRef.current.currentTime) : "0:00"}
         </span>
         <span>/</span>
-        <span>
-          {audioRef.current ? formatTime(audioRef.current.duration) : "0:00"}
-        </span>
+        <span>{audioDuration}</span>
       </div>
     </div>
   );
