@@ -6,12 +6,12 @@
   gap: 1rem;
   border-radius: 10px;
   background-color: var(--ternary-color);
-  margin-bottom: 4rem;
 }
 
 .text {
   display: flex;
   gap: 2rem;
+  padding-bottom: 1rem;
 }
 
 .picture {
@@ -40,8 +40,9 @@
 .microphone_container {
   display: flex;
   justify-content: space-between;
-  padding-left: 6.6rem;
+  padding-left: 7.5rem;
   align-items: center;
+  /* border: 1px solid black; */
 }
 
 .microphone_icon {
@@ -53,7 +54,7 @@
   color: var(--button-active-hover-color);
 }
 
-.microphone_container button {
+.new_post_button {
   border: none;
   padding: 1rem 2rem;
   border-radius: 1rem;
@@ -62,6 +63,7 @@
   cursor: pointer;
   background-color: var(--gray-color);
   color: var(--secondary-color);
+  /* margin-left: 2rem; */
 }
 
 button:hover {
