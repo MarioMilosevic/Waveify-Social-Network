@@ -37,7 +37,6 @@ const Post = ({ post }: PostProps) => {
     text,
     post_id,
   } = post;
-  console.log(audio);
 
   const formattedDate = formatDate(created_at);
 

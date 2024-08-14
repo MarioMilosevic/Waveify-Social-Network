@@ -1,29 +1,49 @@
 import styles from "./ProfileContainer.module.css";
 import marioImage from "../../assets/mariomilosevic.jpg";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import LogOut from "../../UI/LogOut/LogOut";
 import Profile from "../../UI/Profile/Profile";
 
 const ProfileContainer = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const navigate = useNavigate()
+  const windowRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        windowRef.current &&
+        !windowRef.current.contains(event.target as Node)
+      ) {
+        setIsVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const logOut = () => {
-    localStorage.removeItem('jwt')
-    navigate('/login')
-  }
+    localStorage.removeItem("jwt");
+    navigate("/login");
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={windowRef}>
       <div className={styles.image_container}>
         <img
           src={marioImage}
-          alt={marioImage}
+          alt="Profile"
           className={styles.profile_image}
           onClick={() => setIsVisible((prev) => !prev)}
         />
         <div className={isVisible ? styles.visible : styles.not_visible}>
-          <Profile/>
-          <LogOut logOut={logOut}/>
+          <Profile />
+          <LogOut logOut={logOut} />
         </div>
       </div>
     </div>
