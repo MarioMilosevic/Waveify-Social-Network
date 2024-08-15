@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import AudioRecorder from "../AudioRecorder/AudioRecordet";
-import Mario from "../../Audio/Mario";
+import AudioVisualiser from "../../Audio/AudioVisualiser/AudioVisualiser";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -61,7 +61,7 @@ const NewPost = () => {
           New Post
         </button>
       </div>
-      <Mario />
+      <AudioVisualiser />
     </div>
   );
 };
