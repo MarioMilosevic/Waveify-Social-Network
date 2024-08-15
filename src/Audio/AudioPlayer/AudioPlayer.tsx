@@ -1,10 +1,10 @@
 import { AudioPlayerProps } from "../../utils/types";
-import { FaPlayCircle, FaPauseCircle } from "react-icons/fa";
+import { FaPlayCircle, FaPauseCircle, FaStopCircle } from "react-icons/fa";
 import styles from "./AudioPlayer.module.css";
 import { useState, useRef, useEffect } from "react";
 import { formatTime } from "../../utils/helperFunction";
 
-const AudioPlayer = ({ audio }: AudioPlayerProps) => {
+const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const [audioDuration, setAudioDuration] = useState<string>("0:00");
@@ -54,7 +54,6 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
 
   const playAudio = () => {
     if (audioRef.current) {
-      // setMario(formatTime(audioRef.current.currentTime));
       audioRef.current.play();
       setIsPlaying(true);
       animationRef.current = requestAnimationFrame(updateProgress);
@@ -73,14 +72,16 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
 
   return (
     <div className={styles.container}>
-      {isPlaying ? (
+      {isRecording ? (
+        <FaStopCircle className={styles.stop_icon} />
+      ) : isPlaying ? (
         <FaPauseCircle className={styles.pause_icon} onClick={pauseAudio} />
       ) : (
         <FaPlayCircle className={styles.play_icon} onClick={playAudio} />
       )}
       <input
         type="range"
-        className={styles.range}
+        className={`${styles.range} ${isRecording && styles.recording}`}
         min={0}
         max={100}
         value={progress}
@@ -98,3 +99,9 @@ const AudioPlayer = ({ audio }: AudioPlayerProps) => {
 };
 
 export default AudioPlayer;
+
+// // /**
+// //  * kroz prop recording boolean npr da renderujem pravi css
+// //  * ako je recording false da ide ovaj kao i do sada, input range ovo ono
+// //  * ako je recording true da ide isto input range ali da nije ova linija velika vec da skacu decibeli ovo ono, canvas ?
+// //  */

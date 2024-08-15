@@ -20,7 +20,7 @@ import { useUserSlice } from "../../hooks/useUserSlice";
 import PostInfo from "../../UI/PostInfo/PostInfo";
 import { removeToast } from "../../utils/toasts";
 
-import AudioPlayer from "../AudioPlayer/AudioPlayer";
+import AudioPlayer from "../../Audio/AudioPlayer/AudioPlayer";
 
 const Post = ({ post }: PostProps) => {
   const [modalActive, setModalActive] = useState<boolean>(false);
@@ -59,7 +59,7 @@ const Post = ({ post }: PostProps) => {
           <DeleteButton removeHandler={removePostHandler} />
         )}
       </PostInfo>
-      {audio && <AudioPlayer audio={audio} />}
+      {audio && <AudioPlayer audio={audio} isRecording={false} />}
 
       <ButtonWrapper>
         <LikeButton likes={likes} liked={liked} onClick={likeHandler} />

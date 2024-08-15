@@ -3,10 +3,10 @@ import logo from "../../assets/logo.png";
 import Home from "../Home/Home";
 const Sidebar = () => {
   return (
-    <div className={styles.sidebar}>
+    <aside className={styles.sidebar}>
       <img src={logo} alt={logo} />
       <Home />
-    </div>
+    </aside>
   );
 };
 

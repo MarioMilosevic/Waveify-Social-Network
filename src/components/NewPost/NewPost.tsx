@@ -1,6 +1,6 @@
 import styles from "./NewPost.module.css";
 import Input from "../Input/Input";
-import AudioPlayer from "../AudioPlayer/AudioPlayer";
+import AudioPlayer from "../../Audio/AudioPlayer/AudioPlayer";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { FaMicrophone } from "react-icons/fa6";
 import { useState } from "react";
@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
 import DeleteButton from "../DeleteButton/DeleteButton";
+import AudioRecorder from "../AudioRecorder/AudioRecordet";
+import Mario from "../../Audio/Mario";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -44,10 +46,10 @@ const NewPost = () => {
           />
         </form>
       </div>
-      {isRecordingAudio && <AudioPlayer audio="" />}
+      {isRecordingAudio && <AudioPlayer audio="" isRecording={true} />}
       <div className={styles.microphone_container}>
         {isRecordingAudio ? (
-          <DeleteButton removeHandler={() => setIsRecordingAudio(false)}/>
+          <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />
         ) : (
           <FaMicrophone
             className={styles.microphone_icon}
@@ -59,6 +61,7 @@ const NewPost = () => {
           New Post
         </button>
       </div>
+      <Mario />
     </div>
   );
 };

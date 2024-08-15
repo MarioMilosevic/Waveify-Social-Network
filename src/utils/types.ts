@@ -132,4 +132,5 @@ export type PostInfoProps = {
 
 export type AudioPlayerProps = {
   audio: string;
+  isRecording: boolean;
 }

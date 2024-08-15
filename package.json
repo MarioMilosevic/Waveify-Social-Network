@@ -20,6 +20,7 @@
     "react-router": "^6.25.1",
     "react-router-dom": "^6.25.1",
     "react-toastify": "^10.0.5",
+    "react-use-audio-recorder": "^0.3.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
