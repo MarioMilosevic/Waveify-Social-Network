@@ -9,14 +9,24 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isRecordingState, setIsRecordingState] = useState<boolean>(isRecording)
   const [progress, setProgress] = useState<number>(0);
+  // stejt za audio
   const [audioRecord, setAudioRecord] = useState<string>(audio)
   const [audioDuration, setAudioDuration] = useState<string>("0:00");
+
+  const [audioURL, setAudioURL] = useState("");
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(audioRecord);
+    }
+    
+    if (audioRef.current) {
+      audioRef.current.src = audioRecord
     }
 
     const handleAudioEnd = () => {
@@ -55,12 +65,49 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     }
   };
 
+ const startRecording = async () => {
+   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+   mediaRecorderRef.current = new MediaRecorder(stream);
+   audioChunksRef.current = [];
+
+   mediaRecorderRef.current.ondataavailable = (event) => {
+     if (event.data.size > 0) {
+       audioChunksRef.current.push(event.data);
+     }
+   };
+
+   mediaRecorderRef.current.onstop = () => {
+     const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+  const audioUrl = URL.createObjectURL(audioBlob);
+     setAudioURL(audioUrl);
+    //  setAudioRecord(
+    //    "https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/54f0f6d5-f53c-47f7-a1aa-bdb731e80597-blob"
+    //  );
+  setAudioRecord(audioUrl);
+  console.log(audioUrl);
+   };
+
+   mediaRecorderRef.current.start();
+ };
+
+  const stopRecording = () => {
+   console.log(mediaRecorderRef)
+    mediaRecorderRef.current.stop();
+    setIsRecordingState(false)
+    console.log(audioURL)
+    // setAudioRecord(audioURL)
+ };
+
+
   const playAudio = () => {
     if (audioRef.current) {
+      console.log(audioRecord)
+      console.log(audioURL)
+      console.dir(audioRef.current)
       audioRef.current.play();
       setIsPlaying(true);
       animationRef.current = requestAnimationFrame(updateProgress);
-    }
+    } 
   };
 
   const pauseAudio = () => {
@@ -73,10 +120,6 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     }
   };
 
-  const stopRecording = () => {
-    console.log('mario')
-    setIsRecordingState(false)
-  }
 
   return (
     <div className={styles.container}>
@@ -93,12 +136,12 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
           className={`${styles.range} ${isRecordingState && styles.recording}`}
           min={0}
           max={100}
-          value={progress}
+          value={progress || 0}
           readOnly
         />
         {isRecordingState && (
           <div className={styles.audio_visualiser}>
-            <AudioVisualizer />
+            <AudioVisualizer startRecording={startRecording } />
           </div>
         )}
       </div>
@@ -114,9 +157,3 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
 };
 
 export default AudioPlayer;
-
-// // /**
-// //  * kroz prop recording boolean npr da renderujem pravi css
-// //  * ako je recording false da ide ovaj kao i do sada, input range ovo ono
-// //  * ako je recording true da ide isto input range ali da nije ova linija velika vec da skacu decibeli ovo ono, canvas ?
-// //  */

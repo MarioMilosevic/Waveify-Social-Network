@@ -1,14 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./AudioVisualiser.module.css";
 
-const AudioVisualiser = () => {
+const AudioVisualiser = ({startRecording}) => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
 
-  
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioChunks, setAudioChunks] = useState(null);
-  const [audioURL, setAudioURL] = useState(null);
+  const [mediaRecorder, setMediaRecorder] = useState()
   
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -74,36 +71,8 @@ const AudioVisualiser = () => {
     };
 
     handleAudio();
-  }, []);
-
-  const startRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.start()
-      mediaRecorder.ondataavailable = e => {
-        setAudioChunks((prev) => [...prev, e.data])
-      }
-    }
-  }
-
-  const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop()
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: "audio/wav" })
-        const audioUrl = URL.createObjectURL(audioBlob)
-        console.log("audioUrl", audioUrl)
-        setAudioURL(audioUrl)
-        setAudioChunks([])
-      }
-    }
-  }
-
-  const playRecording = () => {
-    if (audioURL) {
-      const audio = new Audio(audioURL)
-      audio.play()
-    }
-  }
+    startRecording()
+  }, [startRecording]);
 
   return (
     <div className={styles.container}>
