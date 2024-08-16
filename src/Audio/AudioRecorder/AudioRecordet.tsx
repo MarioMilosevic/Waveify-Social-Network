@@ -1,39 +1,38 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const AudioRecorder = () => {
   const [canRecord, setCanRecord] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [recorder, setRecorder] = useState(null);
-  const [chunks, setChunks] = useState([]);
-  const [audioURL, setAudioURL] = useState(null);
+  const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
+  const [chunks, setChunks] = useState<Blob[]>([]);
+  const [audioURL, setAudioURL] = useState<string | null>(null);
 
   useEffect(() => {
-      const setupAudio = () => {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices
-            .getUserMedia({ audio: true })
-            .then(setupStream)
-            .catch((err) => console.error("Error accessing microphone: ", err));
-        } else {
-          console.error("getUserMedia is not supported on this browser");
-        }
+    const setupAudio = () => {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then(setupStream)
+          .catch((err) => console.error("Error accessing microphone: ", err));
+      } else {
+        console.error("getUserMedia is not supported on this browser");
+      }
+    };
+    const setupStream = (stream: MediaStream) => {
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = (e) =>
+        setChunks((prev) => [...prev, e.data]);
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+        setChunks([]);
+        setAudioURL(window.URL.createObjectURL(blob));
       };
-      const setupStream = (stream) => {
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = (e) =>
-          setChunks((prev) => [...prev, e.data]);
-    
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
-          setChunks([]);
-          setAudioURL(window.URL.createObjectURL(blob));
-        };
-    
-        setRecorder(mediaRecorder);
-        setCanRecord(true);
-      };
+
+      setRecorder(mediaRecorder);
+      setCanRecord(true);
+    };
     setupAudio();
-    // Cleanup function if the component unmounts while recording
     return () => {
       if (recorder) {
         recorder.stream.getTracks().forEach((track) => track.stop());
@@ -41,18 +40,16 @@ const AudioRecorder = () => {
     };
   }, [recorder, chunks]);
 
-
-
   const toggleMic = () => {
     if (!canRecord || !recorder) return;
 
-      if (isRecording) {
-        console.log('zaustavi')
-          recorder.stop();
-          console.log(audioURL)
+    if (isRecording) {
+      console.log("zaustavi");
+      recorder.stop();
+      console.log(audioURL);
     } else {
-        console.log('pokreni')
-        recorder.start();
+      console.log("pokreni");
+      recorder.start();
     }
     setIsRecording(!isRecording);
   };
@@ -68,5 +65,3 @@ const AudioRecorder = () => {
 };
 
 export default AudioRecorder;
-
-
