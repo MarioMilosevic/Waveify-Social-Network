@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import styles from "./AudioVisualiser.module.css"
-import sound from "./acoustic-guitar-short-intro-ish-live-recording-163329.mp3";
+import styles from "./AudioVisualiser.module.css";
 
 const AudioVisualizer = () => {
   const canvasRef = useRef(null);
@@ -17,37 +16,49 @@ const AudioVisualizer = () => {
     let audioSource;
     let analyser;
 
-    const handleAudio = () => {
-      const audio1 = audioRef.current;
-      audio1.src = `${sound}`;
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      audio1.play();
-      audioSource = audioCtx.createMediaElementSource(audio1);
-      analyser = audioCtx.createAnalyser();
-      audioSource.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 64;
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
+    const handleAudio = async () => {
+      try {
+        const audioCtx = new (window.AudioContext ||
+          window.webkitAudioContext)();
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        audioSource = audioCtx.createMediaStreamSource(stream);
+        analyser = audioCtx.createAnalyser();
+        audioSource.connect(analyser);
+        analyser.fftSize = 64;
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
 
-      const barWidth = canvas.width / bufferLength;
-      let barHeight;
-      let x = 0;
+        const barWidth = canvas.width / bufferLength;
+        const barSpacing = 40; 
+        let barHeight;
+        let x = 0;
 
-      const animate = () => {
-        x = 0;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        analyser.getByteFrequencyData(dataArray);
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i];
-          ctx.fillStyle = "white";
-          ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-          x += barWidth;
-        }
-        requestAnimationFrame(animate);
-      };
+        const scalingFactor = 5;
 
-      animate();
+        const animate = () => {
+          x = 0;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          analyser.getByteFrequencyData(dataArray);
+          for (let i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i] * scalingFactor;
+            ctx.fillStyle = "red";
+            ctx.fillRect(
+              x,
+              canvas.height - barHeight,
+              barWidth - barSpacing,
+              barHeight
+            );
+            x += barWidth;
+          }
+          requestAnimationFrame(animate);
+        };
+
+        animate();
+      } catch (err) {
+        console.error("Error accessing the microphone", err);
+      }
     };
 
     const container = containerRef.current;
@@ -68,3 +79,7 @@ const AudioVisualizer = () => {
 };
 
 export default AudioVisualizer;
+
+
+
+

@@ -1,6 +1,7 @@
 import styles from "./NewPost.module.css";
 import Input from "../Input/Input";
 import AudioPlayer from "../../Audio/AudioPlayer/AudioPlayer";
+import DeleteButton from "../DeleteButton/DeleteButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { FaMicrophone } from "react-icons/fa6";
 import { useState } from "react";
@@ -10,8 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
-import DeleteButton from "../DeleteButton/DeleteButton";
-import AudioRecorder from "../AudioRecorder/AudioRecordet";
+// import AudioRecorder from "../AudioRecorder/AudioRecordet";
 import AudioVisualiser from "../../Audio/AudioVisualiser/AudioVisualiser";
 
 const NewPost = () => {

@@ -1,8 +1,9 @@
+import styles from "./AudioPlayer.module.css";
 import { AudioPlayerProps } from "../../utils/types";
 import { FaPlayCircle, FaPauseCircle, FaStopCircle } from "react-icons/fa";
-import styles from "./AudioPlayer.module.css";
 import { useState, useRef, useEffect } from "react";
 import { formatTime } from "../../utils/helperFunction";
+import AudioVisualizer from "../AudioVisualiser/AudioVisualiser";
 
 const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -79,14 +80,21 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
       ) : (
         <FaPlayCircle className={styles.play_icon} onClick={playAudio} />
       )}
-      <input
-        type="range"
-        className={`${styles.range} ${isRecording && styles.recording}`}
-        min={0}
-        max={100}
-        value={progress}
-        readOnly
-      />
+      <div className={styles.audio_container}>
+        <input
+          type="range"
+          className={`${styles.range} ${isRecording && styles.recording}`}
+          min={0}
+          max={100}
+          value={progress}
+          readOnly
+        />
+        {isRecording && (
+          <div className={styles.audio_visualiser}>
+            <AudioVisualizer />
+          </div>
+        )}
+      </div>
       <div className={styles.duration_container}>
         <span>
           {audioRef.current ? formatTime(audioRef.current.currentTime) : "0:00"}

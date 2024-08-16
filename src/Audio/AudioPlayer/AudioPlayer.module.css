@@ -57,6 +57,22 @@
 }
 
 
+.audio_container {
+  width: 100%;
+  border: 1px solid black;
+  position: relative;
+}
+
+.audio_visualiser {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: red; */
+}
+
+
 .duration_container {
   display: flex;
   align-items: center;
