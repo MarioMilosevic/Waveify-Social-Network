@@ -7,14 +7,16 @@ import AudioVisualizer from "../AudioVisualiser/AudioVisualiser";
 
 const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isRecordingState, setIsRecordingState] = useState<boolean>(isRecording)
   const [progress, setProgress] = useState<number>(0);
+  const [audioRecord, setAudioRecord] = useState<string>(audio)
   const [audioDuration, setAudioDuration] = useState<string>("0:00");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio(audio);
+      audioRef.current = new Audio(audioRecord);
     }
 
     const handleAudioEnd = () => {
@@ -37,7 +39,7 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [audio]);
+  }, [audioRecord]);
 
   const updateProgress = () => {
     if (audioRef.current) {
@@ -71,10 +73,15 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     }
   };
 
+  const stopRecording = () => {
+    console.log('mario')
+    setIsRecordingState(false)
+  }
+
   return (
     <div className={styles.container}>
-      {isRecording ? (
-        <FaStopCircle className={styles.stop_icon} />
+      {isRecordingState ? (
+        <FaStopCircle className={styles.stop_icon} onClick={stopRecording}/>
       ) : isPlaying ? (
         <FaPauseCircle className={styles.pause_icon} onClick={pauseAudio} />
       ) : (
@@ -83,13 +90,13 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
       <div className={styles.audio_container}>
         <input
           type="range"
-          className={`${styles.range} ${isRecording && styles.recording}`}
+          className={`${styles.range} ${isRecordingState && styles.recording}`}
           min={0}
           max={100}
           value={progress}
           readOnly
         />
-        {isRecording && (
+        {isRecordingState && (
           <div className={styles.audio_visualiser}>
             <AudioVisualizer />
           </div>

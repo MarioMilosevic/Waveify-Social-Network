@@ -11,8 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
-// import AudioRecorder from "../AudioRecorder/AudioRecordet";
-import AudioVisualiser from "../../Audio/AudioVisualiser/AudioVisualiser";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -61,7 +59,6 @@ const NewPost = () => {
           New Post
         </button>
       </div>
-      <AudioVisualiser />
     </div>
   );
 };

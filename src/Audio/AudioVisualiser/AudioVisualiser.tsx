@@ -1,15 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./AudioVisualiser.module.css";
 
-const AudioVisualizer = () => {
+const AudioVisualiser = () => {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
-  const containerRef = useRef(null);
 
+  
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioChunks, setAudioChunks] = useState(null);
+  const [audioURL, setAudioURL] = useState(null);
+  
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -25,17 +28,26 @@ const AudioVisualizer = () => {
         });
         audioSource = audioCtx.createMediaStreamSource(stream);
         analyser = audioCtx.createAnalyser();
+
         audioSource.connect(analyser);
+
+        // ovo je novo
+        const audioElement = audioRef.current;
+        audioElement.srcObject = stream;
+        // audioElement.play()
+        const newMediaRecorder = new MediaRecorder(stream)
+        setMediaRecorder(newMediaRecorder)
+        //
         analyser.fftSize = 64;
         const bufferLength = analyser.frequencyBinCount;
         const dataArray = new Uint8Array(bufferLength);
 
         const barWidth = canvas.width / bufferLength;
-        const barSpacing = 40; 
+        const barSpacing = 40;
         let barHeight;
         let x = 0;
 
-        const scalingFactor = 5;
+        const scalingFactor = 3;
 
         const animate = () => {
           x = 0;
@@ -61,25 +73,44 @@ const AudioVisualizer = () => {
       }
     };
 
-    const container = containerRef.current;
-    container.addEventListener("click", handleAudio);
-
-    // Cleanup on component unmount
-    return () => {
-      container.removeEventListener("click", handleAudio);
-    };
+    handleAudio();
   }, []);
 
+  const startRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.start()
+      mediaRecorder.ondataavailable = e => {
+        setAudioChunks((prev) => [...prev, e.data])
+      }
+    }
+  }
+
+  const stopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop()
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" })
+        const audioUrl = URL.createObjectURL(audioBlob)
+        console.log("audioUrl", audioUrl)
+        setAudioURL(audioUrl)
+        setAudioChunks([])
+      }
+    }
+  }
+
+  const playRecording = () => {
+    if (audioURL) {
+      const audio = new Audio(audioURL)
+      audio.play()
+    }
+  }
+
   return (
-    <div ref={containerRef} id="container" className={styles.container}>
-      <canvas ref={canvasRef} id="canvas1" className={styles.canvas1}></canvas>
-      <audio ref={audioRef} id="audio1" className={styles.audio1} />
+    <div className={styles.container}>
+      <canvas ref={canvasRef} className={styles.canvas}></canvas>
+      <audio ref={audioRef} className={styles.audio} />
     </div>
   );
 };
 
-export default AudioVisualizer;
-
-
-
-
+export default AudioVisualiser;
