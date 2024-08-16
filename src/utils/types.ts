@@ -134,3 +134,7 @@ export type AudioPlayerProps = {
   audio: string;
   isRecording: boolean;
 }
+
+export type AudioVisualiserProps = {
+  startRecording:() => void
+}

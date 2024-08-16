@@ -7,16 +7,15 @@ import AudioVisualizer from "../AudioVisualiser/AudioVisualiser";
 
 const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isRecordingState, setIsRecordingState] = useState<boolean>(isRecording)
+  const [isRecordingState, setIsRecordingState] =
+    useState<boolean>(isRecording);
   const [progress, setProgress] = useState<number>(0);
-  // stejt za audio
-  const [audioRecord, setAudioRecord] = useState<string>(audio)
+  const [audioRecord, setAudioRecord] = useState<string>(audio);
   const [audioDuration, setAudioDuration] = useState<string>("0:00");
 
-  const [audioURL, setAudioURL] = useState("");
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
-  
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const animationRef = useRef<number | null>(null);
 
@@ -24,9 +23,9 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     if (!audioRef.current) {
       audioRef.current = new Audio(audioRecord);
     }
-    
+
     if (audioRef.current) {
-      audioRef.current.src = audioRecord
+      audioRef.current.src = audioRecord;
     }
 
     const handleAudioEnd = () => {
@@ -65,49 +64,39 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     }
   };
 
- const startRecording = async () => {
-   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-   mediaRecorderRef.current = new MediaRecorder(stream);
-   audioChunksRef.current = [];
+  const startRecording = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorderRef.current = new MediaRecorder(stream);
+    audioChunksRef.current = [];
 
-   mediaRecorderRef.current.ondataavailable = (event) => {
-     if (event.data.size > 0) {
-       audioChunksRef.current.push(event.data);
-     }
-   };
+    mediaRecorderRef.current.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        audioChunksRef.current.push(event.data);
+      }
+    };
 
-   mediaRecorderRef.current.onstop = () => {
-     const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-  const audioUrl = URL.createObjectURL(audioBlob);
-     setAudioURL(audioUrl);
-    //  setAudioRecord(
-    //    "https://constel-hr-frontend.s3.eu-central-1.amazonaws.com/54f0f6d5-f53c-47f7-a1aa-bdb731e80597-blob"
-    //  );
-  setAudioRecord(audioUrl);
-  console.log(audioUrl);
-   };
+    mediaRecorderRef.current.onstop = () => {
+      const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      setAudioRecord(audioUrl);
+    };
 
-   mediaRecorderRef.current.start();
- };
+    mediaRecorderRef.current.start();
+  };
 
   const stopRecording = () => {
-   console.log(mediaRecorderRef)
-    mediaRecorderRef.current.stop();
-    setIsRecordingState(false)
-    console.log(audioURL)
-    // setAudioRecord(audioURL)
- };
-
+    if (mediaRecorderRef.current) { 
+      mediaRecorderRef.current.stop();
+      setIsRecordingState(false);
+    }
+  };
 
   const playAudio = () => {
     if (audioRef.current) {
-      console.log(audioRecord)
-      console.log(audioURL)
-      console.dir(audioRef.current)
       audioRef.current.play();
       setIsPlaying(true);
       animationRef.current = requestAnimationFrame(updateProgress);
-    } 
+    }
   };
 
   const pauseAudio = () => {
@@ -120,11 +109,10 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     }
   };
 
-
   return (
     <div className={styles.container}>
       {isRecordingState ? (
-        <FaStopCircle className={styles.stop_icon} onClick={stopRecording}/>
+        <FaStopCircle className={styles.stop_icon} onClick={stopRecording} />
       ) : isPlaying ? (
         <FaPauseCircle className={styles.pause_icon} onClick={pauseAudio} />
       ) : (
@@ -141,7 +129,7 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
         />
         {isRecordingState && (
           <div className={styles.audio_visualiser}>
-            <AudioVisualizer startRecording={startRecording } />
+            <AudioVisualizer startRecording={startRecording} />
           </div>
         )}
       </div>

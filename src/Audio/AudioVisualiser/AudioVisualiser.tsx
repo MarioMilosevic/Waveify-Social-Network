@@ -1,77 +1,80 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./AudioVisualiser.module.css";
+import { AudioVisualiserProps } from "../../utils/types";
 
-const AudioVisualiser = ({startRecording}) => {
-  const canvasRef = useRef(null);
-  const audioRef = useRef(null);
 
-  const [mediaRecorder, setMediaRecorder] = useState()
-  
+const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const ctx = canvas?.getContext("2d");
 
-    let audioSource;
-    let analyser;
+    if (canvas && ctx) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-    const handleAudio = async () => {
-      try {
-        const audioCtx = new (window.AudioContext ||
-          window.webkitAudioContext)();
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-        });
-        audioSource = audioCtx.createMediaStreamSource(stream);
-        analyser = audioCtx.createAnalyser();
+      let audioSource: MediaStreamAudioSourceNode | undefined;
+      let analyser: AnalyserNode | undefined;
 
-        audioSource.connect(analyser);
+      const handleAudio = async () => {
+        try {
+          const audioCtx = new (window.AudioContext);
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+          audioSource = audioCtx.createMediaStreamSource(stream);
+          analyser = audioCtx.createAnalyser();
 
-        // ovo je novo
-        const audioElement = audioRef.current;
-        audioElement.srcObject = stream;
-        // audioElement.play()
-        const newMediaRecorder = new MediaRecorder(stream)
-        setMediaRecorder(newMediaRecorder)
-        //
-        analyser.fftSize = 64;
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
+          audioSource.connect(analyser);
 
-        const barWidth = canvas.width / bufferLength;
-        const barSpacing = 40;
-        let barHeight;
-        let x = 0;
-
-        const scalingFactor = 3;
-
-        const animate = () => {
-          x = 0;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          analyser.getByteFrequencyData(dataArray);
-          for (let i = 0; i < bufferLength; i++) {
-            barHeight = dataArray[i] * scalingFactor;
-            ctx.fillStyle = "red";
-            ctx.fillRect(
-              x,
-              canvas.height - barHeight,
-              barWidth - barSpacing,
-              barHeight
-            );
-            x += barWidth;
+          const audioElement = audioRef.current;
+          if (audioElement) {
+            audioElement.srcObject = stream;
           }
-          requestAnimationFrame(animate);
-        };
 
-        animate();
-      } catch (err) {
-        console.error("Error accessing the microphone", err);
-      }
-    };
+          analyser.fftSize = 64;
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Uint8Array(bufferLength);
 
-    handleAudio();
-    startRecording()
+          const barWidth = canvas.width / bufferLength;
+          const barSpacing = 40;
+          let barHeight: number;
+          let x = 0;
+
+          const scalingFactor = 3;
+          const mainColor = getComputedStyle(document.documentElement)
+            .getPropertyValue("--main-color")
+            .trim();
+
+          const animate = () => {
+            x = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            analyser?.getByteFrequencyData(dataArray);
+            for (let i = 0; i < bufferLength; i++) {
+              barHeight = dataArray[i] * scalingFactor;
+              ctx.fillStyle = mainColor;
+              ctx.fillRect(
+                x,
+                canvas.height - barHeight,
+                barWidth - barSpacing,
+                barHeight
+              );
+              x += barWidth;
+            }
+            requestAnimationFrame(animate);
+          };
+
+          animate();
+        } catch (err) {
+          console.error("Error accessing the microphone", err);
+        }
+      };
+
+      handleAudio();
+      startRecording();
+    }
   }, [startRecording]);
 
   return (
