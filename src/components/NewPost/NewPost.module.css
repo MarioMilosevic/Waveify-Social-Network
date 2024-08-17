@@ -43,7 +43,16 @@
   justify-content: space-between;
   padding-left: 7.5rem;
   align-items: center;
-  /* border: 1px solid black; */
+}
+
+.microphone {
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.record_audio {
+  display: none;
 }
 
 .microphone_icon {
@@ -58,15 +67,66 @@
 .new_post_button {
   border: none;
   padding: 1rem 2rem;
-  border-radius: 1rem;
+  border-radius: var(--border-radius-medium);
   font-size: 1.6rem;
   font-weight: 600;
   cursor: pointer;
   background-color: var(--gray-color);
   color: var(--secondary-color);
-  /* margin-left: 2rem; */
+  transition: background-color 0.2s;
 }
 
 button:hover {
   background-color: var(--gray-color-hover-color);
+}
+
+@media (max-width: 1000px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .microphone_container {
+    justify-content: baseline;
+    padding: 0;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .microphone {
+    width: 100%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 1rem;
+    border-radius: var(--border-radius-medium);
+    background-color: var(--main-color);
+  }
+
+  .microphone:hover {
+    background-color: var(--button-active-color);
+  }
+
+  .microphone_icon {
+    color: var(--secondary-color);
+  }
+
+  .microphone_icon:hover {
+    color: var(--secondary-color);
+  }
+
+  .record_audio {
+    display: block;
+    font-size: 1.6rem;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(50%, 50%);
+    color: var(--secondary-color);
+    cursor: pointer;
+  }
+
+  .new_post_button {
+    width: 100%;
+    font-size: 1.6rem;
+  }
 }

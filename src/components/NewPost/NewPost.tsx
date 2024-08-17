@@ -16,7 +16,6 @@ import { initialNewPostState } from "../../utils/constants";
 import { showToast } from "../../utils/toasts";
 import { updateUserFromPost } from "../../utils/helperFunction";
 
-
 const NewPost = () => {
   const { user } = useUserSlice();
   const [newPostDetails, setNewPostDetails] =
@@ -39,7 +38,7 @@ const NewPost = () => {
       return;
     }
     const { post } = await createNewPost(newPostDetails);
-    const updatedUserPost = updateUserFromPost(post)
+    const updatedUserPost = updateUserFromPost(post);
     dispatch(addPostFromState(updatedUserPost));
     setNewPostDetails(initialNewPostState);
     setIsRecordingAudio(false);
@@ -76,10 +75,13 @@ const NewPost = () => {
         {isRecordingAudio ? (
           <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />
         ) : (
-          <FaMicrophone
-            className={styles.microphone_icon}
-            onClick={() => setIsRecordingAudio(true)}
-          />
+          <div className={styles.microphone}>
+            <FaMicrophone
+              className={styles.microphone_icon}
+              onClick={() => setIsRecordingAudio(true)}
+            />
+            <span className={styles.record_audio}>Record audio</span>
+          </div>
         )}
 
         <button className={styles.new_post_button} onClick={onSubmit}>
