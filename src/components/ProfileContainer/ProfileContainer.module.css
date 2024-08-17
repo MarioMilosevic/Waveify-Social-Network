@@ -73,3 +73,17 @@
   width: 25px;
   height: 25px;
 }
+
+@media (max-width: 1000px) {
+  .container {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .visible {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+  }
+}
