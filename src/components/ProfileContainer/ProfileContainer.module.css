@@ -81,6 +81,11 @@
     right: 0;
   }
 
+  .profile_image {
+    width: 45px;
+    height: 45px;
+  }
+
   .visible {
     position: absolute;
     top: 70px;

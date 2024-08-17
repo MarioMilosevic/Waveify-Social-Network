@@ -11,16 +11,3 @@
   gap: 1.5rem;
 }
 
-.text_container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; 
-  font-size: 1.6rem;
-  border: 1px solid black;
-}
-
-
-
-
-
-

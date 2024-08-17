@@ -1,7 +1,6 @@
 .button_container {
   display: flex;
-  align-self:self-end;
-  width: var(--comment-width);
+  align-self: self-end;
   gap: 1rem;
 }
 
@@ -16,4 +15,25 @@
 .button_container,
 .button_container button {
   color: var(--error-color);
+}
+
+@media (max-width: 1000px) {
+  .button_container {
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 1rem 0;
+  }
+
+  .button_container:hover {
+    background-color: var(--error-color);
+    border-radius: var(--border-radius-medium);
+    color: var(--secondary-color);
+    transition: all 0.2s;
+  }
+
+  .button_container:hover button {
+    color: var(--secondary-color);
+  }
 }

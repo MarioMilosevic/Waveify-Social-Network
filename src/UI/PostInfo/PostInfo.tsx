@@ -1,8 +1,7 @@
 import { PostInfoProps } from "../../utils/types";
 import styles from "./PostInfo.module.css";
 
-const PostInfo
- = ({ children, image, text }: PostInfoProps) => {
+const PostInfo = ({ children, image, text }: PostInfoProps) => {
   return (
     <div className={styles.image_container}>
       {image && <img src={image} alt={image} className={styles.image} />}
@@ -14,5 +13,4 @@ const PostInfo
   );
 };
 
-export default PostInfo
-;
+export default PostInfo;

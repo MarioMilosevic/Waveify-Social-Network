@@ -37,7 +37,7 @@ const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
           const bufferLength = analyser.frequencyBinCount;
           const dataArray = new Uint8Array(bufferLength);
 
-          const barWidth = (canvas.width / bufferLength) * 2;
+          const barWidth = canvas.width / bufferLength;
           const barSpacing = 40;
           let barHeight: number;
           let x = 0;

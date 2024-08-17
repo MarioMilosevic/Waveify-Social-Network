@@ -12,3 +12,6 @@
   align-items: center;
 }
 
+.comment_delete_button {
+  width: var(--comment-width);
+}

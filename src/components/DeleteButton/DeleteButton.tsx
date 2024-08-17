@@ -4,9 +4,9 @@ import { dateIconSize } from "../../utils/constants";
 import { DeleteButtonProps } from "../../utils/types";
 const DeleteButton = ({removeHandler}:DeleteButtonProps) => {
   return (
-    <div className={styles.button_container}>
+    <div className={styles.button_container} onClick={removeHandler}>
       <FaTrash size={dateIconSize}/>
-      <button onClick={removeHandler}>Delete</button>
+      <button>Delete</button>
     </div>
   );
 }

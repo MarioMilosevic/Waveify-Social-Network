@@ -73,13 +73,15 @@ const NewPost = () => {
       )}
       <div className={styles.microphone_container}>
         {isRecordingAudio ? (
+          <div className={styles.delete_button_container}>
           <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />
+          </div>
         ) : (
-          <div className={styles.microphone}>
-            <FaMicrophone
-              className={styles.microphone_icon}
-              onClick={() => setIsRecordingAudio(true)}
-            />
+          <div
+            className={styles.microphone}
+            onClick={() => setIsRecordingAudio(true)}
+          >
+            <FaMicrophone className={styles.microphone_icon} />
             <span className={styles.record_audio}>Record audio</span>
           </div>
         )}

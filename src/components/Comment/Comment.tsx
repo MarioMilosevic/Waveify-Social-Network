@@ -4,12 +4,14 @@ import DeleteButton from "../DeleteButton/DeleteButton";
 import { formatDate } from "../../utils/helperFunction";
 import { CommentProps } from "../../utils/types";
 import { removeUserComment } from "../../utils/api";
+import { useUserSlice } from "../../hooks/useUserSlice";
 
 const Comment = ({
   comment,
   postId,
   removeUserCommentHandler,
 }: CommentProps) => {
+  const { user } = useUserSlice();
   const { created_at, text, username, comment_id } = comment;
   const formattedDate = formatDate(created_at);
 
@@ -29,8 +31,10 @@ const Comment = ({
       <UserHeader user={comment} formattedDate={formattedDate} />
       <div className={styles.text_container}>
         <p>{text}</p>
-        {username === "nemanja_malesija" && (
-         <DeleteButton removeHandler={removeComment}/>
+        {username === user.username && (
+          <div className={styles.comment_delete_button}>
+          <DeleteButton removeHandler={removeComment} />
+          </div>
         )}
       </div>
     </div>
@@ -38,4 +42,3 @@ const Comment = ({
 };
 
 export default Comment;
-

@@ -51,6 +51,13 @@
   transition: background-color 0.2s;
 }
 
+.delete_button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+} 
+
 .record_audio {
   display: none;
 }
@@ -85,11 +92,30 @@ button:hover {
     padding: 1rem;
   }
 
+  .picture {
+    width: 45px;
+    height: 45px;
+  }
+
   .microphone_container {
     justify-content: baseline;
     padding: 0;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .delete_button_container{
+    width: 100%;
+    border-radius: var(--border-radius-medium);
+    cursor: pointer;
+  }
+  
+  .delete_button_container:hover{
+    background-color: var(--error-color);
+  }
+
+  .delete_button_container:hover div, .delete_button_container:hover button{
+    color: var(--secondary-color);
   }
 
   .microphone {
