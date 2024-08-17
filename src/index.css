@@ -18,6 +18,8 @@
   --border-radius-small: 0.6rem;
   --border-radius-medium: 1.2rem;
   --comment-width:115px;
+
+  --breakpoint-lg:1000px;
 }
 
 html {
@@ -28,3 +30,5 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--secondary-color);
 }
+
+

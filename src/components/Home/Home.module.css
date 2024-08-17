@@ -1,13 +1,21 @@
 .home {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
 }
 
-.icon, .home {
-    color:var(--button-active-hover-color);
+.icon,
+.home {
+  color: var(--button-active-hover-color);
 }
 
-.paragraph, .icon {
-    cursor: pointer;
+.paragraph,
+.icon {
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .home {
+    display: none;
+  }
 }

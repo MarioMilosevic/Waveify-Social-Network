@@ -6,7 +6,23 @@
   gap: 3rem;
 }
 
-img{
+.logo{
     width: 40px;
     height: 40px;
+}
+
+@media (max-width:1000px) {
+.sidebar{
+  position: absolute;
+  width: 100%;
+  top: 15px;
+  
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translateX(50%);
+  }
 }

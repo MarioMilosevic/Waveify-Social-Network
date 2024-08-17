@@ -8,9 +8,9 @@ import { useUserSlice } from "../../hooks/useUserSlice";
 import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
 import logo from "../../assets/logo.png";
-import styles from "./LogIn.module.css";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import styles from "./LogIn.module.css";
 
 const LogIn = () => {
   const { user } = useUserSlice();
