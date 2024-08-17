@@ -18,7 +18,7 @@ import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import PostInfo from "../../UI/PostInfo/PostInfo";
-import { removeToast } from "../../utils/toasts";
+import { showToast } from "../../utils/toasts";
 
 import AudioPlayer from "../../Audio/AudioPlayer/AudioPlayer";
 
@@ -48,7 +48,7 @@ const Post = ({ post }: PostProps) => {
   const removePostHandler = async () => {
     removePostFromServer(post_id);
     dispatch(removePostFromState(post_id));
-    removeToast("Post sucessfully removed !");
+    showToast("Post sucessfully removed !");
   };
 
   return (

@@ -13,6 +13,9 @@ import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
 import { NewPostDetails } from "../../utils/types";
 import { initialNewPostState } from "../../utils/constants";
+import { showToast } from "../../utils/toasts";
+import { updateUserFromPost } from "../../utils/helperFunction";
+
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -31,10 +34,15 @@ const NewPost = () => {
   };
 
   const onSubmit = async () => {
+    if (!newPostDetails.text) {
+      showToast("Text cannot be empty !");
+      return;
+    }
     const { post } = await createNewPost(newPostDetails);
-    dispatch(addPostFromState(post));
+    const updatedUserPost = updateUserFromPost(post)
+    dispatch(addPostFromState(updatedUserPost));
     setNewPostDetails(initialNewPostState);
-    setIsRecordingAudio(false)
+    setIsRecordingAudio(false);
   };
 
   return (

@@ -5,23 +5,24 @@ import ButtonWrapper from "../../UI/ButtonWrapper/ButtonWrapper";
 import LikeButton from "../../UI/LikeButton/LikeButton";
 import CommentButton from "../../UI/CommentButton/CommentButton";
 import Comment from "../Comment/Comment";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../UI/LoadingSpinner/LoadingSpinner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDate /*updateUser*/ } from "../../utils/helperFunction";
+import { formatDate, updateUserFromComment } from "../../utils/helperFunction";
 import { postComment } from "../../utils/api";
 import { commentSchema } from "../../utils/zod";
 import { CommentValue } from "../../utils/zod";
 import { IoIosSend } from "react-icons/io";
 import { buttonIconSize } from "../../utils/constants";
-import { removeToast } from "../../utils/toasts";
+import { showToast } from "../../utils/toasts";
 import { useSinglePost } from "../../hooks/useSinglePost";
 import { useDispatch } from "react-redux";
 import { updateComment, toggleLike } from "../../redux/features/posts.Slice";
 import { like } from "../../utils/api";
 import { SinglePostProps } from "../../utils/types";
 import PostInfo from "../../UI/PostInfo/PostInfo";
+import AudioPlayer from "../../Audio/AudioPlayer/AudioPlayer";
 
 const SinglePost = ({ postId }: SinglePostProps) => {
   const { loading, postDetails, setPostDetails } = useSinglePost(postId);
@@ -45,6 +46,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
     text,
     user: postUser,
     post_id,
+    audio,
   } = post;
   const formattedDate = formatDate(created_at || "");
 
@@ -53,15 +55,14 @@ const SinglePost = ({ postId }: SinglePostProps) => {
       const { comment: postedComment } = await postComment(post_id, {
         text: data.comment,
       });
-      // const updatedComment = updateUser(postedComment)
+      const updatedComment = updateUserFromComment(postedComment);
 
       setComment("");
       if (postedComment) {
         dispatch(updateComment({ postId, action: "increment" }));
         setPostDetails((prev) => {
           if (!prev) return prev;
-          // const updatedComments = [...prev.comments, updatedComment];
-          const updatedComments = [...prev.comments, postedComment];
+          const updatedComments = [...prev.comments, updatedComment];
           return {
             ...prev,
             comments: updatedComments,
@@ -80,7 +81,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
       const updatedComments = prev?.comments.filter(
         (comment) => comment.comment_id !== commentId
       );
-      removeToast("Comment sucessfully removed !");
+      showToast("Comment sucessfully removed !");
       return {
         ...prev,
         comments: updatedComments,
@@ -112,8 +113,8 @@ const SinglePost = ({ postId }: SinglePostProps) => {
   return (
     <>
       <UserHeader user={postUser} formattedDate={formattedDate} />
-      {/* napravit reusable komponentu USERiNFO ili userHandler sta god  props={small, normal itd}*/}
       <PostInfo image={image} text={text} />
+      {audio && <AudioPlayer audio={audio} isRecording={false} />}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.comment}>
           <Input

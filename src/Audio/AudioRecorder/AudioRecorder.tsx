@@ -42,15 +42,7 @@ const AudioRecorder = () => {
 
   const toggleMic = () => {
     if (!canRecord || !recorder) return;
-
-    if (isRecording) {
-      console.log("zaustavi");
-      recorder.stop();
-      console.log(audioURL);
-    } else {
-      console.log("pokreni");
-      recorder.start();
-    }
+    isRecording ? recorder.stop() : recorder.start();
     setIsRecording(!isRecording);
   };
 

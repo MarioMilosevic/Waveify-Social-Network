@@ -1,6 +1,6 @@
 import { useUserSlice } from "../../../hooks/useUserSlice";
 import { Navigate, Outlet } from "react-router";
-import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../../UI/LoadingSpinner/LoadingSpinner";
 import useFetchUserWithJWT from "../../../hooks/useFetchUserWithJWT";
 
 const ProtectedRoute = () => {

@@ -36,7 +36,6 @@ export const fetchData = async (
     if (!response.ok) {
       const errorText = await response.text();
       const errorData = JSON.parse(errorText);
-      console.log(response);
       throw new Error(errorData.error.message);
     }
 
@@ -116,58 +115,17 @@ export const like = async (postId: string, method: string) => {
   }
 };
 
-// export const createNewPost = async (postDetails: NewPostDetails) => {
-//   try {
-//     const url = "https://api.hr.constel.co/api/v1/posts";
-//     const jwt = localStorage.getItem("jwt");
-
-//     if (!jwt) throw new Error("Authorization token is missing");
-//     if (!postDetails.text.trim()) throw new Error("Text cannot be empty!");
-
-//     const formData = new FormData();
-//     formData.append("text", postDetails.text);
-//     if (postDetails.audio) {
-//       const audioBlob = await fetch(postDetails.audio).then((res) =>
-//         res.blob()
-//       );
-//       formData.append("audio", audioBlob, "recording.wav");
-//     }
-
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         Authorization: `Bearer ${jwt}`,
-//       },
-//       body: formData,
-//     });
-
-//     if (!response.ok) {
-//       const errorText = await response.text();
-//       throw new Error(`HTTP error! Status: ${response.status}. ${errorText}`);
-//     }
-
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Error creating post:", error);
-//     throw error;
-//   }
-// };
-
 export const createNewPost = async (postDetails: NewPostDetails) => {
   try {
-    const url = "https://api.hr.constel.co/api/v1/posts";
     const jwt = localStorage.getItem("jwt");
 
     if (!jwt) throw new Error("Authorization token is missing");
     if (!postDetails.text.trim()) throw new Error("Text cannot be empty!");
 
-    // Use FormData to handle both text and binary data
     const formData = new FormData();
     formData.append("text", postDetails.text);
 
     if (postDetails.audio) {
-      // Fetch the audio file as a Blob using async/await
       const response = await fetch(postDetails.audio);
       if (!response.ok) throw new Error("Failed to fetch audio data");
 
@@ -175,7 +133,7 @@ export const createNewPost = async (postDetails: NewPostDetails) => {
       formData.append("audio", audioBlob, "recording.wav");
     }
 
-    const postResponse = await fetch(url, {
+    const postResponse = await fetch(`${baseUrl}/posts`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${jwt}`,

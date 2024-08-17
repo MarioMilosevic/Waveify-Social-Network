@@ -80,7 +80,9 @@ const AudioPlayer = ({
     mediaRecorderRef.current.onstop = () => {
       const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
       const audioUrl = URL.createObjectURL(audioBlob);
-      newPostAudioHandler(audioUrl);
+      if (newPostAudioHandler) {
+        newPostAudioHandler(audioUrl);
+      }
     };
 
     mediaRecorderRef.current.start();
