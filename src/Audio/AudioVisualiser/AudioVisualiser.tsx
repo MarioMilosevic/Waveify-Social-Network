@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import styles from "./AudioVisualiser.module.css";
 import { AudioVisualiserProps } from "../../utils/types";
 
-
 const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -20,7 +19,7 @@ const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
 
       const handleAudio = async () => {
         try {
-          const audioCtx = new (window.AudioContext);
+          const audioCtx = new window.AudioContext();
           const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
           });
@@ -38,12 +37,12 @@ const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
           const bufferLength = analyser.frequencyBinCount;
           const dataArray = new Uint8Array(bufferLength);
 
-          const barWidth = canvas.width / bufferLength * 2;
+          const barWidth = (canvas.width / bufferLength) * 2;
           const barSpacing = 40;
           let barHeight: number;
           let x = 0;
 
-          const scalingFactor = 3;
+          const scalingFactor = 5;
           const mainColor = getComputedStyle(document.documentElement)
             .getPropertyValue("--main-color")
             .trim();

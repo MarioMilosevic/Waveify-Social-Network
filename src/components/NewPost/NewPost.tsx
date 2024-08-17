@@ -11,10 +11,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addPostFromState } from "../../redux/features/posts.Slice";
+import { NewPostDetails } from "../../utils/types";
+import { initialNewPostState } from "../../utils/constants";
 
 const NewPost = () => {
   const { user } = useUserSlice();
-  const [text, setText] = useState<string>("");
+  const [newPostDetails, setNewPostDetails] =
+    useState<NewPostDetails>(initialNewPostState);
   const [isRecordingAudio, setIsRecordingAudio] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -23,10 +26,15 @@ const NewPost = () => {
     resolver: zodResolver(textSchema),
   });
 
+  const newPostAudioHandler = (newAudio: string) => {
+    setNewPostDetails((prev) => ({ ...prev, audio: newAudio }));
+  };
+
   const onSubmit = async () => {
-    const { post } = await createNewPost(text);
+    const { post } = await createNewPost(newPostDetails);
     dispatch(addPostFromState(post));
-    setText("");
+    setNewPostDetails(initialNewPostState);
+    setIsRecordingAudio(false)
   };
 
   return (
@@ -38,13 +46,24 @@ const NewPost = () => {
             placeholder="What's happening"
             title=""
             type="text"
-            value={text}
-            changeHandler={(e) => setText(e.target.value)}
+            value={newPostDetails.text}
+            changeHandler={(e) =>
+              setNewPostDetails((prev) => ({
+                ...prev,
+                text: e.target.value,
+              }))
+            }
             zod={{ ...register("text") }}
           />
         </form>
       </div>
-      {isRecordingAudio && <AudioPlayer audio="" isRecording={true} />}
+      {isRecordingAudio && (
+        <AudioPlayer
+          audio={newPostDetails.audio}
+          newPostAudioHandler={newPostAudioHandler}
+          isRecording={true}
+        />
+      )}
       <div className={styles.microphone_container}>
         {isRecordingAudio ? (
           <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />

@@ -5,12 +5,15 @@ import { useState, useRef, useEffect } from "react";
 import { formatTime } from "../../utils/helperFunction";
 import AudioVisualizer from "../AudioVisualiser/AudioVisualiser";
 
-const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
+const AudioPlayer = ({
+  audio,
+  isRecording,
+  newPostAudioHandler,
+}: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isRecordingState, setIsRecordingState] =
     useState<boolean>(isRecording);
   const [progress, setProgress] = useState<number>(0);
-  const [audioRecord, setAudioRecord] = useState<string>(audio);
   const [audioDuration, setAudioDuration] = useState<string>("0:00");
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -21,11 +24,10 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
 
   useEffect(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio(audioRecord);
+      audioRef.current = new Audio(audio || "");
     }
-
     if (audioRef.current) {
-      audioRef.current.src = audioRecord;
+      audioRef.current.src = audio || "";
     }
 
     const handleAudioEnd = () => {
@@ -48,7 +50,7 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [audioRecord]);
+  }, [audio]);
 
   const updateProgress = () => {
     if (audioRef.current) {
@@ -78,14 +80,14 @@ const AudioPlayer = ({ audio, isRecording }: AudioPlayerProps) => {
     mediaRecorderRef.current.onstop = () => {
       const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
       const audioUrl = URL.createObjectURL(audioBlob);
-      setAudioRecord(audioUrl);
+      newPostAudioHandler(audioUrl);
     };
 
     mediaRecorderRef.current.start();
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current) { 
+    if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecordingState(false);
     }

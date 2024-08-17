@@ -131,10 +131,16 @@ export type PostInfoProps = {
 }
 
 export type AudioPlayerProps = {
-  audio: string;
+  audio: string | null;
   isRecording: boolean;
+  newPostAudioHandler:(newAudio:string) => void
 }
 
 export type AudioVisualiserProps = {
   startRecording:() => void
+}
+
+export type NewPostDetails = {
+  audio: string | null;
+  text: string;
 }

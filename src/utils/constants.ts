@@ -7,7 +7,14 @@ export const initialUserState = {
   posts: [],
 };
 
+
 export const buttonIconSize = 18;
 export const dateIconSize = 20;
 
 export const baseUrl = "https://api.hr.constel.co/api/v1";
+
+export const initialNewPostState = {
+  text: "",
+  audio:null
+}
+
