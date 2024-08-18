@@ -1,0 +1,34 @@
+.footer {
+  padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.copyRightText {
+  font-size: 1.6rem;
+}
+
+.githubLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s ease;
+}
+
+.githubLink:hover {
+  transform: scale(1.1) rotate(360deg);
+}
+
+.githubIcon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
