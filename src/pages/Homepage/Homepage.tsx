@@ -1,7 +1,7 @@
 import styles from "./Homepage.module.css";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Main from "../../components/Main/Main";
-import ProfileContainer from "../../components/ProfileContainer/ProfileContainer";
+import Sidebar from "../../components/layout/Sidebar/Sidebar";
+import Main from "../../components/layout/Main/Main";
+import ProfileContainer from "../../components/layout/ProfileContainer/ProfileContainer";
 
 const Homepage = () => {
   return (

@@ -7,9 +7,9 @@ import { useNavigate } from "react-router";
 import { useUserSlice } from "../../hooks/useUserSlice";
 import { setUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
-import logo from "../../assets/logo.png";
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
+import logo from "../../assets/images/logo.png"
+import Input from "../../components/common/Input/Input";
+import Button from "../../components/common/Button/Button";
 import styles from "./LogIn.module.css";
 import { showToast } from "../../utils/toasts";
 

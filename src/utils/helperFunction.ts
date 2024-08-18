@@ -1,4 +1,4 @@
-import marioPicture from "../assets/mariomilosevic.jpg";
+import marioPicture from "../assets/images/mariomilosevic.jpg"
 import { CommentType, PostType, UserType } from "./types";
 
 export const updateUser = (user: UserType) => {
