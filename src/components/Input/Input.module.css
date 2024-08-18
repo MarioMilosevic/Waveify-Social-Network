@@ -5,14 +5,9 @@
   gap: 0.8rem;
 }
 
-p {
-  font-weight: 600;
-  font-size: 1.6rem;
-}
-
 .input {
   width: 100%;
-  padding: 1.5rem 1rem ;
+  padding: 1.5rem 1rem;
   border-radius: var(--border-radius-small);
   border: 1px solid var(--border-color);
   outline: none;

@@ -40,9 +40,14 @@ const Post = ({ post }: PostProps) => {
 
   const formattedDate = formatDate(created_at);
 
-  const likeHandler = () => {
-    like(post_id, liked ? "DELETE" : "POST");
-    dispatch(toggleLike(post_id));
+  const likeHandler =async () => {
+    try {
+     await like(post_id, liked ? "DELETE" : "POST");
+      console.log('odje je post')
+      dispatch(toggleLike(post_id));
+    } catch (error) {
+      showToast("Unexpected error occured", "error")
+    }
   };
 
   const removePostHandler = async () => {

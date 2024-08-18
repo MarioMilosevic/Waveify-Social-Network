@@ -62,6 +62,7 @@ export const getUserInformation = async (
     navigate("/home");
   } catch (error) {
     console.error("Error fetching user information:", error);
+    throw error
   }
 };
 
@@ -113,6 +114,7 @@ export const like = async (postId: string, method: string) => {
     await fetchData(endpoint, method);
   } catch (error) {
     console.error("Error giving like to post", error);
+    throw error
   }
 };
 

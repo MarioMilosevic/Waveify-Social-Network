@@ -11,6 +11,7 @@ import logo from "../../assets/logo.png";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import styles from "./LogIn.module.css";
+import { showToast } from "../../utils/toasts";
 
 const LogIn = () => {
   const { user } = useUserSlice();
@@ -38,14 +39,10 @@ const LogIn = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetchData(
-        "login",
-        "POST",
-        {
-          email: data.email,
-          password: data.password,
-        },
-      );
+      const response = await fetchData("login", "POST", {
+        email: data.email,
+        password: data.password,
+      });
       if (response) {
         localStorage.setItem("jwt", response.token);
         navigate("/home");
@@ -69,6 +66,17 @@ const LogIn = () => {
     );
     if (value === "") setLoginError("");
   };
+  const logInAsTestUser = async () => {
+    try {
+      const testCredentials = {
+        email: "malesija.nemanja@gmail.com",
+        password: "He5r4dOVdy9x6IT",
+      };
+      await onSubmit(testCredentials);
+    } catch (error) {
+      showToast("Error logging in", "error");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -91,9 +99,16 @@ const LogIn = () => {
           zod={{ ...register("password") }}
         />
         {loginError && <div className={styles.error}>{loginError}</div>}
-        <Button text="Confirm" isActive={isValid} />
-        <p>malesija.nemanja@gmail.com</p>
-        <p>He5r4dOVdy9x6IT</p>
+        <Button
+          text="Confirm"
+          isActive={isValid}
+          clickHandler={handleSubmit(onSubmit)}
+        />
+        <Button
+          text="Log in as test user"
+          isActive={true}
+          clickHandler={logInAsTestUser}
+        />
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PostResponseType } from "../utils/types";
 import { getPostInformation } from "../utils/api";
+import { showToast } from "../utils/toasts";
 
 export function useSinglePost(postId:string) {
   const [loading, setLoading] = useState(true);
@@ -13,6 +14,9 @@ export function useSinglePost(postId:string) {
         setPostDetails(data);
       } catch (error) {
         console.error("Error fetching post comments:", error);
+          showToast("Error getting user information", "error");
+
+        throw error
       } finally {
         setLoading(false);
       }

@@ -31,4 +31,9 @@ body {
   background-color: var(--secondary-color);
 }
 
+p{
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
 

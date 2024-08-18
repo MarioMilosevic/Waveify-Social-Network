@@ -15,6 +15,7 @@ import { NewPostDetails } from "../../utils/types";
 import { initialNewPostState } from "../../utils/constants";
 import { showToast } from "../../utils/toasts";
 import { updateUserFromPost } from "../../utils/helperFunction";
+import Button from "../Button/Button";
 
 const NewPost = () => {
   const { user } = useUserSlice();
@@ -23,7 +24,11 @@ const NewPost = () => {
   const [isRecordingAudio, setIsRecordingAudio] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm<StatusValue>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<StatusValue>({
     defaultValues: { text: "" },
     resolver: zodResolver(textSchema),
   });
@@ -32,17 +37,23 @@ const NewPost = () => {
     setNewPostDetails((prev) => ({ ...prev, audio: newAudio }));
   };
 
-  const onSubmit = async () => {
-    if (!newPostDetails.text) {
-      showToast("Text cannot be empty !", "warning");
-      return;
-    }
+const onSubmit = async () => {
+  if (!newPostDetails.text) {
+    showToast("Text cannot be empty!", "warning");
+    return;
+  }
+
+  try {
     const { post } = await createNewPost(newPostDetails);
     const updatedUserPost = updateUserFromPost(post);
     dispatch(addPostFromState(updatedUserPost));
     setNewPostDetails(initialNewPostState);
     setIsRecordingAudio(false);
-  };
+  } catch (error) {
+    showToast("Error creating post", "error");
+  }
+};
+
 
   return (
     <div className={styles.container}>
@@ -74,7 +85,7 @@ const NewPost = () => {
       <div className={styles.microphone_container}>
         {isRecordingAudio ? (
           <div className={styles.delete_button_container}>
-          <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />
+            <DeleteButton removeHandler={() => setIsRecordingAudio(false)} />
           </div>
         ) : (
           <div
@@ -85,10 +96,9 @@ const NewPost = () => {
             <span className={styles.record_audio}>Record audio</span>
           </div>
         )}
-
-        <button className={styles.new_post_button} onClick={onSubmit}>
-          New Post
-        </button>
+        <div className={styles.new_post_button}>
+        <Button text="New Post" isActive={isValid} clickHandler={onSubmit} />
+        </div>
       </div>
     </div>
   );

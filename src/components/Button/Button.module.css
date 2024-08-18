@@ -7,7 +7,7 @@
     font-weight: 500;
     color: var(--secondary-color);
     cursor: pointer;
-    transition: background-color 200ms;
+    transition: background-color 0.2s;
 }
 
 .button-active {
@@ -20,8 +20,10 @@
 
 .button-inactive {
   background-color: var(--gray-color);
+  cursor: not-allowed;
 }
 
+
 .button-inactive:hover {
-  background-color: var(--gray-color-hover-color);
+  background-color: var(--gray-color);
 }

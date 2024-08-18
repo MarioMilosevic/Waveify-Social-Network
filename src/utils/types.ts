@@ -12,6 +12,7 @@ export type InputProps = {
 export type ButtonProps = {
   text: string;
   isActive: boolean;
+  clickHandler:() => void
 };
 
 export type UserType = {

@@ -71,6 +71,7 @@ const SinglePost = ({ postId }: SinglePostProps) => {
       }
     } catch (error) {
       console.error("Error posting comment");
+      showToast('Error posting comment', "error")
     }
   };
 
