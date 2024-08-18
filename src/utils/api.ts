@@ -103,6 +103,7 @@ export const removeUserComment = async (postId: string, commentId: string) => {
     return data;
   } catch (error) {
     console.error("Error deleting comment", error);
+    throw error
   }
 };
 
@@ -165,5 +166,6 @@ export const removePostFromServer = async (postId: string) => {
     return data;
   } catch (error) {
     console.error("Error deleting comment", error);
+    throw error
   }
 };

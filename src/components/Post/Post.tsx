@@ -46,9 +46,14 @@ const Post = ({ post }: PostProps) => {
   };
 
   const removePostHandler = async () => {
-    removePostFromServer(post_id);
-    dispatch(removePostFromState(post_id));
-    showToast("Post sucessfully removed !");
+    try {
+      await removePostFromServer(post_id);
+      dispatch(removePostFromState(post_id));
+      showToast("Post successfully removed!");
+    } catch (error) {
+      console.error("Failed to remove post:", error);
+      showToast("Failed to remove post. Please try again.", "error");
+    }
   };
 
   return (

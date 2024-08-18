@@ -5,6 +5,7 @@ import { formatDate } from "../../utils/helperFunction";
 import { CommentProps } from "../../utils/types";
 import { removeUserComment } from "../../utils/api";
 import { useUserSlice } from "../../hooks/useUserSlice";
+import { showToast } from "../../utils/toasts";
 
 const Comment = ({
   comment,
@@ -23,6 +24,7 @@ const Comment = ({
       }
     } catch (error) {
       console.error("Error removing comment:", error);
+      showToast("Error removing comment", "error");
     }
   };
 
@@ -33,7 +35,7 @@ const Comment = ({
         <p>{text}</p>
         {username === user.username && (
           <div className={styles.comment_delete_button}>
-          <DeleteButton removeHandler={removeComment} />
+            <DeleteButton removeHandler={removeComment} />
           </div>
         )}
       </div>

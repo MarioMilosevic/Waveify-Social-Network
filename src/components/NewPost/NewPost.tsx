@@ -34,7 +34,7 @@ const NewPost = () => {
 
   const onSubmit = async () => {
     if (!newPostDetails.text) {
-      showToast("Text cannot be empty !");
+      showToast("Text cannot be empty !", "warning");
       return;
     }
     const { post } = await createNewPost(newPostDetails);
