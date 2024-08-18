@@ -1,4 +1,4 @@
-# Waveify Social Media Network Frontend
+# Waveify Social Network Frontend
 This is the frontend application for the Waveify social media network, where users can log in, create posts (both text and audio), interact with other users' posts, and manage their own content. The application also features audio visualization during recording and playback functionalities for audio posts.
 
 # FEATURES
