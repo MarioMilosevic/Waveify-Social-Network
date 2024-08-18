@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# Waveify Social Network Frontend
+This is the frontend application for the Waveify social media network, where users can log in, create posts (both text and audio), interact with other users' posts, and manage their own content. The application also features audio visualization during recording and playback functionalities for audio posts.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# FEATURES
+Signup/Login: Secure user authentication.
+Create Posts: Users can create posts with text or audio content.
+Audio Visualization: Real-time audio visualization while recording audio posts.
+Interact with Posts: Like, comment, and delete posts.
+Play Audio Posts: Play audio directly within the application.
+Manage Comments: Add and delete comments on posts.
+Logout: Safely log out from the application.
 
-Currently, two official plugins are available:
+# TECHNOLOGIES USED
+React
+Typescript
+MediaRecorder API
+Redux toolkit
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# LOGIN CREDENTIALS
+For testing purposes, you can use the following credentials:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Email: malesija.nemanja@gmail.com
+Password: He5r4dOVdy9x6IT
