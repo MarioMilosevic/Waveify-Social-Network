@@ -37,7 +37,7 @@ const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
           const bufferLength = analyser.frequencyBinCount;
           const dataArray = new Uint8Array(bufferLength);
 
-          const barWidth = canvas.width / bufferLength;
+          const barWidth = canvas.width / bufferLength *2;
           const barSpacing = 40;
           let barHeight: number;
           let x = 0;
@@ -79,7 +79,7 @@ const AudioVisualiser = ({ startRecording }: AudioVisualiserProps) => {
   return (
     <div className={styles.container}>
       <canvas ref={canvasRef} className={styles.canvas}></canvas>
-      <audio ref={audioRef} className={styles.audio} />
+      <audio ref={audioRef} />
     </div>
   );
 };
