@@ -64,11 +64,11 @@ const Post = ({ post }: PostProps) => {
     <div className={styles.container}>
       <UserHeader user={user} formattedDate={formattedDate} />
       <PostInfo image={image} text={text}>
-        <div>
+        {/* <div> */}
           {user.username === stateUser.username && (
             <DeleteButton removeHandler={removePostHandler} />
           )}
-        </div>
+        {/* </div> */}
       </PostInfo>
       {audio && <AudioPlayer audio={audio} isRecording={false} />}
 

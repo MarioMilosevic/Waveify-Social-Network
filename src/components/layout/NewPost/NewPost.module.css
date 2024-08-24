@@ -102,7 +102,7 @@ button:hover {
     background-color: var(--error-color);
   }
 
-  .delete_button_container:hover div, .delete_button_container:hover button{
+  .delete_button_container:hover button, .delete_button_container:hover span{
     color: var(--secondary-color);
   }
 
